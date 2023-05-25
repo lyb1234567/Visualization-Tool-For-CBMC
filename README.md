@@ -2,13 +2,13 @@
 
 ### Table of Content
 
-- [Features](# Features)
-- [Installation](# Installation)
+- [Features](#Features)
+- [Installation](#Installation)
 - [Usage](#Usage)
-- [Contribution](# Contribution)
-- [Testing](# Testing)
-- [Tasks](Tasks)
-- [License](# License)
+- [Contribution](#Contribution)
+- [Testing](#Testing)
+- [Tasks](#Tasks)
+- [License](#License)
 
 ### Overview
 
