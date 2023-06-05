@@ -6,6 +6,7 @@ root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(root_folder)
 from UI.utils import extract_file_name
 from UI.TextEdit import TextEdit
+from UI.utils import extract_file_name_without_extension
 class ExplorerWidget(QWidget):
     def __init__(self,window):
         super().__init__()
@@ -47,8 +48,10 @@ class ExplorerWidget(QWidget):
             if self.model.isDir(index):
                 menu.addAction("Rename Folder", lambda: self.renameFolder(index))
                 menu.addAction('Create File', lambda: self.createFile(index))
+                menu.addAction('Delete Folder', lambda: self.deleteFolder(index))
             else:
                 menu.addAction("Rename File", lambda: self.renameFile(index))
+                menu.addAction("Delete File", lambda: self.deleteFile(index))
             menu.exec_(self.treeView.viewport().mapToGlobal(position))
 
     def renameFolder(self, index):
@@ -82,5 +85,25 @@ class ExplorerWidget(QWidget):
                 new_file = QDir(self.model.filePath(index.parent())).filePath(new_name)
                 if not QDir(self.model.filePath(index.parent())).rename(old_name, new_file):
                     QMessageBox.warning(self, "Rename File", "Failed to rename the file.")
+    def deleteFile(self,index):
+        file_path = self.model.filePath(index)
+        filename=extract_file_name_without_extension(file_path)
+        result = QMessageBox.question(self, "Confirmation", 
+                                       f"Are you sure you want to delete' {filename} '?",
+                                       QMessageBox.Yes | QMessageBox.No)
+        if result == QMessageBox.Yes:
+            os.remove(file_path)
+    def deleteFolder(self,index):
+        dir_path = self.model.filePath(index)
+        dir_name=extract_file_name_without_extension(dir_path)
+        result = QMessageBox.question(self, "Confirmation", 
+                                       f"Are you sure you want to delete' {dir_name} '?",
+                                       QMessageBox.Yes | QMessageBox.No)
+        if result == QMessageBox.Yes:
+            dir_obj = QDir(dir_path)
+            if dir_obj.removeRecursively():
+                print(f"Folder '{dir_name}' removed successfully.")
+            else:
+                QMessageBox.warning(self, "Remove Folder", "Failed to remove the folder.")
     
     

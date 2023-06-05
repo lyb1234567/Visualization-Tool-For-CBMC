@@ -2,33 +2,72 @@ import os
 import sys
 root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(root_folder)
-from PyQt5.QtWidgets import QMainWindow,QAction, QFileDialog, QInputDialog, QTabWidget, QDockWidget, QFileSystemModel
-from UI.utils import extract_file_name
+from PyQt5.QtWidgets import QMainWindow,QAction, QFileDialog, QInputDialog, QTabWidget, QDockWidget, QFileSystemModel,QPlainTextEdit,QVBoxLayout,QWidget,QSplitter
+from PyQt5.QtCore import QProcess,Qt,pyqtSignal
+from PyQt5.QtGui import QTextCursor
+from UI.utils import extract_file_name,extract_command
 from UI.TextEdit import TextEdit
 from UI.Explorer import ExplorerWidget
+from UI.utils import extract_command
+from UI.Terminal import Terminal
+
+class MyTabWidget(QTabWidget):
+    tabChanged = pyqtSignal(int)
+
+    def __init__(self, *args, **kwargs):
+        super(MyTabWidget, self).__init__(*args, **kwargs)
+        self.currentChanged.connect(self.emitTabChanged)
+
+    def emitTabChanged(self, index):
+        self.tabChanged.emit(index)
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.splitter=QSplitter()
         self.setGeometry(100, 100, 800, 600)
+        self.mainWidget = QWidget(self)  # Create main widget
+        self.setCentralWidget(self.mainWidget)
 
-        self.tabWidget = QTabWidget()
-        self.setCentralWidget(self.tabWidget)
+        self.mainLayout = QVBoxLayout(self.mainWidget)  # Create main layout
 
+        self.tabWidget = MyTabWidget()
+        self.splitter.addWidget(self.tabWidget)
+
+        self.tabWidget.tabChanged.connect(self.refreshTerminal)
+        # Add tabWidget to the layout instead of setting it as centralWidget
+        self.mainLayout.addWidget(self.tabWidget)
+        
+        self.terminal = Terminal()  # Initialize the terminal
+        self.mainLayout.addWidget(self.terminal)  # Add the terminal to the layout
+
+
+    
         self.tabWidget.setTabsClosable(True)
         self.tabWidget.tabCloseRequested.connect(self.closeTab)
 
         menubar = self.menuBar()
         fileMenu = menubar.addMenu('File')
+        TerminalMenu=menubar.addMenu('Terminal')
 
         openFile = QAction('Open File', self)
         openFile.setShortcut('Ctrl+O')
         openFile.triggered.connect(self.openFile)
         fileMenu.addAction(openFile)
 
+        openFolder = QAction('Open Folder', self)
+        openFolder.setShortcut('Ctrl+Shift+O')
+        openFolder.triggered.connect(self.openFolder)
+        fileMenu.addAction(openFolder)
+
         createFile = QAction('Create File', self)
         createFile.setShortcut('Ctrl+N')
         createFile.triggered.connect(self.createFile)
         fileMenu.addAction(createFile)
+
+        createFolder = QAction('Create Folder', self)
+        createFolder.setShortcut('Ctrl+Shift+N')
+        createFolder.triggered.connect(self.createFolder)
+        fileMenu.addAction(createFolder)
 
         saveFile = QAction('Save', self)
         saveFile.setShortcut('Ctrl+S')
@@ -40,8 +79,13 @@ class MainWindow(QMainWindow):
         closeTab.triggered.connect(self.closeTab)
         fileMenu.addAction(closeTab)
 
+        TerminalTab=QAction('New Terminal',self)
+        TerminalTab.triggered.connect(self.refreshTerminal)
+        TerminalMenu.addAction(TerminalTab)
+
         self.explorer=self.setupExplorer()
         self.model = QFileSystemModel()
+
 
     def setupExplorer(self):
         explorerWidget = ExplorerWidget(self)
@@ -105,6 +149,23 @@ class MainWindow(QMainWindow):
     def closeTab(self, index):
         tab = self.tabWidget.widget(index)
         self.tabWidget.removeTab(index)
-        self.explorer.check_file_lst.remove(tab.fileName)
+        try:
+            self.explorer.check_file_lst.remove(tab.fileName)
+        except:
+            pass 
+    
+    def createFolder(self):
+        folderName, ok = QInputDialog.getText(self, 'New Folder', 'Enter folder name:')
+        if ok and folderName:
+            if not os.path.exists(folderName):
+                os.makedirs(folderName)
+    def openFolder(self):
+        folder_path = QFileDialog.getExistingDirectory(self, 'Open Folder', '')
+        if folder_path:
+            self.explorer.openFolder(folder_path)
+    def refreshTerminal(self, index):
+        self.terminal.deleteLater()
+        self.terminal = Terminal()  # Initialize the terminal
+        self.mainLayout.addWidget(self.terminal)  # Add the terminal to the layout
         
 
