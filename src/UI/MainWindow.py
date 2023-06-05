@@ -11,29 +11,17 @@ from UI.Explorer import ExplorerWidget
 from UI.utils import extract_command
 from UI.Terminal import Terminal
 
-class MyTabWidget(QTabWidget):
-    tabChanged = pyqtSignal(int)
-
-    def __init__(self, *args, **kwargs):
-        super(MyTabWidget, self).__init__(*args, **kwargs)
-        self.currentChanged.connect(self.emitTabChanged)
-
-    def emitTabChanged(self, index):
-        self.tabChanged.emit(index)
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.splitter=QSplitter()
         self.setGeometry(100, 100, 800, 600)
         self.mainWidget = QWidget(self)  # Create main widget
         self.setCentralWidget(self.mainWidget)
 
         self.mainLayout = QVBoxLayout(self.mainWidget)  # Create main layout
 
-        self.tabWidget = MyTabWidget()
-        self.splitter.addWidget(self.tabWidget)
+        self.tabWidget = QTabWidget()
 
-        self.tabWidget.tabChanged.connect(self.refreshTerminal)
         # Add tabWidget to the layout instead of setting it as centralWidget
         self.mainLayout.addWidget(self.tabWidget)
         
