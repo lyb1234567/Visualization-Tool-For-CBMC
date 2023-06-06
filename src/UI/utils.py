@@ -17,3 +17,4 @@ def extract_command(input_string):
     command = split_string[-1].strip()  # Use strip to remove leading/trailing whitespace
     return command
 
+

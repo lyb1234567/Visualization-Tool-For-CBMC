@@ -73,6 +73,7 @@ class MainWindow(QMainWindow):
 
         self.explorer=self.setupExplorer()
         self.model = QFileSystemModel()
+        self.check_tab_lst=[]
 
 
     def setupExplorer(self):
@@ -100,19 +101,23 @@ class MainWindow(QMainWindow):
         textEdit.setText(fileData)
         textEdit.fileName = file_path
         fileName = extract_file_name(file_path)
-        self.tabWidget.addTab(textEdit, fileName)
+        if fileName not in  self.check_tab_lst:
+            self.tabWidget.addTab(textEdit, fileName)
+            self.check_tab_lst.append(fileName)
 
     def createFile(self):
         fileName, ok = QInputDialog.getText(self, 'New File', 'Enter file name (e.g. file.c or file.json):')
         if ok and fileName:
             if os.path.exists(fileName):
                 return
-            textEdit = TextEdit()  # create TextEdit instance
+            textEdit = TextEdit(self)  # create TextEdit instance
             with open(fileName, 'w') as f:  # create an empty file
                 pass
             textEdit.fileName = fileName
             fileName = extract_file_name(fileName)
+        if fileName not in  self.check_tab_lst:
             self.tabWidget.addTab(textEdit, fileName)
+            self.check_tab_lst.append(fileName)
 
     def saveFile(self):
         textEdit = self.tabWidget.currentWidget()
@@ -137,6 +142,7 @@ class MainWindow(QMainWindow):
     def closeTab(self, index):
         tab = self.tabWidget.widget(index)
         self.tabWidget.removeTab(index)
+        self.check_tab_lst.remove(extract_file_name(tab.fileName))
         try:
             self.explorer.check_file_lst.remove(tab.fileName)
         except:
