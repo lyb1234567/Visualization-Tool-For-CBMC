@@ -2,7 +2,11 @@ from PyQt5.QtWidgets import QMainWindow,QAction, QFileDialog, QInputDialog, QTab
 from PyQt5.QtCore import QProcess,Qt
 from PyQt5.QtGui import QTextCursor
 import subprocess
-from UI.utils import extract_command
+import os
+import sys
+root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.append(root_folder)
+from UI.utils import extract_command,extract_file_name_without_extension
 class Terminal(QPlainTextEdit):
     def __init__(self, parent=None):
         super(Terminal, self).__init__(parent)
@@ -25,11 +29,21 @@ class Terminal(QPlainTextEdit):
             command = self.toPlainText().split('\n')[-2]
             last_command=self.toPlainText().split('\n')[-1]
             last_command=extract_command(last_command)
-            
+            print(last_command)
             if last_command.strip() == 'cls'or last_command.strip() == 'CLS':
                 self.process.write(command.encode('utf-8'))
                 self.process.write(b'\n')
                 self.clear()
+            elif last_command.strip().startswith('run'):
+                file_lst=last_command.split(' ')[1:]
+                if len(file_lst)==1:
+                    file_name=extract_file_name_without_extension(file_lst[0])
+                    command='cbmc {0} --bounds-check --pointer-check --trace --json-ui > {1}.json'.format(file_lst[0],file_name)
+                    result = subprocess.run([command], shell=True, capture_output=True, text=True)
+                    self.appendPlainText(result.stdout)
+                    self.process.write(b'\n')
+                else:
+                    pass
             else:
                 result = subprocess.run([last_command], shell=True, capture_output=True, text=True)
                 if result.stdout:
