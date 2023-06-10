@@ -29,6 +29,8 @@ class ExplorerWidget(QWidget):
             if file_path not in self.check_file_lst:
                 self.window.openFile(file_path)
                 self.check_file_lst.append(file_path)
+            else:
+                self.window.switchToFile(file_path)
 
     def getFilesInFolder(self, folder_path):
         folder_model = QFileSystemModel()

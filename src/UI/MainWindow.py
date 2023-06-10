@@ -161,5 +161,11 @@ class MainWindow(QMainWindow):
         self.terminal.deleteLater()
         self.terminal = Terminal()  # Initialize the terminal
         self.mainLayout.addWidget(self.terminal)  # Add the terminal to the layout
+    def switchToFile(self,file_path):
+        for i in range(self.tabWidget.count()):
+            tab = self.tabWidget.widget(i)
+            if tab.fileName == file_path:
+                self.tabWidget.setCurrentWidget(tab)
+                break
         
 
