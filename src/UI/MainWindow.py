@@ -2,14 +2,15 @@ import os
 import sys
 root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(root_folder)
-from PyQt5.QtWidgets import QMainWindow,QAction, QFileDialog, QInputDialog, QTabWidget, QDockWidget, QFileSystemModel,QPlainTextEdit,QVBoxLayout,QWidget,QSplitter
-from PyQt5.QtCore import QProcess,Qt,pyqtSignal
-from PyQt5.QtGui import QTextCursor
+from PyQt5.QtWidgets import QMainWindow,QAction, QFileDialog, QInputDialog, QTabWidget, QDockWidget, QFileSystemModel,QVBoxLayout,QWidget,QDialog
+from PyQt5.QtCore import QDir
+import subprocess
 from UI.utils import extract_file_name,extract_command
 from UI.TextEdit import TextEdit
 from UI.Explorer import ExplorerWidget
-from UI.utils import extract_command
+from UI.utils import extract_file_name_without_extension
 from UI.Terminal import Terminal
+from UI.Fileselection import MultiFileDialog
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -36,6 +37,7 @@ class MainWindow(QMainWindow):
         menubar = self.menuBar()
         fileMenu = menubar.addMenu('File')
         TerminalMenu=menubar.addMenu('Terminal')
+        runMenu=menubar.addMenu("Run")
 
         openFile = QAction('Open File', self)
         openFile.setShortcut('Ctrl+O')
@@ -70,6 +72,16 @@ class MainWindow(QMainWindow):
         TerminalTab=QAction('New Terminal',self)
         TerminalTab.triggered.connect(self.refreshTerminal)
         TerminalMenu.addAction(TerminalTab)
+        
+        debugTabsingle=QAction("Run current file",self)
+        debugTabsingle.triggered.connect(self.runfilesingle)
+        runMenu.addAction(debugTabsingle)
+
+        debugTabmultiple=QAction("Run multiple files",self)
+        debugTabmultiple.triggered.connect(self.runfilemultiple)
+        runMenu.addAction(debugTabmultiple)
+
+        
 
         self.explorer=self.setupExplorer()
         self.model = QFileSystemModel()
@@ -167,5 +179,34 @@ class MainWindow(QMainWindow):
             if tab.fileName == file_path:
                 self.tabWidget.setCurrentWidget(tab)
                 break
-        
+    def runfilesingle(self,index):
+        tab = self.tabWidget.widget(index)
+        fileName=extract_file_name(tab.fileName)
+        command='cbmc {0} --bounds-check --pointer-check --trace --json-ui > {1}.json'.format(fileName,extract_file_name_without_extension(tab.fileName))
+        result = subprocess.run([command], shell=True, capture_output=True, text=True)
+        if result.stdout:
+            self.terminal.appendPlainText(result.stdout)
+            self.terminal.process.write(b'\n')
+        elif result.stderr:
+            self.terminal.appendPlainText(result.stderr)
+            self.terminal.process.write(b'\n')
+        else:
+            self.terminal.appendPlainText(command)
+            self.terminal.process.write(b'\n')
+    def runfilemultiple(self):
+    # get the list of files in the current directory
+        current_folder = os.getcwd()
+        files = os.listdir(current_folder)  # Get the list of files in the current folder
+        # # create and show the dialog
+        dialog = MultiFileDialog(files, self)
+        result = dialog.exec_()
 
+        # if the user clicked OK, get the selected files and process them
+        if result == QDialog.Accepted:
+            selected_files = dialog.getSelectedFiles()
+        combined_file_name=""
+        if selected_files:
+           for file in selected_files:
+               file=extract_file_name(file)
+               combined_file_name=combined_file_name+file+" "
+        # TODO: implement the functions of running multiple files in cbmc

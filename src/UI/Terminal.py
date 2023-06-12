@@ -30,7 +30,7 @@ class Terminal(QPlainTextEdit):
             last_command=self.toPlainText().split('\n')[-1]
             last_command=extract_command(last_command)
             print(last_command)
-            if last_command.strip() == 'cls'or last_command.strip() == 'CLS':
+            if last_command.strip() == 'clear':
                 self.process.write(command.encode('utf-8'))
                 self.process.write(b'\n')
                 self.clear()
@@ -40,8 +40,15 @@ class Terminal(QPlainTextEdit):
                     file_name=extract_file_name_without_extension(file_lst[0])
                     command='cbmc {0} --bounds-check --pointer-check --trace --json-ui > {1}.json'.format(file_lst[0],file_name)
                     result = subprocess.run([command], shell=True, capture_output=True, text=True)
-                    self.appendPlainText(result.stdout)
-                    self.process.write(b'\n')
+                    if result.stdout:
+                        self.appendPlainText(result.stdout)
+                        self.process.write(b'\n')
+                    elif result.stderr:
+                        self.appendPlainText(result.stderr)
+                        self.process.write(b'\n')
+                    else:
+                        self.appendPlainText(command)
+                        self.process.write(b'\n')
                 else:
                     pass
             else:
@@ -51,5 +58,5 @@ class Terminal(QPlainTextEdit):
                     self.process.write(b'\n')
                 else:
                     self.appendPlainText(result.stderr)
-                    self.process.write(b'\n')        
+                    self.process.write(b'\n')
         super(Terminal, self).keyPressEvent(event)
