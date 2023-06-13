@@ -1,5 +1,5 @@
-#include <assert.h>
+#include <stdio.h>
 
-int multiply(int a, int b) {
-    return a * b;
+void printA() {
+    printf("This is function A.\n");
 }

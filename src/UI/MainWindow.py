@@ -112,13 +112,16 @@ class MainWindow(QMainWindow):
             fileData = f.read()
         textEdit.setText(fileData)
         textEdit.fileName = file_path
+        temp=file_path
         fileName = extract_file_name(file_path)
         if fileName not in  self.check_tab_lst:
             self.tabWidget.addTab(textEdit, fileName)
+            self.switchToFile(temp)
             self.check_tab_lst.append(fileName)
 
     def createFile(self):
         fileName, ok = QInputDialog.getText(self, 'New File', 'Enter file name (e.g. file.c or file.json):')
+        temp=fileName
         if ok and fileName:
             if os.path.exists(fileName):
                 return
@@ -129,6 +132,7 @@ class MainWindow(QMainWindow):
             fileName = extract_file_name(fileName)
         if fileName not in  self.check_tab_lst:
             self.tabWidget.addTab(textEdit, fileName)
+            self.switchToFile(temp)
             self.check_tab_lst.append(fileName)
 
     def saveFile(self):

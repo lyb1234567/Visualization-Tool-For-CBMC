@@ -4,6 +4,7 @@
         "*.tcc": "c",
         "algorithm": "c",
         "random": "c",
-        "numeric": "c"
+        "numeric": "c",
+        "functions.h": "c"
     }
 }

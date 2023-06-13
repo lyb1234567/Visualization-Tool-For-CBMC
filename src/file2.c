@@ -1,8 +1,5 @@
-#include <assert.h>
+#include <stdio.h>
 
-extern int multiply(int a, int b);
-
-void check_multiply() {
-    int result = multiply(2, 3);
-    assert(result == 6);
+void printB() {
+    printf("This is function B.\n");
 }
