@@ -1,9 +1,11 @@
-int puts(const char *s)
+#include <time.h>
+#include <stdlib.h>
+#include <assert.h>
+void main(void)
 {
-}
-
-int main(int argc, char **argv)
-{
-  puts(argv[2]);
-  return 0;
+int x = 10;
+srand(time(NULL));   // Initialization, should only be called once.
+int y = rand();      // Returns a pseudo-random integer between 0 and RAND_MAX.
+int z = x-y;
+assert(z > 0);
 }

@@ -159,7 +159,12 @@ class MainWindow(QMainWindow):
             self.explorer.check_file_lst.remove(tab.fileName)
         except:
             pass 
-    
+    def closeTabdelete(self,fileName):
+        for i in range(self.tabWidget.count()):
+                print(self.tabWidget.widget(i).fileName)
+                if self.tabWidget.widget(i).fileName == fileName:  # Assuming each tab has a filePath attribute
+                    self.tabWidget.removeTab(i)
+                    break
     def createFolder(self):
         folderName, ok = QInputDialog.getText(self, 'New Folder', 'Enter folder name:')
         if ok and folderName:
@@ -183,7 +188,7 @@ class MainWindow(QMainWindow):
         tab = self.tabWidget.widget(index)
         if tab:
             fileName=extract_file_name(tab.fileName)
-            command='cbmc {0} --bounds-check --pointer-check --trace --json-ui > {1}.json'.format(fileName,extract_file_name_without_extension(tab.fileName))
+            command='cbmc {0} --trace --json-ui > {1}.json'.format(fileName,extract_file_name_without_extension(tab.fileName))
             result = subprocess.run([command], shell=True, capture_output=True, text=True)
             if result.stdout:
                 self.terminal.appendPlainText(result.stdout)

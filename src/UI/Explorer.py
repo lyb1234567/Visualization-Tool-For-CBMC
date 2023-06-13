@@ -89,12 +89,13 @@ class ExplorerWidget(QWidget):
                     QMessageBox.warning(self, "Rename File", "Failed to rename the file.")
     def deleteFile(self,index):
         file_path = self.model.filePath(index)
-        filename=extract_file_name_without_extension(file_path)
+        filename=extract_file_name(file_path)
         result = QMessageBox.question(self, "Confirmation", 
                                        f"Are you sure you want to delete' {filename} '?",
                                        QMessageBox.Yes | QMessageBox.No)
         if result == QMessageBox.Yes:
             os.remove(file_path)
+            self.window.closeTabdelete(file_path)
     def deleteFolder(self,index):
         dir_path = self.model.filePath(index)
         dir_name=extract_file_name_without_extension(dir_path)

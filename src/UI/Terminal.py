@@ -38,7 +38,7 @@ class Terminal(QPlainTextEdit):
                 file_lst=last_command.split(' ')[1:]
                 if len(file_lst)==1:
                     file_name=extract_file_name_without_extension(file_lst[0])
-                    command='cbmc {0} --bounds-check --pointer-check --trace --json-ui > {1}.json'.format(file_lst[0],file_name)
+                    command='cbmc {0} --trace --json-ui > {1}.json'.format(file_lst[0],file_name)
                     result = subprocess.run([command], shell=True, capture_output=True, text=True)
                     if result.stdout:
                         self.appendPlainText(result.stdout)
