@@ -2,7 +2,7 @@ import os
 import sys
 root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(root_folder)
-from PyQt5.QtWidgets import QMainWindow,QAction, QFileDialog, QInputDialog, QTabWidget, QDockWidget, QFileSystemModel,QVBoxLayout,QWidget,QDialog
+from PyQt5.QtWidgets import QMainWindow,QAction, QFileDialog, QInputDialog, QTabWidget, QDockWidget, QFileSystemModel,QVBoxLayout,QWidget,QDialog,QMessageBox
 from PyQt5.QtCore import QDir
 import subprocess
 from UI.utils import extract_file_name,extract_command
@@ -181,18 +181,22 @@ class MainWindow(QMainWindow):
                 break
     def runfilesingle(self,index):
         tab = self.tabWidget.widget(index)
-        fileName=extract_file_name(tab.fileName)
-        command='cbmc {0} --bounds-check --pointer-check --trace --json-ui > {1}.json'.format(fileName,extract_file_name_without_extension(tab.fileName))
-        result = subprocess.run([command], shell=True, capture_output=True, text=True)
-        if result.stdout:
-            self.terminal.appendPlainText(result.stdout)
-            self.terminal.process.write(b'\n')
-        elif result.stderr:
-            self.terminal.appendPlainText(result.stderr)
-            self.terminal.process.write(b'\n')
+        if tab:
+            fileName=extract_file_name(tab.fileName)
+            command='cbmc {0} --bounds-check --pointer-check --trace --json-ui > {1}.json'.format(fileName,extract_file_name_without_extension(tab.fileName))
+            result = subprocess.run([command], shell=True, capture_output=True, text=True)
+            if result.stdout:
+                self.terminal.appendPlainText(result.stdout)
+                self.terminal.process.write(b'\n')
+            elif result.stderr:
+                self.terminal.appendPlainText(result.stderr)
+                self.terminal.process.write(b'\n')
+            else:
+                self.terminal.appendPlainText(command)
+                self.terminal.process.write(b'\n')
         else:
-            self.terminal.appendPlainText(command)
-            self.terminal.process.write(b'\n')
+            QMessageBox.warning(self, "Choose a file to open!!")
+            
     def runfilemultiple(self):
     # get the list of files in the current directory
         current_folder = os.getcwd()
