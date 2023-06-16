@@ -1,5 +1,5 @@
 import os
-
+import subprocess
 def extract_file_name(file_address):
     file_name = os.path.basename(file_address)
     return file_name
@@ -16,3 +16,14 @@ def extract_command(input_string):
     split_string = input_string.split('>')
     command = split_string[-1].strip()  # Use strip to remove leading/trailing whitespace
     return command
+
+def print_result(result,window,command):
+    if result.stdout:
+        window.terminal.appendPlainText(result.stdout)
+        window.terminal.process.write(b'\n')
+    elif result.stderr:
+        window.terminal.appendPlainText(result.stderr)
+        window.terminal.process.write(b'\n')
+    else:
+        window.terminal.appendPlainText(command)
+        window.terminal.process.write(b'\n')

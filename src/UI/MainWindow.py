@@ -5,7 +5,7 @@ sys.path.append(root_folder)
 from PyQt5.QtWidgets import QMainWindow,QAction, QFileDialog, QInputDialog, QTabWidget, QDockWidget, QFileSystemModel,QVBoxLayout,QWidget,QDialog,QMessageBox
 from PyQt5.QtCore import QDir
 import subprocess
-from UI.utils import extract_file_name,extract_command
+from UI.utils import extract_file_name,print_result
 from UI.TextEdit import TextEdit
 from UI.Explorer import ExplorerWidget
 from UI.utils import extract_file_name_without_extension
@@ -194,15 +194,7 @@ class MainWindow(QMainWindow):
             fileName=extract_file_name(tab.fileName)
             command='cbmc {0} --trace --json-ui > {1}.json'.format(fileName,extract_file_name_without_extension(tab.fileName))
             result = subprocess.run([command], shell=True, capture_output=True, text=True)
-            if result.stdout:
-                self.terminal.appendPlainText(result.stdout)
-                self.terminal.process.write(b'\n')
-            elif result.stderr:
-                self.terminal.appendPlainText(result.stderr)
-                self.terminal.process.write(b'\n')
-            else:
-                self.terminal.appendPlainText(command)
-                self.terminal.process.write(b'\n')
+            print_result(result,self,command)
         else:
             QMessageBox.warning(self, "Choose a file to open!!")
             
@@ -218,8 +210,21 @@ class MainWindow(QMainWindow):
         if result == QDialog.Accepted:
             selected_files = dialog.getSelectedFiles()
         combined_file_name=""
+
         if selected_files:
            for file in selected_files:
                file=extract_file_name(file)
                combined_file_name=combined_file_name+file+" "
         # TODO: implement the functions of running multiple files in cbmc
+        build_goto_file=None
+        generate_json_file=None
+        outputFile, ok = QInputDialog.getText(self, 'Output file', 'Enter output file name')
+        if ok and outputFile:
+            build_goto_file="goto-cc "+combined_file_name+"-o "+outputFile
+        if build_goto_file:
+            subprocess.run([build_goto_file], shell=True, capture_output=True, text=True)
+            generate_json_file='cbmc {0} --trace --json-ui > {1}.json'.format(outputFile,outputFile)
+        result = subprocess.run([generate_json_file], shell=True, capture_output=True, text=True)
+        print_result(result,self,generate_json_file)
+        
+        

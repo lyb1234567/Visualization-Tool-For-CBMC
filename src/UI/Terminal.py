@@ -6,7 +6,7 @@ import os
 import sys
 root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(root_folder)
-from UI.utils import extract_command,extract_file_name_without_extension
+from UI.utils import extract_command,extract_file_name_without_extension,print_result
 class Terminal(QPlainTextEdit):
     def __init__(self, parent=None):
         super(Terminal, self).__init__(parent)
@@ -50,7 +50,25 @@ class Terminal(QPlainTextEdit):
                         self.appendPlainText(command)
                         self.process.write(b'\n')
                 else:
-                    pass
+                    file_combined=""
+                    for file in file_lst:
+                        file_combined=file_combined+file+" "
+                    outputFile, ok = QInputDialog.getText(self, 'Output file', 'Enter output file name')
+                    if outputFile and ok:
+                        build_goto_file="goto-cc "+file_combined+"-o "+outputFile
+                    if build_goto_file:
+                        subprocess.run([build_goto_file], shell=True, capture_output=True, text=True)
+                        generate_json_file='cbmc {0} --trace --json-ui > {1}.json'.format(outputFile,outputFile)
+                    result = subprocess.run([generate_json_file], shell=True, capture_output=True, text=True)
+                    if result.stdout:
+                        self.appendPlainText(result.stdout)
+                        self.process.write(b'\n')
+                    elif result.stderr:
+                        self.appendPlainText(result.stderr)
+                        self.process.write(b'\n')
+                    else:
+                        self.appendPlainText(generate_json_file)
+                        self.process.write(b'\n')
             else:
                 result = subprocess.run([last_command], shell=True, capture_output=True, text=True)
                 if result.stdout:
