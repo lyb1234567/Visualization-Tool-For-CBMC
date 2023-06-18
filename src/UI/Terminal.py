@@ -6,11 +6,14 @@ import os
 import sys
 root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(root_folder)
-from UI.utils import extract_command,extract_file_name_without_extension,print_result
+from UI.utils import extract_command,extract_file_name_without_extension,print_result,wait_for_file
+from JsonViwer.MainJsonWindow import MainWindow as jsonWindow
 class Terminal(QPlainTextEdit):
     def __init__(self, parent=None):
         super(Terminal, self).__init__(parent)
         self.process = QProcess(self)
+        self.jsonwindow=None
+        self.jsonFileChange=False
         self.process.readyRead.connect(self.dataReady)
         self.process.start('cmd.exe')
         welcome_message = "Welcome to the terminal! You can now only use the following commands: xxx \n"
@@ -40,6 +43,11 @@ class Terminal(QPlainTextEdit):
                     file_name=extract_file_name_without_extension(file_lst[0])
                     command='cbmc {0} --trace --json-ui > {1}.json'.format(file_lst[0],file_name)
                     result = subprocess.run([command], shell=True, capture_output=True, text=True)
+                    jsonfile="{0}.json".format(file_name)
+                    if not self.jsonwindow or  self.jsonFileChange:
+                        self.jsonwindow=jsonWindow(jsonfile)
+                        self.jsonFileChange=True
+                    self.jsonwindow.show()
                     if result.stdout:
                         self.appendPlainText(result.stdout)
                         self.process.write(b'\n')
@@ -69,6 +77,13 @@ class Terminal(QPlainTextEdit):
                     else:
                         self.appendPlainText(generate_json_file)
                         self.process.write(b'\n')
+                    jsonfile="{0}.json".format(outputFile)
+                    wait_for_file(jsonfile)
+                    if os.path.exists(jsonfile):
+                        if not self.jsonwindow or self.jsonFileChange:
+                            self.jsonwindow=jsonWindow(jsonfile)
+                            self.jsonFileChange=True
+                        self.jsonwindow.show() 
             else:
                 result = subprocess.run([last_command], shell=True, capture_output=True, text=True)
                 if result.stdout:

@@ -8,7 +8,7 @@ import subprocess
 from UI.utils import extract_file_name,print_result
 from UI.TextEdit import TextEdit
 from UI.Explorer import ExplorerWidget
-from UI.utils import extract_file_name_without_extension
+from UI.utils import extract_file_name_without_extension,wait_for_file
 from UI.Terminal import Terminal
 from UI.Fileselection import MultiFileDialog
 from JsonViwer.MainJsonWindow import MainWindow as jsonWindow
@@ -19,6 +19,7 @@ class MainWindow(QMainWindow):
         self.mainWidget = QWidget(self)  # Create main widget
         self.setCentralWidget(self.mainWidget)
         self.jsonwindow=None
+        self.fileChange=False
         self.mainLayout = QVBoxLayout(self.mainWidget)  # Create main layout
 
         self.tabWidget = QTabWidget()
@@ -213,9 +214,15 @@ class MainWindow(QMainWindow):
             fileName=extract_file_name(tab.fileName)
             command='cbmc {0} --trace --json-ui > {1}.json'.format(fileName,extract_file_name_without_extension(tab.fileName))
             result = subprocess.run([command], shell=True, capture_output=True, text=True)
+            jsonfile="{0}.json".format(extract_file_name_without_extension(tab.fileName))
+            if (os.path.exists(jsonfile)):
+                if not self.jsonwindow or  self.jsonFileChange:
+                    self.jsonwindow=jsonWindow(jsonfile)
+                    self.jsonFileChange=True
+                    self.jsonwindow.show()
             print_result(result,self,command)
         else:
-            QMessageBox.warning(self, "Choose a file to open!!")
+            QMessageBox.warning(self,"Warning", "Choose a file to open!!")
             
     def runfilemultiple(self):
     # get the list of files in the current directory
@@ -245,5 +252,12 @@ class MainWindow(QMainWindow):
             generate_json_file='cbmc {0} --trace --json-ui > {1}.json'.format(outputFile,outputFile)
         result = subprocess.run([generate_json_file], shell=True, capture_output=True, text=True)
         print_result(result,self,generate_json_file)
+        jsonfile="{0}.json".format(outputFile)
+        wait_for_file(jsonfile)
+        if os.path.exists(jsonfile):
+            if not self.jsonwindow or self.jsonFileChange:
+                self.jsonwindow=jsonWindow(jsonfile)
+                self.jsonFileChange=True
+                self.jsonwindow.show() 
         
         
