@@ -11,14 +11,14 @@ from UI.Explorer import ExplorerWidget
 from UI.utils import extract_file_name_without_extension
 from UI.Terminal import Terminal
 from UI.Fileselection import MultiFileDialog
-
+from JsonViwer.MainJsonWindow import MainWindow as jsonWindow
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setGeometry(100, 100, 800, 600)
         self.mainWidget = QWidget(self)  # Create main widget
         self.setCentralWidget(self.mainWidget)
-
+        self.jsonwindow=None
         self.mainLayout = QVBoxLayout(self.mainWidget)  # Create main layout
 
         self.tabWidget = QTabWidget()
@@ -43,6 +43,7 @@ class MainWindow(QMainWindow):
         openFile.setShortcut('Ctrl+O')
         openFile.triggered.connect(self.openFile)
         fileMenu.addAction(openFile)
+        
 
         openFolder = QAction('Open Folder', self)
         openFolder.setShortcut('Ctrl+Shift+O')
@@ -69,6 +70,17 @@ class MainWindow(QMainWindow):
         closeTab.triggered.connect(self.closeTab)
         fileMenu.addAction(closeTab)
 
+        OpenExplorer=QAction('Open Explorer',self)
+        OpenExplorer.triggered.connect(self.openExplorer)
+        fileMenu.addAction(OpenExplorer)
+
+
+        jsonloader=QAction('Load JsonFile',self)
+        jsonloader.triggered.connect(self.loadJson)
+        fileMenu.addAction(jsonloader)
+
+
+
         TerminalTab=QAction('New Terminal',self)
         TerminalTab.triggered.connect(self.refreshTerminal)
         TerminalMenu.addAction(TerminalTab)
@@ -87,7 +99,14 @@ class MainWindow(QMainWindow):
         self.model = QFileSystemModel()
         self.check_tab_lst=[]
 
-
+    
+    def openExplorer(self):
+        self.explorer=self.setupExplorer()
+    
+    def loadJson(self):
+        if not self.jsonwindow:
+            self.jsonwindow=jsonWindow()
+        self.jsonwindow.show()
     def setupExplorer(self):
         explorerWidget = ExplorerWidget(self)
         dockWidget = self.createDockWidget('Explorer', explorerWidget)

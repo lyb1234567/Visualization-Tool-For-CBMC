@@ -7,6 +7,7 @@ sys.path.append(root_folder)
 from UI.utils import extract_file_name
 from UI.TextEdit import TextEdit
 from UI.utils import extract_file_name_without_extension
+from JsonViwer.MainJsonWindow import MainWindow as jsonWindow
 class ExplorerWidget(QWidget):
     def __init__(self,window):
         super().__init__()
@@ -20,6 +21,7 @@ class ExplorerWidget(QWidget):
         self.treeView.clicked.connect(self.handleItemClicked)
         self.check_file_lst=[]
         self.window=window
+        self.jsonwindow=None
 
     def handleItemClicked(self, index):
         file_path = self.model.filePath(index)
@@ -54,8 +56,18 @@ class ExplorerWidget(QWidget):
             else:
                 menu.addAction("Rename File", lambda: self.renameFile(index))
                 menu.addAction("Delete File", lambda: self.deleteFile(index))
+                if (file_path.endswith('.json')):
+                    menu.addAction("load", lambda: self.loadjson(index))
             menu.exec_(self.treeView.viewport().mapToGlobal(position))
 
+
+    def loadjson(self,index):
+        filePath=self.model.filePath(index)
+        if not self.jsonwindow:
+            self.jsonwindow=jsonWindow(filePath)
+        self.jsonwindow.show()
+        
+        
     def renameFolder(self, index):
         old_name = self.model.filePath(index)
         old_name=extract_file_name(old_name)

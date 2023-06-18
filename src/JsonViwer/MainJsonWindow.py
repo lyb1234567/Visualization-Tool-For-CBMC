@@ -12,9 +12,12 @@ from JsonViwer.TreeViewer import TreeViewer
 from JsonViwer.TextViewer import TextViewer
 
 class MainWindow(QMainWindow):
-    def __init__(self):
+    def __init__(self,filePath=None):
         super().__init__()
+        self.filePath=filePath
         self.initUI()
+        if filePath:
+            self.loadJSON()
 
     def initUI(self):
         self.setGeometry(300, 300, 600, 500)
@@ -76,7 +79,10 @@ class MainWindow(QMainWindow):
 
     def loadJSON(self):
         options = QFileDialog.Options()
-        fileName, _ = QFileDialog.getOpenFileName(self,"Load JSON", "","JSON Files (*.json)", options=options)
+        if not self.filePath:
+            fileName, _ = QFileDialog.getOpenFileName(self,"Load JSON", "","JSON Files (*.json)", options=options)
+        else:
+            fileName=self.filePath
         if fileName:
             with open(fileName, 'r') as file:
                 json_content = json.load(file)
@@ -87,8 +93,3 @@ class MainWindow(QMainWindow):
         pass 
 
 
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = MainWindow()
-    ex.show()
-    sys.exit(app.exec_())
