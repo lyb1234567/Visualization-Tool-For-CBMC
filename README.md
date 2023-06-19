@@ -48,9 +48,13 @@ TODO
 ### Tasks
 
 - [ ] User Study
+  - [x] Questionnaire
 - [ ] Implementation
-  - [ ] Design the user interface
+  - [x] Design the user interface
   - [ ] Create wireframes and mockups(features)
+    - [x] Json Viewer
+    - [ ] Navigation
+    - [ ] Show variable
   - [ ] Develop the prototype
 - [ ] Evaluation and Refinement
 - [ ] Documentation
