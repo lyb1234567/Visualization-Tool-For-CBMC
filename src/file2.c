@@ -2,6 +2,6 @@
 
 void printB() {
     int z=random();
-    assert(z>3);
+    assert(z<=10);
     printf("This is function B.\n");
 }

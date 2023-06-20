@@ -1,8 +1,8 @@
 import sys
 import json
-from PyQt5.QtWidgets import (QApplication, QMainWindow, QComboBox, QVBoxLayout, 
-                             QWidget, QPushButton, QFileDialog, QTextEdit, 
-                             QTreeWidget, QTreeWidgetItem, QLabel, QStackedLayout,QHBoxLayout,QMenu,QMenuBar,QAction)
+from PyQt5.QtWidgets import (QMainWindow, QComboBox, QVBoxLayout, 
+                             QWidget, QFileDialog,
+                             QLabel, QStackedLayout,QHBoxLayout,QMenu,QMenuBar,QAction,QInputDialog,QLineEdit,QMessageBox,QListWidget,QListWidgetItem,QDialog)
 import os
 import sys
 root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -10,7 +10,7 @@ sys.path.append(root_folder)
 
 from JsonViwer.TreeViewer import TreeViewer
 from JsonViwer.TextViewer import TextViewer
-
+from JsonViwer.KeysDialog import KeyListDialog
 class MainWindow(QMainWindow):
     def __init__(self,filePath=None):
         super().__init__()
@@ -23,27 +23,29 @@ class MainWindow(QMainWindow):
         self.setGeometry(300, 300, 600, 500)
         self.setWindowTitle('JSON Viewer')
 
+        self.checkLoad=False
         # Create QMenuBar
         self.menuBar = QMenuBar(self)
 
         # Create menus
         self.fileMenu = QMenu("File", self)
-        self.extraMenu = QMenu("Search", self)  # Placeholder for your custom menu
+        self.searchMenu = QMenu("Search", self)  # Placeholder for your custom menu
 
         # Create actions
         self.loadAction = QAction("Load JSON", self)
         self.loadAction.triggered.connect(self.loadJSON)
+    
+        self.searchByKeyAction = QAction("Search By Key", self)  # Placeholder for your custom action
+        self.searchByKeyAction.triggered.connect(self.search)
         
-        self.extraAction = QAction("Search", self)  # Placeholder for your custom action
-        self.extraAction.triggered.connect(self.search)
-
+        self.formatdict={}
         # Add actions to menus
         self.fileMenu.addAction(self.loadAction)
-        self.extraMenu.addAction(self.extraAction)
+        self.searchMenu.addAction(self.searchByKeyAction)
 
         # Add menus to menuBar
         self.menuBar.addMenu(self.fileMenu)
-        self.menuBar.addMenu(self.extraMenu)
+        self.menuBar.addMenu(self.searchMenu)
 
         # Set menuBar to the mainWindow
         self.setMenuBar(self.menuBar)
@@ -57,7 +59,9 @@ class MainWindow(QMainWindow):
 
         self.formatComboBox = QComboBox(self)
         self.formatComboBox.addItem('Tree')
+        self.formatdict[0]="Tree"
         self.formatComboBox.addItem('Text')
+        self.formatdict[1]="Text"
         self.formatComboBox.currentIndexChanged.connect(self.switchView)
 
         self.viewWidget = QWidget()
@@ -84,12 +88,24 @@ class MainWindow(QMainWindow):
         else:
             fileName=self.filePath
         if fileName:
+            self.checkLoad=True
             with open(fileName, 'r') as file:
                 json_content = json.load(file)
                 self.treeViewer.clear()
                 self.treeViewer.display(json_content)
                 self.textViewer.display(json_content)
     def search(self):
-        pass 
+        current=self.formatdict[self.formatComboBox.currentIndex()]
+        if not self.checkLoad:
+            QMessageBox.warning(self,"Warning", "There is no file loaded")
+        if current=="Tree" and self.checkLoad:
+            OuterKeys=self.treeViewer.insertOuterKeys
+            dialog = KeyListDialog(OuterKeys, self)
+            result = dialog.exec_()
+            if result == QDialog.Accepted:
+              searchQuery = dialog.selected_key
+              self.treeViewer.search(searchQuery)
+        elif current=="Text" and self.checkLoad:
+            QMessageBox.warning(self,"Warning", "Search only works for Tree Viewer !!!")
 
 
