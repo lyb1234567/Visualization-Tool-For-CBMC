@@ -92,8 +92,10 @@ class MainWindow(QMainWindow):
             with open(fileName, 'r') as file:
                 json_content = json.load(file)
                 self.treeViewer.clear()
+                self.treeViewer.foundItems=[]
                 self.treeViewer.display(json_content)
                 self.textViewer.display(json_content)
+                self.filePath=None
     def search(self):
         current=self.formatdict[self.formatComboBox.currentIndex()]
         if not self.checkLoad:

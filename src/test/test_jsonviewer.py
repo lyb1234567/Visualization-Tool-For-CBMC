@@ -7,4 +7,4 @@ from JsonViwer.MainJsonWindow import MainWindow as jsonWindow
 app = QApplication([])
 window = jsonWindow()
 window.show()
-app.exec_() 
+app.exec_()

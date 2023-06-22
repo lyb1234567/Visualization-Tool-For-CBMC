@@ -1,0 +1,96 @@
+2023-06-22 11:19:53.900 | ERROR    | unittest.case:_callTestMethod:549 - An error has been caught in function '_callTestMethod', process 'MainProcess' (1613), thread 'MainThread' (140084552664128):
+Traceback (most recent call last):
+
+  File "/home/mirage/Visualization-Tool-For-CBMC/src/test/test_JsonTreeviewer.py", line 58, in <module>
+    unittest.main()
+    │        └ <class 'unittest.main.TestProgram'>
+    └ <module 'unittest' from '/home/mirage/miniconda3/lib/python3.10/unittest/__init__.py'>
+
+  File "/home/mirage/miniconda3/lib/python3.10/unittest/main.py", line 101, in __init__
+    self.runTests()
+    │    └ <function TestProgram.runTests at 0x7f67f4a43910>
+    └ <unittest.main.TestProgram object at 0x7f67f2935390>
+  File "/home/mirage/miniconda3/lib/python3.10/unittest/main.py", line 271, in runTests
+    self.result = testRunner.run(self.test)
+    │             │          │   │    └ <unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[<__main__.TestTreeViewer testMethod=test_initOuterKeyDict>]>]>
+    │             │          │   └ <unittest.main.TestProgram object at 0x7f67f2935390>
+    │             │          └ <function TextTestRunner.run at 0x7f67f4a43250>
+    │             └ <unittest.runner.TextTestRunner object at 0x7f67f2935f00>
+    └ <unittest.main.TestProgram object at 0x7f67f2935390>
+  File "/home/mirage/miniconda3/lib/python3.10/unittest/runner.py", line 184, in run
+    test(result)
+    │    └ <unittest.runner.TextTestResult run=1 errors=0 failures=0>
+    └ <unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[<__main__.TestTreeViewer testMethod=test_initOuterKeyDict>]>]>
+  File "/home/mirage/miniconda3/lib/python3.10/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           │    │    │       └ {}
+           │    │    └ (<unittest.runner.TextTestResult run=1 errors=0 failures=0>,)
+           │    └ <function TestSuite.run at 0x7f67f49f5090>
+           └ <unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[<__main__.TestTreeViewer testMethod=test_initOuterKeyDict>]>]>
+  File "/home/mirage/miniconda3/lib/python3.10/unittest/suite.py", line 122, in run
+    test(result)
+    │    └ <unittest.runner.TextTestResult run=1 errors=0 failures=0>
+    └ <unittest.suite.TestSuite tests=[<__main__.TestTreeViewer testMethod=test_initOuterKeyDict>]>
+  File "/home/mirage/miniconda3/lib/python3.10/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           │    │    │       └ {}
+           │    │    └ (<unittest.runner.TextTestResult run=1 errors=0 failures=0>,)
+           │    └ <function TestSuite.run at 0x7f67f49f5090>
+           └ <unittest.suite.TestSuite tests=[<__main__.TestTreeViewer testMethod=test_initOuterKeyDict>]>
+  File "/home/mirage/miniconda3/lib/python3.10/unittest/suite.py", line 122, in run
+    test(result)
+    │    └ <unittest.runner.TextTestResult run=1 errors=0 failures=0>
+    └ <__main__.TestTreeViewer testMethod=test_initOuterKeyDict>
+  File "/home/mirage/miniconda3/lib/python3.10/unittest/case.py", line 650, in __call__
+    return self.run(*args, **kwds)
+           │    │    │       └ {}
+           │    │    └ (<unittest.runner.TextTestResult run=1 errors=0 failures=0>,)
+           │    └ <function TestCase.run at 0x7f67f49e9cf0>
+           └ <__main__.TestTreeViewer testMethod=test_initOuterKeyDict>
+  File "/home/mirage/miniconda3/lib/python3.10/unittest/case.py", line 591, in run
+    self._callTestMethod(testMethod)
+    │    │               └ <bound method TestTreeViewer.test_initOuterKeyDict of <__main__.TestTreeViewer testMethod=test_initOuterKeyDict>>
+    │    └ <function TestCase._callTestMethod at 0x7f67f49e9b40>
+    └ <__main__.TestTreeViewer testMethod=test_initOuterKeyDict>
+> File "/home/mirage/miniconda3/lib/python3.10/unittest/case.py", line 549, in _callTestMethod
+    method()
+    └ <bound method TestTreeViewer.test_initOuterKeyDict of <__main__.TestTreeViewer testMethod=test_initOuterKeyDict>>
+
+  File "/home/mirage/Visualization-Tool-For-CBMC/src/test/test_JsonTreeviewer.py", line 36, in test_initOuterKeyDict
+    self.assertEqual(ans_2,tree.OutKeyDict)
+    │    │           │     │    └ {'apple': [1, 2, 3], 'banana': [1, 2, 3], 'cherry': [1, 2], 'orange': [1, 2, 3, 4, 5]}
+    │    │           │     └ <JsonViwer.TreeViewer.TreeViewer object at 0x7f67f291c790>
+    │    │           └ {'orange': [1, 2, 3, 4, 5]}
+    │    └ <function TestCase.assertEqual at 0x7f67f49ea5f0>
+    └ <__main__.TestTreeViewer testMethod=test_initOuterKeyDict>
+
+  File "/home/mirage/miniconda3/lib/python3.10/unittest/case.py", line 845, in assertEqual
+    assertion_func(first, second, msg=msg)
+    │              │      │           └ None
+    │              │      └ {'apple': [1, 2, 3], 'banana': [1, 2, 3], 'cherry': [1, 2], 'orange': [1, 2, 3, 4, 5]}
+    │              └ {'orange': [1, 2, 3, 4, 5]}
+    └ <bound method TestCase.assertDictEqual of <__main__.TestTreeViewer testMethod=test_initOuterKeyDict>>
+  File "/home/mirage/miniconda3/lib/python3.10/unittest/case.py", line 1144, in assertDictEqual
+    self.fail(self._formatMessage(msg, standardMsg))
+    │    │    │    │              │    └ "{'orange': [1, 2, 3, 4, 5]} != {'apple': [1, 2, 3], 'banana': [1, 2, 3], '[38 chars], 5]}\n+ {'apple': [1, 2, 3],\n+  'banan...
+    │    │    │    │              └ None
+    │    │    │    └ <function TestCase._formatMessage at 0x7f67f49ea200>
+    │    │    └ <__main__.TestTreeViewer testMethod=test_initOuterKeyDict>
+    │    └ <function TestCase.fail at 0x7f67f49ea050>
+    └ <__main__.TestTreeViewer testMethod=test_initOuterKeyDict>
+  File "/home/mirage/miniconda3/lib/python3.10/unittest/case.py", line 675, in fail
+    raise self.failureException(msg)
+          │    │                └ "{'orange': [1, 2, 3, 4, 5]} != {'apple': [1, 2, 3], 'banana': [1, 2, 3], '[38 chars], 5]}\n+ {'apple': [1, 2, 3],\n+  'banan...
+          │    └ <class 'AssertionError'>
+          └ <__main__.TestTreeViewer testMethod=test_initOuterKeyDict>
+
+AssertionError: {'orange': [1, 2, 3, 4, 5]} != {'apple': [1, 2, 3], 'banana': [1, 2, 3], '[38 chars], 5]}
++ {'apple': [1, 2, 3],
++  'banana': [1, 2, 3],
++  'cherry': [1, 2],
+- {'orange': [1, 2, 3, 4, 5]}
+? ^
+
++  'orange': [1, 2, 3, 4, 5]}
+? ^
+

@@ -8,7 +8,6 @@ class TreeViewer(QTreeWidget):
         self.foundItems = []  # List to keep track of found items
         self.currentIndex = 0  # Index to keep track of current selected item
         self.insertOuterKeys=[]
-        self.OutKeyDict={}
     def search(self, query,order=None):
         if not self.foundItems or self.foundItems[0].text(0) != query:
             # Clear previous search results if new search query
@@ -65,6 +64,7 @@ class TreeViewer(QTreeWidget):
     #  set order for each key in the outer key lists
 
     def initOuterKeyDict(self):
+        self.OutKeyDict={}
         if self.insertOuterKeys:
             for key in self.insertOuterKeys:
                 self.OutKeyDict[key]=[]

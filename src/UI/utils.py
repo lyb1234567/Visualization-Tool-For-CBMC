@@ -31,3 +31,4 @@ def wait_for_file(file_path):
     while not os.path.exists(file_path) or os.path.getsize(file_path) == 0:
         time.sleep(0.1)
     return
+

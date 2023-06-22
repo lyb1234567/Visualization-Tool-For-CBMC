@@ -1,0 +1,38 @@
+[{
+    "name": "John",
+    "age": 30,
+    "cars": [
+      {
+        "model": "Ford",
+        "year": 2020
+      },
+      {
+        "model": "BMW",
+        "year": 2021
+      }
+    ],
+    "favorites": {
+      "color": "blue",
+      "sport": "soccer"
+    }
+  },
+  {
+    "name": "Mike",
+    "age": 40,
+    "cars": [
+      {
+        "model": "Ford",
+        "year": 2020
+      },
+      {
+        "model": "BMW",
+        "year": 2021
+      }
+    ],
+    "favorites": {
+      "color": "blue",
+      "sport": "soccer"
+    }
+  }
+]
+  
