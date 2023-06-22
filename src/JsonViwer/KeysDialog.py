@@ -1,10 +1,14 @@
 from PyQt5.QtWidgets import QDialog,QVBoxLayout,QListWidgetItem,QListWidget
+import copy
 class KeyListDialog(QDialog):
-    def __init__(self, keys, parent=None):
+    def __init__(self, keys,dict=None,parent=None):
         super(KeyListDialog, self).__init__(parent)
 
         self.keys = keys
+
         self.selected_key = None
+        self.selected_keyorder=None
+        self.dict=dict
 
         self.initUI()
 
@@ -12,8 +16,10 @@ class KeyListDialog(QDialog):
         self.layout = QVBoxLayout(self)
 
         self.listWidget = QListWidget(self)
+        temp=copy.deepcopy(self.dict)
         for key in self.keys:
-            QListWidgetItem(key, self.listWidget)
+            QListWidgetItem(key+"_"+str(temp[key][0]), self.listWidget)
+            temp[key].pop(0)
 
         self.listWidget.itemClicked.connect(self.onItemClicked)
 
@@ -24,4 +30,7 @@ class KeyListDialog(QDialog):
 
     def onItemClicked(self, item):
         self.selected_key = item.text()
+        temp=self.selected_key.split('_')
+        self.selected_key=temp[0]
+        self.selected_keyorder=temp[1]
         self.accept()

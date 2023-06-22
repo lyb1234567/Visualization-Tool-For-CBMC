@@ -100,11 +100,13 @@ class MainWindow(QMainWindow):
             QMessageBox.warning(self,"Warning", "There is no file loaded")
         if current=="Tree" and self.checkLoad:
             OuterKeys=self.treeViewer.insertOuterKeys
-            dialog = KeyListDialog(OuterKeys, self)
+            OuterDict=self.treeViewer.OutKeyDict
+            dialog = KeyListDialog(OuterKeys, OuterDict,self)
             result = dialog.exec_()
             if result == QDialog.Accepted:
               searchQuery = dialog.selected_key
-              self.treeViewer.search(searchQuery)
+              searchQueryOrder=int(dialog.selected_keyorder)-1
+              self.treeViewer.search(searchQuery,searchQueryOrder)
         elif current=="Text" and self.checkLoad:
             QMessageBox.warning(self,"Warning", "Search only works for Tree Viewer !!!")
 

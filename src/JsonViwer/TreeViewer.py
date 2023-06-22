@@ -8,17 +8,19 @@ class TreeViewer(QTreeWidget):
         self.foundItems = []  # List to keep track of found items
         self.currentIndex = 0  # Index to keep track of current selected item
         self.insertOuterKeys=[]
-    def search(self, query):
+        self.OutKeyDict={}
+    def search(self, query,order=None):
         if not self.foundItems or self.foundItems[0].text(0) != query:
             # Clear previous search results if new search query
             self.foundItems.clear()
-            self.currentIndex = 0
             self._search(query, self.invisibleRootItem())
 
         if self.foundItems:
             # If matches are found, select the current item
-            self.setCurrentItem(self.foundItems[self.currentIndex])
-            self.currentIndex = (self.currentIndex + 1) % len(self.foundItems)
+            if order:
+                self.setCurrentItem(self.foundItems[order])
+            else:
+                self.setCurrentItem(self.foundItems[0])
         else:
             # If no matches found, clear the selection
             self.setCurrentItem(None)
@@ -38,6 +40,7 @@ class TreeViewer(QTreeWidget):
                     if isinstance(element, dict):
                        for key in element.keys():
                            self.insertOuterKeys.append(key)
+                self.initOuterKeyDict()
                 root_item = QTreeWidgetItem(self)
                 root_item.setText(0, f'Array[{len(json_obj)}]')
             else:
@@ -59,3 +62,16 @@ class TreeViewer(QTreeWidget):
             child = QTreeWidgetItem()
             child.setText(1, str(json_obj))
             root_item.addChild(child)
+    #  set order for each key in the outer key lists
+
+    def initOuterKeyDict(self):
+        if self.insertOuterKeys:
+            for key in self.insertOuterKeys:
+                self.OutKeyDict[key]=[]
+            for key in self.insertOuterKeys:
+                if not self.OutKeyDict[key]:
+                    self.OutKeyDict[key].append(1)
+                else:
+                    temp=self.OutKeyDict[key][-1]+1
+                    self.OutKeyDict[key].append(temp)
+            
