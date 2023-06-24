@@ -30,22 +30,26 @@ class MainWindow(QMainWindow):
         # Create menus
         self.fileMenu = QMenu("File", self)
         self.searchMenu = QMenu("Search", self)  # Placeholder for your custom menu
-
+        self.ViewMenu=QMenu("View")
         # Create actions
         self.loadAction = QAction("Load JSON", self)
         self.loadAction.triggered.connect(self.loadJSON)
     
         self.searchByKeyAction = QAction("Search By Key", self)  # Placeholder for your custom action
         self.searchByKeyAction.triggered.connect(self.search)
-        
+
+        self.ViewFailureAction=QAction("View Failure Action")
+        self.ViewFailureAction.triggered.connect(self.viewfailure)
+
         self.formatdict={}
         # Add actions to menus
         self.fileMenu.addAction(self.loadAction)
         self.searchMenu.addAction(self.searchByKeyAction)
-
+        self.ViewMenu.addAction(self.ViewFailureAction)
         # Add menus to menuBar
         self.menuBar.addMenu(self.fileMenu)
         self.menuBar.addMenu(self.searchMenu)
+        self.menuBar.addMenu(self.ViewMenu)
 
         # Set menuBar to the mainWindow
         self.setMenuBar(self.menuBar)
@@ -78,6 +82,14 @@ class MainWindow(QMainWindow):
 
         self.setCentralWidget(self.viewWidget)
 
+    def viewfailure(self):
+        current=self.formatdict[self.formatComboBox.currentIndex()]
+        if not self.checkLoad:
+            QMessageBox.warning(self,"Warning", "There is no file loaded")
+        if current=="Tree" and self.checkLoad:
+            self.treeViewer.viewFailure()
+        elif current=="Text" and self.checkLoad:
+            QMessageBox.warning(self,"Warning", "Viewing failure only works for Tree !!!")
     def switchView(self):
         self.stackedLayout.setCurrentIndex(self.formatComboBox.currentIndex())
 
@@ -108,7 +120,7 @@ class MainWindow(QMainWindow):
             if result == QDialog.Accepted:
               searchQuery = dialog.selected_key
               searchQueryOrder=int(dialog.selected_keyorder)-1
-              self.treeViewer.search(searchQuery,searchQueryOrder)
+              self.treeViewer.search(searchQuery,False,searchQueryOrder)
         elif current=="Text" and self.checkLoad:
             QMessageBox.warning(self,"Warning", "Search only works for Tree Viewer !!!")
 
