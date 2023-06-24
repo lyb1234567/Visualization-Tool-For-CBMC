@@ -87,7 +87,10 @@ class MainWindow(QMainWindow):
         if not self.checkLoad:
             QMessageBox.warning(self,"Warning", "There is no file loaded")
         if current=="Tree" and self.checkLoad:
-            self.treeViewer.viewFailure()
+            if self.treeViewer.FailureList:
+                self.treeViewer.viewFailure()
+            else:
+                QMessageBox.warning(self,"Warning", "Verification Successful!!")
         elif current=="Text" and self.checkLoad:
             QMessageBox.warning(self,"Warning", "Viewing failure only works for Tree !!!")
     def switchView(self):
