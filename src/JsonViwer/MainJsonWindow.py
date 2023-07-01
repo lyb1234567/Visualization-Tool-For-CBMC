@@ -81,7 +81,6 @@ class MainWindow(QMainWindow):
         self.viewLayout.addWidget(layoutWidget)
 
         self.setCentralWidget(self.viewWidget)
-
     def viewfailure(self):
         current=self.formatdict[self.formatComboBox.currentIndex()]
         if not self.checkLoad:
@@ -90,9 +89,9 @@ class MainWindow(QMainWindow):
             if self.treeViewer.FailureList:
                 self.treeViewer.viewFailure()
             else:
-                QMessageBox.warning(self,"Warning", "Verification Successful!!")
+                QMessageBox.information (self,"Success", "Verification Successful!!")
         elif current=="Text" and self.checkLoad:
-            QMessageBox.warning(self,"Warning", "Viewing failure only works for Tree !!!")
+            QMessageBox.critical(self,"Failure", "Viewing failure only works for Tree !!!")
     def switchView(self):
         self.stackedLayout.setCurrentIndex(self.formatComboBox.currentIndex())
 
@@ -108,9 +107,17 @@ class MainWindow(QMainWindow):
                 json_content = json.load(file)
                 self.treeViewer.clear()
                 self.treeViewer.foundItems=[]
+                self.treeViewer.FailureList=[]
+                self.treeViewer.SuccessList=[]
+                self.treeViewer.FailureSourceList=[]
                 self.treeViewer.display(json_content)
                 self.textViewer.display(json_content)
                 self.filePath=None
+                if not self.treeViewer.FailureList :
+                    QMessageBox.information(self,"Success", "Verification Successful")
+                else:
+                    self.treeViewer.ExpandAllFailure()
+                    QMessageBox.critical(self,"Failure", "{0} failed cases!!".format(len(self.treeViewer.FailureList)))
     def search(self):
         current=self.formatdict[self.formatComboBox.currentIndex()]
         if not self.checkLoad:

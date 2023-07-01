@@ -108,6 +108,7 @@ class MainWindow(QMainWindow):
         if not self.jsonwindow:
             self.jsonwindow=jsonWindow()
         self.jsonwindow.show()
+        
     def setupExplorer(self):
         explorerWidget = ExplorerWidget(self)
         dockWidget = self.createDockWidget('Explorer', explorerWidget)

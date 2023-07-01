@@ -5,7 +5,7 @@ sys.path.append(root_folder)
 from PyQt5.QtWidgets import QTreeWidget,QTreeWidgetItem,QMenu,QAction,QDialog
 from JsonViwer.FailureKeyDialog import FailureKeyListDialog
 class TreeViewer(QTreeWidget):
-    def __init__(self):
+    def __init__(self,window=None):
         super().__init__()
         self.setColumnCount(2)
         self.setHeaderLabels(['Key', 'Value'])
@@ -14,9 +14,10 @@ class TreeViewer(QTreeWidget):
         self.insertOuterKeys=[]
         self.FailureList=[]
         self.SuccessList=[]
+        self.FailureSourceList=[]
+        self.window=window
     def contextMenuEvent(self, event):
         contextMenu = QMenu(self)
-
         # Determine the currently clicked item
         currentItem = self.currentItem()
 
@@ -55,7 +56,8 @@ class TreeViewer(QTreeWidget):
             if order:
                 self.setCurrentItem(self.foundItems[order])
             else:
-                self.setCurrentItem(self.foundItems[0])
+                for i in range(len(self.foundItems)):
+                    self.setCurrentItem(self.foundItems[i])
             found=True
         else:
             # If no matches found, clear the selection
@@ -127,4 +129,6 @@ class TreeViewer(QTreeWidget):
                 else:
                     temp=self.OutKeyDict[key][-1]+1
                     self.OutKeyDict[key].append(temp)
+    def ExpandAllFailure(self):
+        self.search("status",True)
             
