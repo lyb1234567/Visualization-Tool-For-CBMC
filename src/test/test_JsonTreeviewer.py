@@ -1,3 +1,4 @@
+
 import os
 import sys
 root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -57,17 +58,24 @@ class TestTreeViewer(unittest.TestCase):
     def test_search(self):
         self.tree_viewer = TreeViewer()
         self.tree_viewer.display(self.data)
-        self.tree_viewer.search('name')
+        self.tree_viewer.search('name',False)
         self.assertEqual(self.tree_viewer.foundItems[0].text(0), 'name')
         self.assertEqual(self.tree_viewer.foundItems[0].child(0).text(1), 'John')
         self.assertEqual(self.tree_viewer.foundItems[1].text(0), 'name')
         self.assertEqual(self.tree_viewer.foundItems[1].child(0).text(1), 'Mike')
 
-        self.tree_viewer.search('age')
+        self.tree_viewer.search('age',False)
         self.assertEqual(self.tree_viewer.foundItems[0].text(0), 'age')
         self.assertEqual(self.tree_viewer.foundItems[0].child(0).text(1),'30')
         self.assertEqual(self.tree_viewer.foundItems[1].text(0), 'age')
         self.assertEqual(self.tree_viewer.foundItems[1].child(0).text(1),'40')
+
+        self.tree_viewer.search('status',False)
+        self.assertEqual(self.tree_viewer.foundItems[0].text(0), 'status')
+        self.assertEqual(self.tree_viewer.foundItems[0].child(0).text(1),'FAILURE')
+        self.assertEqual(self.tree_viewer.foundItems[1].text(0), 'status')
+        self.assertEqual(self.tree_viewer.foundItems[1].child(0).text(1),'SUCCESS')
+           
 
 logger.add("/home/mirage/Visualization-Tool-For-CBMC/src/test/log/Test_JsonTreeViwer.log")
 if __name__ == '__main__':

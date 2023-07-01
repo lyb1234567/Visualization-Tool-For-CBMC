@@ -1,8 +1,15 @@
+'''
+TODO
+1. viewSourceFile() 
+2. getSourceFile()
+3. action at leftclick
+'''
 import os
 import sys
 root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(root_folder)
 from PyQt5.QtWidgets import QTreeWidget,QTreeWidgetItem,QMenu,QAction,QDialog
+from PyQt5.QtCore import Qt
 from JsonViwer.FailureKeyDialog import FailureKeyListDialog
 class TreeViewer(QTreeWidget):
     def __init__(self,window=None):
@@ -16,24 +23,37 @@ class TreeViewer(QTreeWidget):
         self.SuccessList=[]
         self.FailureSourceList=[]
         self.window=window
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            # You can get the item under the cursor with the itemAt method
+            item = self.itemAt(event.pos())
+            if item:
+                # Do something with the item...TODO
+                pass
+        super().mousePressEvent(event)
     def contextMenuEvent(self, event):
         contextMenu = QMenu(self)
         # Determine the currently clicked item
-        currentItem = self.currentItem()
-
+        currentItem = self.itemAt(event.pos())
+        if not currentItem:
+            pass
         # Check the text of the current item and adjust the context menu accordingly
-        if currentItem.text(0) == 'result':
-            failureAction = QAction("View failure", self)
-            failureAction.triggered.connect(self.viewFailure)
-            contextMenu.addAction(failureAction)
+        if currentItem.text(0):
+            if currentItem.text(0) == 'result':
+                failureAction = QAction("View failure", self)
+                failureAction.triggered.connect(self.viewFailure)
+                contextMenu.addAction(failureAction)
         else:
-            nodeAction = QAction("View node", self)
-            nodeAction.triggered.connect(self.viewNode)
-            contextMenu.addAction(nodeAction)
-
+            if currentItem.text(1):
+                if currentItem.text(1) == 'FAILURE':
+                    nodeAction = QAction("View Source File", self)
+                    nodeAction.triggered.connect(self.viewSourceFile)
+                    contextMenu.addAction(nodeAction)
         # show the context menu
+
         contextMenu.exec_(event.globalPos())     
     def viewFailure(self):
+        print(self.FailureList)
         seachFailure=True
         failureDialog=FailureKeyListDialog(self.FailureList)
         result = failureDialog.exec_()
@@ -41,9 +61,12 @@ class TreeViewer(QTreeWidget):
             query=failureDialog.selected_key
             order=int(failureDialog.selected_keyorder)
             self.search(query,seachFailure,order)
-
-    def viewNode(self):
-        pass
+    def viewSourceFile(self):
+        #  viewer sourcefile TODO
+         raise NotImplementedError("View Source File not implemented!!")
+    def getSourceFile(self):
+        #  viewer sourcefile TODO
+         raise NotImplementedError("getSourceFile not implemented!!")
     def search(self, query,searchFailure,order=None):
         found=False
         if not self.foundItems or self.foundItems[0].text(0) != query:
@@ -73,15 +96,21 @@ class TreeViewer(QTreeWidget):
                 child.setExpanded(True)
             elif query==key and ifFailure:
                 if child.child(0).text(1)=="FAILURE":
-                    child.setExpanded(True)
                     parent=child.parent()
                     for i  in range(parent.childCount()):
                         sibling=parent.child(i)
                         if sibling.text(0)=="description":
                             sibling.setExpanded(True)
+                        if sibling.text(0)=="sourceLocation":
+                            source_dict={}
+                            for j in range(sibling.childCount()):
+                                sibling_child=sibling.child(j)
+                                source_dict[sibling_child.text(0)]=sibling_child.child(0).text(1)
+                                self.FailureSourceList.append(source_dict)
                     self.foundItems.append(child)
                     child.setExpanded(True)
             self._search(query, child,ifFailure)  # Recursive call for child items
+            
     def display(self, json_obj, root_item=None):
         if root_item is None:
             if isinstance(json_obj, list):

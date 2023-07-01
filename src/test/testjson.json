@@ -11,6 +11,7 @@
         "year": 2021
       }
     ],
+    "status": "FAILURE",
     "favorites": {
       "color": "blue",
       "sport": "soccer"
@@ -29,6 +30,7 @@
         "year": 2021
       }
     ],
+    "status": "SUCCESS",
     "favorites": {
       "color": "blue",
       "sport": "soccer"
