@@ -53,7 +53,7 @@ class TreeViewer(QTreeWidget):
 
         if self.foundItems:
             # If matches are found, select the current item
-            if order:
+            if order is not None :
                 self.setCurrentItem(self.foundItems[order])
             else:
                 for i in range(len(self.foundItems)):
@@ -73,6 +73,7 @@ class TreeViewer(QTreeWidget):
                 child.setExpanded(True)
             elif query==key and ifFailure:
                 if child.child(0).text(1)=="FAILURE":
+                    child.setExpanded(True)
                     parent=child.parent()
                     for i  in range(parent.childCount()):
                         sibling=parent.child(i)
