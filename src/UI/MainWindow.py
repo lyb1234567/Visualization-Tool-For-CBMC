@@ -106,8 +106,7 @@ class MainWindow(QMainWindow):
     
     def loadJson(self):
         if not self.jsonwindow:
-            self.jsonwindow=jsonWindow()
-            self.jsonwindow.deleteLater()
+            self.jsonwindow=jsonWindow(editor_window=self)
         self.jsonwindow.show()
         
     def setupExplorer(self):
@@ -121,18 +120,19 @@ class MainWindow(QMainWindow):
         dockWidget.setWidget(widget)
         return dockWidget
 
-    def openFile(self, file_path=None):
+    def openFile(self, file_path=None,line_number=None):
         if not file_path:
             options = QFileDialog.Options()
             options |= QFileDialog.DontUseNativeDialog
             file_path, _ = QFileDialog.getOpenFileName(self, 'Open File', '', 'C Files (*.c);;JSON Files (*.json)', options=options)
             if not file_path:
                 return
-
         textEdit = TextEdit(self)
         with open(file_path, 'r') as f:
             fileData = f.read()
         textEdit.setText(fileData)
+        if line_number:
+            textEdit.highlight_line(int(line_number))
         textEdit.fileName = file_path
         temp=file_path
         fileName = extract_file_name(file_path)
@@ -219,7 +219,7 @@ class MainWindow(QMainWindow):
             jsonfile="{0}.json".format(extract_file_name_without_extension(tab.fileName))
             if (os.path.exists(jsonfile)):
                 if not self.jsonwindow or  self.jsonFileChange:
-                    self.jsonwindow=jsonWindow(jsonfile)
+                    self.jsonwindow=jsonWindow(jsonfile,editor_window=self)
                     self.jsonFileChange=True
                     self.jsonwindow.show()
             print_result(result,self,command)
@@ -257,7 +257,7 @@ class MainWindow(QMainWindow):
         wait_for_file(jsonfile)
         if os.path.exists(jsonfile):
             if not self.jsonwindow or self.jsonFileChange:
-                self.jsonwindow=jsonWindow(jsonfile)
+                self.jsonwindow=jsonWindow(jsonfile,editor_window=self)
                 self.jsonFileChange=True
                 self.jsonwindow.show() 
         

@@ -12,9 +12,10 @@ from JsonViwer.TreeViewer import TreeViewer
 from JsonViwer.TextViewer import TextViewer
 from JsonViwer.KeysDialog import KeyListDialog
 class MainWindow(QMainWindow):
-    def __init__(self,filePath=None):
+    def __init__(self,filePath=None,editor_window=None):
         super().__init__()
         self.filePath=filePath
+        self.editor_window=editor_window
         self.initUI()
         if filePath:
             self.loadJSON()
@@ -54,7 +55,7 @@ class MainWindow(QMainWindow):
         # Set menuBar to the mainWindow
         self.setMenuBar(self.menuBar)
 
-        self.treeViewer = TreeViewer()
+        self.treeViewer = TreeViewer(self.editor_window)
         self.textViewer = TextViewer()
 
         self.stackedLayout = QStackedLayout()

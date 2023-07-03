@@ -1,9 +1,6 @@
 '''
 TODO
-1. viewSourceFile() 
-2. getSourceFile()
-3. action at leftclick
-
+1. action at leftclick
 '''
 import os
 import sys
@@ -13,7 +10,7 @@ from PyQt5.QtWidgets import QTreeWidget,QTreeWidgetItem,QMenu,QAction,QDialog
 from PyQt5.QtCore import Qt
 from JsonViwer.FailureKeyDialog import FailureKeyListDialog
 class TreeViewer(QTreeWidget):
-    def __init__(self,window=None):
+    def __init__(self,editor_window=None):
         super().__init__()
         self.setColumnCount(2)
         self.setHeaderLabels(['Key', 'Value'])
@@ -23,14 +20,17 @@ class TreeViewer(QTreeWidget):
         self.FailureList=[]
         self.SuccessList=[]
         self.FailureSourceList=[]
-        self.window=window
+        self.FailureDict={}
+        self.editor_window=editor_window
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
             # You can get the item under the cursor with the itemAt method
             item = self.itemAt(event.pos())
             if item:
+                if item.text(1):
+                    if item.text(1)=="FAILURE":
+                        pass
                 # Do something with the item...TODO
-                pass
         super().mousePressEvent(event)
     def contextMenuEvent(self, event):
         contextMenu = QMenu(self)
@@ -47,8 +47,10 @@ class TreeViewer(QTreeWidget):
         else:
             if currentItem.text(1):
                 if currentItem.text(1) == 'FAILURE':
+                    filename=self.getSourceFile(id(currentItem))['file']
+                    filenumber=self.getSourceFile(id(currentItem))['line']
                     nodeAction = QAction("View Source File", self)
-                    nodeAction.triggered.connect(self.viewSourceFile)
+                    nodeAction.triggered.connect(lambda: self.viewSourceFile(filename,filenumber))
                     contextMenu.addAction(nodeAction)
         # show the context menu
 
@@ -62,12 +64,14 @@ class TreeViewer(QTreeWidget):
             query=failureDialog.selected_key
             order=int(failureDialog.selected_keyorder)
             self.search(query,seachFailure,order)
-    def viewSourceFile(self):
+    def viewSourceFile(self,filename,filenumber):
         #  viewer sourcefile TODO
-         raise NotImplementedError("View Source File not implemented!!")
-    def getSourceFile(self):
+        self.editor_window.openFile(filename,filenumber)
+    def getSourceFile(self,Failure_id):
         #  viewer sourcefile TODO
-         raise NotImplementedError("getSourceFile not implemented!!")
+         Failure_index= self.FailureDict[Failure_id]
+         Sourcedict=self.FailureSourceList[Failure_index-1]
+         return Sourcedict
     def search(self, query,searchFailure,order=None):
         found=False
         if not self.foundItems or self.foundItems[0].text(0) != query:
@@ -107,7 +111,7 @@ class TreeViewer(QTreeWidget):
                             for j in range(sibling.childCount()):
                                 sibling_child=sibling.child(j)
                                 source_dict[sibling_child.text(0)]=sibling_child.child(0).text(1)
-                                self.FailureSourceList.append(source_dict)
+                            self.FailureSourceList.append(source_dict)
                     self.foundItems.append(child)
                     child.setExpanded(True)
             self._search(query, child,ifFailure)  # Recursive call for child items
@@ -138,15 +142,17 @@ class TreeViewer(QTreeWidget):
                 root_item.addChild(child)
                 self.display(value, child)
         else:
-            if json_obj=="FAILURE":
-                if not self.FailureList:
-                        self.FailureList.append(1)
-                else:
-                        temp=self.FailureList[-1]+1
-                        self.FailureList.append(temp)
             child = QTreeWidgetItem()
             child.setText(1, str(json_obj))
             root_item.addChild(child)
+            if json_obj=="FAILURE":
+                if not self.FailureList:
+                        self.FailureDict[id(child)]=1
+                        self.FailureList.append(1)
+                else:
+                        temp=self.FailureList[-1]+1
+                        self.FailureDict[id(child)]=temp
+                        self.FailureList.append(temp)
     #  set order for each key in the outer key lists
 
     def initOuterKeyDict(self):
