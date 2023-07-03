@@ -107,6 +107,7 @@ class MainWindow(QMainWindow):
     def loadJson(self):
         if not self.jsonwindow:
             self.jsonwindow=jsonWindow()
+            self.jsonwindow.deleteLater()
         self.jsonwindow.show()
         
     def setupExplorer(self):
@@ -242,7 +243,6 @@ class MainWindow(QMainWindow):
            for file in selected_files:
                file=extract_file_name(file)
                combined_file_name=combined_file_name+file+" "
-        # TODO: implement the functions of running multiple files in cbmc
         build_goto_file=None
         generate_json_file=None
         outputFile, ok = QInputDialog.getText(self, 'Output file', 'Enter output file name')

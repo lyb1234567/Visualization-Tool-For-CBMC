@@ -63,8 +63,7 @@ class ExplorerWidget(QWidget):
 
     def loadjson(self,index):
         filePath=self.model.filePath(index)
-        if not self.jsonwindow:
-            self.jsonwindow=jsonWindow(filePath)
+        self.jsonwindow=jsonWindow(filePath)
         self.jsonwindow.show()
         
         

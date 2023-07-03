@@ -81,6 +81,9 @@ class MainWindow(QMainWindow):
         self.viewLayout.addWidget(layoutWidget)
 
         self.setCentralWidget(self.viewWidget)
+    def closeEvent(self, event):
+        self.checkLoad = False
+        event.accept()  # let the window close
     def viewfailure(self):
         current=self.formatdict[self.formatComboBox.currentIndex()]
         if not self.checkLoad:
