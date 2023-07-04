@@ -1,27 +1,51 @@
 '''
 TODO
-1. action at leftclick
+1. Visualization of trace trees
+2. user should be able to see the counterexamples by hovering around the highlighted code
 '''
 import os
 import sys
+import json
 root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(root_folder)
 from PyQt5.QtWidgets import QTreeWidget,QTreeWidgetItem,QMenu,QAction,QDialog
 from PyQt5.QtCore import Qt
 from JsonViwer.FailureKeyDialog import FailureKeyListDialog
+from UI.utils import extract_file_name_without_extension
 class TreeViewer(QTreeWidget):
-    def __init__(self,editor_window=None):
+    def __init__(self,editor_window=None,json_window=None,filePath=None):
         super().__init__()
         self.setColumnCount(2)
         self.setHeaderLabels(['Key', 'Value'])
+        self.filePath=filePath
         self.foundItems = []  # List to keep track of found items
         self.currentIndex = 0  # Index to keep track of current selected item
         self.insertOuterKeys=[]
         self.FailureList=[]
         self.SuccessList=[]
         self.FailureSourceList=[]
+        self.FailureReasonDict={}
+        self.FailureReasonList=[]
+        self.variableDict={}
         self.FailureDict={}
         self.editor_window=editor_window
+        self.json_window=json_window
+        self.trace_num=0
+    
+    def setFilePath(self,filePath):
+        self.filePath=filePath
+    def clear(self):
+        super().clear()
+        self.foundItems.clear()  # Clear foundItems list
+        self.FailureDict.clear()
+        self.FailureSourceList.clear()
+        self.variableDict.clear()
+        self.FailureList.clear()
+        self.insertOuterKeys.clear()
+        self.SuccessList.clear()
+        self.trace_num=0
+        self.FailureReasonDict.clear()
+        self.FailureReasonList.clear()
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
             # You can get the item under the cursor with the itemAt method
@@ -48,9 +72,9 @@ class TreeViewer(QTreeWidget):
             if currentItem.text(1):
                 if currentItem.text(1) == 'FAILURE':
                     filename=self.getSourceFile(id(currentItem))['file']
-                    filenumber=self.getSourceFile(id(currentItem))['line']
+                    linenumber=self.getSourceFile(id(currentItem))['line']
                     nodeAction = QAction("View Source File", self)
-                    nodeAction.triggered.connect(lambda: self.viewSourceFile(filename,filenumber))
+                    nodeAction.triggered.connect(lambda: self.viewSourceFile(filename,linenumber))
                     contextMenu.addAction(nodeAction)
         # show the context menu
 
@@ -64,9 +88,16 @@ class TreeViewer(QTreeWidget):
             query=failureDialog.selected_key
             order=int(failureDialog.selected_keyorder)
             self.search(query,seachFailure,order)
-    def viewSourceFile(self,filename,filenumber):
+    def viewtraces(self):
+        trace_file=extract_file_name_without_extension(self.filePath)+"_trace.json"
+        self.json_window.filePath=trace_file
+        self.json_window.loadJSON()
+        print('reason:',self.FailureReasonDict)
+    def viewcounterexamples(self): 
+        pass
+    def viewSourceFile(self,filename,linenumber):
         #  viewer sourcefile TODO
-        self.editor_window.openFile(filename,filenumber)
+        self.editor_window.openFile(filename,linenumber)
     def getSourceFile(self,Failure_id):
         #  viewer sourcefile TODO
          Failure_index= self.FailureDict[Failure_id]
@@ -134,6 +165,20 @@ class TreeViewer(QTreeWidget):
                 child = QTreeWidgetItem()
                 child.setText(0, str(key))
                 root_item.addChild(child)
+                if key == "trace":  # If the key is "trace", write the object to a JSON file
+                    self.trace_num=self.trace_num+1
+                    if self.trace_num==1:
+                        file_name = os.path.join(os.getcwd(), f"{extract_file_name_without_extension(self.json_window.filePath)}_trace.json")
+                        with open(file_name, 'w') as f:
+                            json.dump(json_obj[key], f, indent=4)
+                if key=="reason":
+                    if not self.FailureReasonList:
+                        self.FailureReasonList.append(1)
+                        self.FailureReasonDict[id(child)]=1
+                    else:
+                        temp=self.FailureReasonList[-1]+1
+                        self.FailureReasonDict[id(child)]=temp
+                        self.FailureReasonList.append(temp)
                 self.display(json_obj[key], child)
         elif isinstance(json_obj, list):
             for i, value in enumerate(json_obj):
@@ -168,4 +213,6 @@ class TreeViewer(QTreeWidget):
                     self.OutKeyDict[key].append(temp)
     def ExpandAllFailure(self):
         self.search("status",True)
+    def ExpandAllCounterExamples(self):
+        pass
             

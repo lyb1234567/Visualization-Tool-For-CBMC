@@ -1,5 +1,6 @@
 import sys
 import json
+import glob
 from PyQt5.QtWidgets import (QMainWindow, QComboBox, QVBoxLayout, 
                              QWidget, QFileDialog,
                              QLabel, QStackedLayout,QHBoxLayout,QMenu,QMenuBar,QAction,QInputDialog,QLineEdit,QMessageBox,QListWidget,QListWidgetItem,QDialog)
@@ -41,12 +42,16 @@ class MainWindow(QMainWindow):
 
         self.ViewFailureAction=QAction("View Failure Action")
         self.ViewFailureAction.triggered.connect(self.viewfailure)
+        
+        self.ViewTraceAction=QAction("View traces")
+        self.ViewTraceAction.triggered.connect(self.viewtraces)
 
         self.formatdict={}
         # Add actions to menus
         self.fileMenu.addAction(self.loadAction)
         self.searchMenu.addAction(self.searchByKeyAction)
         self.ViewMenu.addAction(self.ViewFailureAction)
+        self.ViewMenu.addAction(self.ViewTraceAction)
         # Add menus to menuBar
         self.menuBar.addMenu(self.fileMenu)
         self.menuBar.addMenu(self.searchMenu)
@@ -55,7 +60,10 @@ class MainWindow(QMainWindow):
         # Set menuBar to the mainWindow
         self.setMenuBar(self.menuBar)
 
-        self.treeViewer = TreeViewer(self.editor_window)
+        if self.filePath:
+            self.treeViewer = TreeViewer(self.editor_window,self,filePath=self.filePath)
+        else:
+            self.treeViewer = TreeViewer(self.editor_window,self)
         self.textViewer = TextViewer()
 
         self.stackedLayout = QStackedLayout()
@@ -85,6 +93,14 @@ class MainWindow(QMainWindow):
     def closeEvent(self, event):
         self.checkLoad = False
         event.accept()  # let the window close
+    def viewtraces(self):
+        current=self.formatdict[self.formatComboBox.currentIndex()]
+        if not self.checkLoad:
+            QMessageBox.warning(self,"Warning", "There is no file loaded")
+        if current=="Tree" and self.checkLoad:
+            self.treeViewer.viewtraces() 
+        elif current=="Text" and self.checkLoad:
+            QMessageBox.critical(self,"Failure", "Viewing failure only works for Tree !!!")
     def viewfailure(self):
         current=self.formatdict[self.formatComboBox.currentIndex()]
         if not self.checkLoad:
@@ -98,11 +114,13 @@ class MainWindow(QMainWindow):
             QMessageBox.critical(self,"Failure", "Viewing failure only works for Tree !!!")
     def switchView(self):
         self.stackedLayout.setCurrentIndex(self.formatComboBox.currentIndex())
-
+        
     def loadJSON(self):
         options = QFileDialog.Options()
         if not self.filePath:
             fileName, _ = QFileDialog.getOpenFileName(self,"Load JSON", "","JSON Files (*.json)", options=options)
+            self.filePath=fileName
+            self.treeViewer.setFilePath(fileName)
         else:
             fileName=self.filePath
         if fileName:
@@ -110,18 +128,23 @@ class MainWindow(QMainWindow):
             with open(fileName, 'r') as file:
                 json_content = json.load(file)
                 self.treeViewer.clear()
-                self.treeViewer.foundItems=[]
-                self.treeViewer.FailureList=[]
-                self.treeViewer.SuccessList=[]
-                self.treeViewer.FailureSourceList=[]
+                self.textViewer.clear()
                 self.treeViewer.display(json_content)
                 self.textViewer.display(json_content)
                 self.filePath=None
-                if not self.treeViewer.FailureList :
-                    QMessageBox.information(self,"Success", "Verification Successful")
+                if hasattr(self, 'ViewCounterExamplesAction'):  # Check if the attribute exists
+                    self.ViewMenu.removeAction(self.ViewCounterExamplesAction)  # If it does, remove the action
+                if (fileName.endswith("trace.json")):
+                    self.ViewCounterExamplesAction=QAction("View CounterExamples")
+                    self.ViewCounterExamplesAction.triggered.connect(self.treeViewer.viewcounterexamples)
+                    self.ViewMenu.addAction(self.ViewCounterExamplesAction)
+                    self.treeViewer.ExpandAllCounterExamples()
                 else:
-                    self.treeViewer.ExpandAllFailure()
-                    QMessageBox.critical(self,"Failure", "{0} failed cases!!".format(len(self.treeViewer.FailureList)))
+                    if not self.treeViewer.FailureList :
+                        QMessageBox.information(self,"Success", "Verification Successful")
+                    else:
+                        self.treeViewer.ExpandAllFailure()
+                        QMessageBox.critical(self,"Failure", "{0} failed cases!!".format(len(self.treeViewer.FailureList)))
     def search(self):
         current=self.formatdict[self.formatComboBox.currentIndex()]
         if not self.checkLoad:

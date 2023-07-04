@@ -51,5 +51,4 @@ class TextEdit(QTextEdit):
         self.setTextCursor(cursor)
     def highlight_line(self, line_number):
         self.highlighter.highlight_line(line_number - 1)
-    
         

@@ -35,11 +35,11 @@
     "messageType": "STATUS-MESSAGE"
   },
   {
-    "messageText": "Runtime Symex: 0.00355632s",
+    "messageText": "Runtime Symex: 0.00203044s",
     "messageType": "STATUS-MESSAGE"
   },
   {
-    "messageText": "size of program expression: 98 steps",
+    "messageText": "size of program expression: 113 steps",
     "messageType": "STATUS-MESSAGE"
   },
   {
@@ -51,7 +51,7 @@
     "messageType": "STATUS-MESSAGE"
   },
   {
-    "messageText": "Runtime Postprocess Equation: 2.8734e-05s",
+    "messageText": "Runtime Postprocess Equation: 2.2572e-05s",
     "messageType": "STATUS-MESSAGE"
   },
   {
@@ -63,7 +63,7 @@
     "messageType": "STATUS-MESSAGE"
   },
   {
-    "messageText": "Runtime Convert SSA: 0.0018888s",
+    "messageText": "Runtime Convert SSA: 0.000691707s",
     "messageType": "STATUS-MESSAGE"
   },
   {
@@ -75,7 +75,7 @@
     "messageType": "STATUS-MESSAGE"
   },
   {
-    "messageText": "Runtime Post-process: 8.375e-06s",
+    "messageText": "Runtime Post-process: 5.911e-06s",
     "messageType": "STATUS-MESSAGE"
   },
   {
@@ -83,7 +83,7 @@
     "messageType": "STATUS-MESSAGE"
   },
   {
-    "messageText": "1287 variables, 781 clauses",
+    "messageText": "1769 variables, 1483 clauses",
     "messageType": "STATUS-MESSAGE"
   },
   {
@@ -91,11 +91,11 @@
     "messageType": "STATUS-MESSAGE"
   },
   {
-    "messageText": "Runtime Solver: 0.000898322s",
+    "messageText": "Runtime Solver: 0.000983385s",
     "messageType": "STATUS-MESSAGE"
   },
   {
-    "messageText": "Runtime decision procedure: 0.00372586s",
+    "messageText": "Runtime decision procedure: 0.00175782s",
     "messageType": "STATUS-MESSAGE"
   },
   {
@@ -582,7 +582,7 @@
             "assignmentType": "variable",
             "hidden": true,
             "internal": false,
-            "lhs": "z",
+            "lhs": "x",
             "mode": "C",
             "sourceLocation": {
               "file": "file2.c",
@@ -696,8 +696,8 @@
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "0000000000000000000000000000000000000000000000000000000000001011",
-              "data": "11l",
+              "binary": "0000000000000000000000000000000000010110001000011001010000100110",
+              "data": "371299366l",
               "name": "integer",
               "type": "signed long int",
               "width": 64
@@ -718,8 +718,8 @@
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "0000000000000000000000000000000000000000000000000000000000001011",
-              "data": "11l",
+              "binary": "0000000000000000000000000000000000010110001000011001010000100110",
+              "data": "371299366l",
               "name": "integer",
               "type": "signed long int",
               "width": 64
@@ -751,8 +751,8 @@
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "0000000000000000000000000000000000000000000000000000000000001011",
-              "data": "11l",
+              "binary": "0000000000000000000000000000000000010110001000011001010000100110",
+              "data": "371299366l",
               "name": "integer",
               "type": "signed long int",
               "width": 64
@@ -788,11 +788,294 @@
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "0000000000000000000000000000000000000000000000000000000000001011",
-              "data": "11l",
+              "binary": "0000000000000000000000000000000000010110001000011001010000100110",
+              "data": "371299366l",
               "name": "integer",
               "type": "signed long int",
               "width": 64
+            }
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": false,
+            "internal": false,
+            "lhs": "x",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "file2.c",
+              "function": "printB",
+              "line": "4",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "00010110001000011001010000100110",
+              "data": "371299366",
+              "name": "integer",
+              "type": "signed int",
+              "width": 32
+            }
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": true,
+            "internal": false,
+            "lhs": "y",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "file2.c",
+              "function": "printB",
+              "line": "5",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "00000000000000000000000000000000",
+              "data": "0",
+              "name": "integer",
+              "type": "signed int",
+              "width": 32
+            }
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": true,
+            "internal": false,
+            "lhs": "return_value_random$0",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "file2.c",
+              "function": "printB",
+              "line": "5",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "00000000000000000000000000000000",
+              "data": "0",
+              "name": "integer",
+              "type": "signed int",
+              "width": 32
+            }
+          },
+          {
+            "function": {
+              "displayName": "random",
+              "identifier": "random",
+              "sourceLocation": {
+                "file": "<builtin-library-random>",
+                "line": "4",
+                "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+              }
+            },
+            "hidden": false,
+            "internal": true,
+            "stepType": "function-call",
+            "thread": 0
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": true,
+            "internal": false,
+            "lhs": "result",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "<builtin-library-random>",
+              "function": "random",
+              "line": "8",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "0000000000000000000000000000000000000000000000000000000000000000",
+              "data": "0l",
+              "name": "integer",
+              "type": "signed long int",
+              "width": 64
+            }
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": true,
+            "internal": false,
+            "lhs": "return_value___VERIFIER_nondet_long",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "<builtin-library-random>",
+              "function": "random",
+              "line": "8",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "0000000000000000000000000000000000000000000000000000000000000000",
+              "data": "0l",
+              "name": "integer",
+              "type": "signed long int",
+              "width": 64
+            }
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": true,
+            "internal": false,
+            "lhs": "return_value___VERIFIER_nondet_long",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "<builtin-library-random>",
+              "function": "random",
+              "line": "8",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "0000000000000000000000000000000001101001010001111000100000000100",
+              "data": "1766295556l",
+              "name": "integer",
+              "type": "signed long int",
+              "width": 64
+            }
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": false,
+            "internal": false,
+            "lhs": "result",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "<builtin-library-random>",
+              "function": "random",
+              "line": "8",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "0000000000000000000000000000000001101001010001111000100000000100",
+              "data": "1766295556l",
+              "name": "integer",
+              "type": "signed long int",
+              "width": 64
+            }
+          },
+          {
+            "hidden": false,
+            "sourceLocation": {
+              "file": "<builtin-library-random>",
+              "function": "random",
+              "line": "9",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "location-only",
+            "thread": 0
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": true,
+            "internal": false,
+            "lhs": "goto_symex$$return_value$$random",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "<builtin-library-random>",
+              "function": "random",
+              "line": "10",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "0000000000000000000000000000000001101001010001111000100000000100",
+              "data": "1766295556l",
+              "name": "integer",
+              "type": "signed long int",
+              "width": 64
+            }
+          },
+          {
+            "function": {
+              "displayName": "random",
+              "identifier": "random",
+              "sourceLocation": {
+                "file": "<builtin-library-random>",
+                "line": "4",
+                "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+              }
+            },
+            "hidden": false,
+            "internal": false,
+            "sourceLocation": {
+              "file": "<builtin-library-random>",
+              "function": "random",
+              "line": "11",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "function-return",
+            "thread": 0
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": true,
+            "internal": false,
+            "lhs": "(signed long int)return_value_random$0",
+            "mode": "C",
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "0000000000000000000000000000000001101001010001111000100000000100",
+              "data": "1766295556l",
+              "name": "integer",
+              "type": "signed long int",
+              "width": 64
+            }
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": false,
+            "internal": false,
+            "lhs": "y",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "file2.c",
+              "function": "printB",
+              "line": "5",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "01101001010001111000100000000100",
+              "data": "1766295556",
+              "name": "integer",
+              "type": "signed int",
+              "width": 32
+            }
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": true,
+            "internal": false,
+            "lhs": "z",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "file2.c",
+              "function": "printB",
+              "line": "6",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "00000000000000000000000000000000",
+              "data": "0",
+              "name": "integer",
+              "type": "signed int",
+              "width": 32
             }
           },
           {
@@ -804,14 +1087,14 @@
             "sourceLocation": {
               "file": "file2.c",
               "function": "printB",
-              "line": "4",
+              "line": "6",
               "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
             },
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "00000000000000000000000000001011",
-              "data": "11",
+              "binary": "01111111011010010001110000101010",
+              "data": "2137594922",
               "name": "integer",
               "type": "signed int",
               "width": 32
@@ -825,7 +1108,7 @@
             "sourceLocation": {
               "file": "file2.c",
               "function": "printB",
-              "line": "5",
+              "line": "7",
               "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
             },
             "stepType": "failure",
@@ -836,7 +1119,7 @@
             "sourceLocation": {
               "file": "file2.c",
               "function": "printB",
-              "line": "6",
+              "line": "8",
               "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
             },
             "stepType": "location-only",
@@ -857,7 +1140,7 @@
             "sourceLocation": {
               "file": "file2.c",
               "function": "printB",
-              "line": "6",
+              "line": "8",
               "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
             },
             "stepType": "function-call",
@@ -872,7 +1155,7 @@
             "sourceLocation": {
               "file": "file2.c",
               "function": "printB",
-              "line": "6",
+              "line": "8",
               "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
             },
             "stepType": "assignment",
@@ -1099,7 +1382,7 @@
             "sourceLocation": {
               "file": "file2.c",
               "function": "printB",
-              "line": "7",
+              "line": "9",
               "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
             },
             "stepType": "function-return",
@@ -1381,7 +1664,7 @@
         "sourceLocation": {
           "file": "file2.c",
           "function": "printB",
-          "line": "5",
+          "line": "7",
           "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
         },
         "status": "FAILURE",
@@ -1853,7 +2136,7 @@
             "assignmentType": "variable",
             "hidden": true,
             "internal": false,
-            "lhs": "z",
+            "lhs": "x",
             "mode": "C",
             "sourceLocation": {
               "file": "file2.c",
@@ -1967,8 +2250,8 @@
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "0000000000000000000000000000000000000000000000000000000000001011",
-              "data": "11l",
+              "binary": "0000000000000000000000000000000000010110001000011001010000100110",
+              "data": "371299366l",
               "name": "integer",
               "type": "signed long int",
               "width": 64
@@ -1989,8 +2272,8 @@
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "0000000000000000000000000000000000000000000000000000000000001011",
-              "data": "11l",
+              "binary": "0000000000000000000000000000000000010110001000011001010000100110",
+              "data": "371299366l",
               "name": "integer",
               "type": "signed long int",
               "width": 64
@@ -2022,8 +2305,8 @@
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "0000000000000000000000000000000000000000000000000000000000001011",
-              "data": "11l",
+              "binary": "0000000000000000000000000000000000010110001000011001010000100110",
+              "data": "371299366l",
               "name": "integer",
               "type": "signed long int",
               "width": 64
@@ -2059,11 +2342,294 @@
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "0000000000000000000000000000000000000000000000000000000000001011",
-              "data": "11l",
+              "binary": "0000000000000000000000000000000000010110001000011001010000100110",
+              "data": "371299366l",
               "name": "integer",
               "type": "signed long int",
               "width": 64
+            }
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": false,
+            "internal": false,
+            "lhs": "x",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "file2.c",
+              "function": "printB",
+              "line": "4",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "00010110001000011001010000100110",
+              "data": "371299366",
+              "name": "integer",
+              "type": "signed int",
+              "width": 32
+            }
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": true,
+            "internal": false,
+            "lhs": "y",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "file2.c",
+              "function": "printB",
+              "line": "5",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "00000000000000000000000000000000",
+              "data": "0",
+              "name": "integer",
+              "type": "signed int",
+              "width": 32
+            }
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": true,
+            "internal": false,
+            "lhs": "return_value_random$0",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "file2.c",
+              "function": "printB",
+              "line": "5",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "00000000000000000000000000000000",
+              "data": "0",
+              "name": "integer",
+              "type": "signed int",
+              "width": 32
+            }
+          },
+          {
+            "function": {
+              "displayName": "random",
+              "identifier": "random",
+              "sourceLocation": {
+                "file": "<builtin-library-random>",
+                "line": "4",
+                "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+              }
+            },
+            "hidden": false,
+            "internal": true,
+            "stepType": "function-call",
+            "thread": 0
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": true,
+            "internal": false,
+            "lhs": "result",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "<builtin-library-random>",
+              "function": "random",
+              "line": "8",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "0000000000000000000000000000000000000000000000000000000000000000",
+              "data": "0l",
+              "name": "integer",
+              "type": "signed long int",
+              "width": 64
+            }
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": true,
+            "internal": false,
+            "lhs": "return_value___VERIFIER_nondet_long",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "<builtin-library-random>",
+              "function": "random",
+              "line": "8",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "0000000000000000000000000000000000000000000000000000000000000000",
+              "data": "0l",
+              "name": "integer",
+              "type": "signed long int",
+              "width": 64
+            }
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": true,
+            "internal": false,
+            "lhs": "return_value___VERIFIER_nondet_long",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "<builtin-library-random>",
+              "function": "random",
+              "line": "8",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "0000000000000000000000000000000001101001010001111000100000000100",
+              "data": "1766295556l",
+              "name": "integer",
+              "type": "signed long int",
+              "width": 64
+            }
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": false,
+            "internal": false,
+            "lhs": "result",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "<builtin-library-random>",
+              "function": "random",
+              "line": "8",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "0000000000000000000000000000000001101001010001111000100000000100",
+              "data": "1766295556l",
+              "name": "integer",
+              "type": "signed long int",
+              "width": 64
+            }
+          },
+          {
+            "hidden": false,
+            "sourceLocation": {
+              "file": "<builtin-library-random>",
+              "function": "random",
+              "line": "9",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "location-only",
+            "thread": 0
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": true,
+            "internal": false,
+            "lhs": "goto_symex$$return_value$$random",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "<builtin-library-random>",
+              "function": "random",
+              "line": "10",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "0000000000000000000000000000000001101001010001111000100000000100",
+              "data": "1766295556l",
+              "name": "integer",
+              "type": "signed long int",
+              "width": 64
+            }
+          },
+          {
+            "function": {
+              "displayName": "random",
+              "identifier": "random",
+              "sourceLocation": {
+                "file": "<builtin-library-random>",
+                "line": "4",
+                "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+              }
+            },
+            "hidden": false,
+            "internal": false,
+            "sourceLocation": {
+              "file": "<builtin-library-random>",
+              "function": "random",
+              "line": "11",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "function-return",
+            "thread": 0
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": true,
+            "internal": false,
+            "lhs": "(signed long int)return_value_random$0",
+            "mode": "C",
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "0000000000000000000000000000000001101001010001111000100000000100",
+              "data": "1766295556l",
+              "name": "integer",
+              "type": "signed long int",
+              "width": 64
+            }
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": false,
+            "internal": false,
+            "lhs": "y",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "file2.c",
+              "function": "printB",
+              "line": "5",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "01101001010001111000100000000100",
+              "data": "1766295556",
+              "name": "integer",
+              "type": "signed int",
+              "width": 32
+            }
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": true,
+            "internal": false,
+            "lhs": "z",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "file2.c",
+              "function": "printB",
+              "line": "6",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "00000000000000000000000000000000",
+              "data": "0",
+              "name": "integer",
+              "type": "signed int",
+              "width": 32
             }
           },
           {
@@ -2075,14 +2641,14 @@
             "sourceLocation": {
               "file": "file2.c",
               "function": "printB",
-              "line": "4",
+              "line": "6",
               "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
             },
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "00000000000000000000000000001011",
-              "data": "11",
+              "binary": "01111111011010010001110000101010",
+              "data": "2137594922",
               "name": "integer",
               "type": "signed int",
               "width": 32
@@ -2096,7 +2662,7 @@
             "sourceLocation": {
               "file": "file2.c",
               "function": "printB",
-              "line": "5",
+              "line": "7",
               "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
             },
             "stepType": "failure",
