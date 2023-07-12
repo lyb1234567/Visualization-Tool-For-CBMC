@@ -1,5 +1,7 @@
 import os
-import time 
+import time
+import re
+bin_op=["<","<=",">",">=","=="]
 def extract_file_name(file_address):
     file_name = os.path.basename(file_address)
     return file_name
@@ -31,4 +33,11 @@ def wait_for_file(file_path):
     while not os.path.exists(file_path) or os.path.getsize(file_path) == 0:
         time.sleep(0.1)
     return
+
+
+def extract_variables(statement):
+    variables = re.findall(r'[a-zA-Z_][a-zA-Z_0-9]*', statement)
+    variables.remove("assertion")
+    return variables
+
 
