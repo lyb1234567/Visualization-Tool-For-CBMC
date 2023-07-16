@@ -99,6 +99,7 @@ class MainWindow(QMainWindow):
         self.explorer=self.setupExplorer()
         self.model = QFileSystemModel()
         self.check_tab_lst=[]
+        self.counterexmaples={}
 
     
     def openExplorer(self):
@@ -133,6 +134,8 @@ class MainWindow(QMainWindow):
         textEdit.setText(fileData)
         if line_number:
             textEdit.highlight_line(int(line_number))
+            textEdit.counterexamples=self.counterexmaples[file_path]
+            print(textEdit.counterexamples)
         textEdit.fileName = file_path
         temp=file_path
         fileName = extract_file_name(file_path)
@@ -237,6 +240,8 @@ class MainWindow(QMainWindow):
         # if the user clicked OK, get the selected files and process them
         if result == QDialog.Accepted:
             selected_files = dialog.getSelectedFiles()
+        else:
+            selected_files=None
         combined_file_name=""
 
         if selected_files:
@@ -256,7 +261,7 @@ class MainWindow(QMainWindow):
         jsonfile="{0}.json".format(outputFile)
         wait_for_file(jsonfile)
         if os.path.exists(jsonfile):
-            if not self.jsonwindow or self.jsonFileChange:
+            if not self.jsonwindow or self.fileChange:
                 self.jsonwindow=jsonWindow(jsonfile,editor_window=self)
                 self.jsonFileChange=True
                 self.jsonwindow.show() 

@@ -6,6 +6,6 @@ void printB() {
     int a=random();
     int asdas=random();
     int z=x+y;
-    assert(z <= 10);
+    assert(z + x <= 10);
     printf("This is function B.\n");
 }

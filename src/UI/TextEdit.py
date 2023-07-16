@@ -1,7 +1,9 @@
 
 from PyQt5.QtGui import QTextCursor
 from PyQt5.QtGui import QColor, QTextCursor, QTextCharFormat, QSyntaxHighlighter
-from PyQt5.QtWidgets import QTextEdit
+from PyQt5.QtWidgets import QTextEdit,QToolTip
+from PyQt5.QtCore import QEvent
+
 
 class MyHighlighter(QSyntaxHighlighter):
     def __init__(self, parent=None):
@@ -20,13 +22,41 @@ class MyHighlighter(QSyntaxHighlighter):
 
 
 class TextEdit(QTextEdit):
-    def __init__(self,window,line_number=None):
+    def __init__(self,window,line_number=None,counterexamples=None):
         super().__init__()
         self.fileName = ''
         self.textChanged.connect(self.handleTextChanged)
         self.window=window
         self.line_number=line_number
         self.highlighter = MyHighlighter(self.document())
+        self.counterexamples=counterexamples
+    def event(self, event):
+        if (event.type() == QEvent.ToolTip):
+            pos = event.pos()
+            # Get a QTextCursor at the mouse position
+            cursor = self.cursorForPosition(pos)
+            # Pass this cursor to the isTextHighlighted method
+            if self.isTextHighlighted(cursor):
+                block = cursor.block()
+                position_in_line = cursor.position()
+                range=self.get_line_positions(self.highlighter.highlight_line_number)
+                if position_in_line>=range[0] and position_in_line<=range[1]:
+                    counterexamplemessage=self.counterexamplemessgae()
+                    QToolTip.showText(event.globalPos(), counterexamplemessage)
+
+            else:
+                QToolTip.hideText()
+            return True
+        return super().event(event)
+
+    def isTextHighlighted(self, cursor):
+        # Get the line number of the block that the cursor is in
+        line_number = cursor.blockNumber()
+
+        # Return True if the current line is the highlighted line
+        return line_number == self.highlighter.highlight_line_number
+
+
     def handleTextChanged(self):
         currentIndex = self.window.tabWidget.currentIndex()
         currentTitle = self.window.tabWidget.tabText(currentIndex)
@@ -51,4 +81,34 @@ class TextEdit(QTextEdit):
         self.setTextCursor(cursor)
     def highlight_line(self, line_number):
         self.highlighter.highlight_line(line_number - 1)
-        
+    def get_line_positions(self, line_number):
+        # Create a new QTextCursor attached to the QTextEdit document
+        cursor = QTextCursor(self.document())
+
+        # Move the cursor to the start of the document
+        cursor.movePosition(QTextCursor.Start)
+
+        # Move down by line_number - 1 lines (zero-based)
+        for _ in range(line_number):
+            cursor.movePosition(QTextCursor.Down)
+
+        # Select the line text
+        cursor.select(QTextCursor.LineUnderCursor)
+        line_text = cursor.selectedText()
+
+        # Move the cursor to the end of the line
+        cursor.movePosition(QTextCursor.EndOfLine)
+
+        # The ending position is the current position of the cursor
+        end_position = cursor.position()
+        start_position=end_position-len(line_text.strip())
+        return start_position, end_position-1
+    def counterexamplemessgae(self):
+        messages = []
+        if self.counterexamples:
+            for key, values in self.counterexamples.items():
+                value_str = " and ".join(str(value) for value in values)
+                messages.append(f"{key} is {value_str}")
+        message = "Property Violated, when " + ", ".join(messages)
+        return message
+                        

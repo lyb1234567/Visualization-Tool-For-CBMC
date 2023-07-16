@@ -1,10 +1,26 @@
 file2.c
+x
+0
+
+file2.c
+x
+0
+
+file2.c
 z
 0
 
 file2.c
 z
-1610661888
+67108864
+
+file2.c
+x
+0
+
+file2.c
+x
+0
 
 file2.c
 z
@@ -12,7 +28,7 @@ z
 
 file2.c
 z
-1610661888
+67108864
 
 file3.c
 a
@@ -20,5 +36,5 @@ a
 
 file3.c
 a
-0
+2
 

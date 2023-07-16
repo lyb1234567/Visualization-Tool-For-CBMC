@@ -96,9 +96,6 @@ class TreeViewer(QTreeWidget):
             order=int(failureDialog.selected_keyorder)
             self.search(query,seachFailure,order)
     def viewtraces(self):
-        # trace_file=extract_file_name_without_extension(self.filePath)+"_trace.json"
-        # self.json_window.filePath=trace_file
-        # self.json_window.loadJSON()
         self.ExpandAllCounterExamples()
     def viewcounterexamples(self): 
         pass
@@ -253,7 +250,7 @@ class TreeViewer(QTreeWidget):
     def ExpandAllCounterExamples(self):
         self.search("lhs",True,True)
         self.generate_counterexamples_source()
-        print(self.counterexamplesSourceDict)
+        self.editor_window.counterexmaples=self.counterexamplesSourceDict
     def generate_counterexamples_source(self):
         with open('counterexamplerecord.txt', 'r') as f:
             # Split the file contents into groups

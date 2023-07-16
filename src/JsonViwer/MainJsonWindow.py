@@ -92,6 +92,7 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.viewWidget)
     def closeEvent(self, event):
         self.checkLoad = False
+        self.editor_window.jsonwindow=None
         event.accept()  # let the window close
     def viewtraces(self):
         current=self.formatdict[self.formatComboBox.currentIndex()]
@@ -118,7 +119,7 @@ class MainWindow(QMainWindow):
     def loadJSON(self):
         options = QFileDialog.Options()
         if not self.filePath:
-            fileName, _ = QFileDialog.getOpenFileName(self,"Load JSON", "","JSON Files (*.json)", options=options)
+            fileName, _ = QFileDialog.getOpenFileName(self,"Load JSON ", "","JSON Files (*.json)", options=options)
             self.filePath=fileName
             self.treeViewer.setFilePath(fileName)
         else:
@@ -138,12 +139,12 @@ class MainWindow(QMainWindow):
                     self.ViewCounterExamplesAction=QAction("View CounterExamples")
                     self.ViewCounterExamplesAction.triggered.connect(self.treeViewer.viewcounterexamples)
                     self.ViewMenu.addAction(self.ViewCounterExamplesAction)
-                    self.treeViewer.ExpandAllCounterExamples()
                 else:
                     if not self.treeViewer.FailureList :
                         QMessageBox.information(self,"Success", "Verification Successful")
                     else:
                         self.treeViewer.ExpandAllFailure()
+                        self.treeViewer.ExpandAllCounterExamples()
                         QMessageBox.critical(self,"Failure", "{0} failed cases!!".format(len(self.treeViewer.FailureList)))
     def search(self):
         current=self.formatdict[self.formatComboBox.currentIndex()]
