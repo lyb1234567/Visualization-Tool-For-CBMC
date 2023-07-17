@@ -9,10 +9,11 @@ sys.path.append(root_folder)
 from UI.utils import extract_command,extract_file_name_without_extension,print_result,wait_for_file
 from JsonViwer.MainJsonWindow import MainWindow as jsonWindow
 class Terminal(QPlainTextEdit):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None,editor_window=None):
         super(Terminal, self).__init__(parent)
         self.process = QProcess(self)
         self.jsonwindow=None
+        self.editor_window=editor_window
         self.jsonFileChange=False
         self.process.readyRead.connect(self.dataReady)
         self.process.start('cmd.exe')
@@ -45,7 +46,8 @@ class Terminal(QPlainTextEdit):
                     result = subprocess.run([command], shell=True, capture_output=True, text=True)
                     jsonfile="{0}.json".format(file_name)
                     if not self.jsonwindow or  self.jsonFileChange:
-                        self.jsonwindow=jsonWindow(jsonfile)
+                        self.jsonwindow=jsonWindow(jsonfile,editor_window=self.editor_window)
+                        self.jsonwindow.treeViewer.ExpandAllFailure()
                         self.jsonFileChange=True
                     self.jsonwindow.show()
                     if result.stdout:

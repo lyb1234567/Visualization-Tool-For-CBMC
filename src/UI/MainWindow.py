@@ -27,7 +27,7 @@ class MainWindow(QMainWindow):
         # Add tabWidget to the layout instead of setting it as centralWidget
         self.mainLayout.addWidget(self.tabWidget)
         
-        self.terminal = Terminal()  # Initialize the terminal
+        self.terminal = Terminal(editor_window=self)  # Initialize the terminal
         self.mainLayout.addWidget(self.terminal)  # Add the terminal to the layout
 
 
@@ -133,9 +133,11 @@ class MainWindow(QMainWindow):
             fileData = f.read()
         textEdit.setText(fileData)
         if line_number:
+            tab_index=self.get_tabindex(file_path)
+            if tab_index !=None:
+                self.closeTab(tab_index)
             textEdit.highlight_line(int(line_number))
             textEdit.counterexamples=self.counterexmaples[file_path]
-            print(textEdit.counterexamples)
         textEdit.fileName = file_path
         temp=file_path
         fileName = extract_file_name(file_path)
@@ -205,7 +207,7 @@ class MainWindow(QMainWindow):
             self.explorer.openFolder(folder_path)
     def refreshTerminal(self, index):
         self.terminal.deleteLater()
-        self.terminal = Terminal()  # Initialize the terminal
+        self.terminal = Terminal(editor_window=self)  # Initialize the terminal
         self.mainLayout.addWidget(self.terminal)  # Add the terminal to the layout
     def switchToFile(self,file_path):
         for i in range(self.tabWidget.count()):
@@ -224,11 +226,18 @@ class MainWindow(QMainWindow):
                 if not self.jsonwindow or  self.jsonFileChange:
                     self.jsonwindow=jsonWindow(jsonfile,editor_window=self)
                     self.jsonFileChange=True
+                    self.jsonwindow.treeViewer.ExpandAllFailure()
                     self.jsonwindow.show()
             print_result(result,self,command)
         else:
             QMessageBox.warning(self,"Warning", "Choose a file to open!!")
-            
+    
+    def get_tabindex(self,fileName):
+        for i in range(self.tabWidget.count()):
+            tab = self.tabWidget.widget(i)
+            if extract_file_name(tab.fileName)==fileName:
+                return i
+        return None
     def runfilemultiple(self):
     # get the list of files in the current directory
         current_folder = os.getcwd()

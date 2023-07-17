@@ -1,11 +1,19 @@
-#include <time.h>
-#include <stdlib.h>
 #include <assert.h>
-void main(void)
-{
-int x = 10;
-srand(time(NULL));   // Initialization, should only be called once.
-int y = rand();      // Returns a pseudo-random integer between 0 and RAND_MAX.
-int z = x-y;
-assert(z > 0);
+#include <stdbool.h>
+
+bool isEven(int num) {
+    if(num % 2 == 0) {
+        return true;
+    }
+    return false;
+}
+
+int main() {
+    int num1 = 10;
+    int num2 = 9;
+
+    assert(isEven(num1)); // Asserting that num1 is even
+    assert(isEven(num2)); // Asserting that num2 is not even
+
+    return 0;
 }

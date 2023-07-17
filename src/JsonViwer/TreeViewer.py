@@ -153,7 +153,9 @@ class TreeViewer(QTreeWidget):
                 if child.text(0)=="lhs":
                     for key in self.counterexamplesvariable.keys():
                         sameFile=False
+                        hidden=False
                         value_lst=self.counterexamplesvariable[key]
+                        print(self.FailureSourceList)
                         fileName=self.FailureSourceList[key-1]['file']
                         for value in value_lst:
                             if child.child(0).text(1)==value:
@@ -165,10 +167,15 @@ class TreeViewer(QTreeWidget):
                                             sibling_child=sibling.child(j)
                                             if sibling_child.text(0)=="file" and sibling_child.child(0).text(1)==fileName:
                                                 sameFile=True
+                                    if sibling.text(0)=="hidden":
+                                       if sibling.child(0).text(1)=='False':
+                                           hidden=False
+                                       else:
+                                           hidden=True
                                     if sibling.text(0)=="value":
                                         for j in range(sibling.childCount()):
                                             sibling_child=sibling.child(j)
-                                            if sibling_child.text(0)=="data" and sameFile:
+                                            if sibling_child.text(0)=="data" and sameFile and not hidden :
                                                 with open('counterexamplerecord.txt',"a") as f:
                                                     f.write(fileName+'\n')
                                                     f.write(value+'\n')
@@ -202,9 +209,11 @@ class TreeViewer(QTreeWidget):
                     with open(file_name, 'w') as f:
                             json.dump(json_obj[key], f, indent=4)
                 if key=="description":
-                    self.counterNum=self.counterNum+1
-                    assertion_statement=json_obj[key]
-                    self.counterexamplesvariable[self.counterNum]=extract_variables(assertion_statement)
+                    if json_obj.get('status') !=None:
+                        if json_obj.get('status')=='FAILURE':
+                            self.counterNum=self.counterNum+1
+                            assertion_statement=json_obj[key]
+                            self.counterexamplesvariable[self.counterNum]=extract_variables(assertion_statement)
                 if key=="reason":
                     if not self.FailureReasonList:
                         self.FailureReasonList.append(1)
@@ -276,7 +285,6 @@ class TreeViewer(QTreeWidget):
                 # If the variable is not yet in the filename's dictionary, add it with an empty list as its value
                 if variable not in self.counterexamplesSourceDict[filename]:
                     self.counterexamplesSourceDict[filename][variable] = set()
-
                 # Append the counterexample to the variable's list
                 self.counterexamplesSourceDict[filename][variable].add(counterexample)
         

@@ -64,6 +64,7 @@ class ExplorerWidget(QWidget):
     def loadjson(self,index):
         filePath=self.model.filePath(index)
         self.jsonwindow=jsonWindow(filePath,editor_window=self.window)
+        self.jsonwindow.treeViewer.ExpandAllFailure()
         self.jsonwindow.show()
         
         
