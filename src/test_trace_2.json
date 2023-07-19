@@ -400,5 +400,160 @@
         },
         "stepType": "failure",
         "thread": 0
+    },
+    {
+        "assignmentType": "variable",
+        "hidden": true,
+        "internal": false,
+        "lhs": "return_value_isEven$0",
+        "mode": "C",
+        "sourceLocation": {
+            "file": "test.c",
+            "function": "main",
+            "line": "16",
+            "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+        },
+        "stepType": "assignment",
+        "thread": 0,
+        "value": {
+            "binary": "00000000",
+            "data": "FALSE",
+            "name": "integer",
+            "type": "_Bool",
+            "width": 8
+        }
+    },
+    {
+        "function": {
+            "displayName": "isEven",
+            "identifier": "isEven",
+            "sourceLocation": {
+                "file": "test.c",
+                "line": "4",
+                "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            }
+        },
+        "hidden": false,
+        "internal": false,
+        "sourceLocation": {
+            "file": "test.c",
+            "function": "main",
+            "line": "16",
+            "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+        },
+        "stepType": "function-call",
+        "thread": 0
+    },
+    {
+        "assignmentType": "actual-parameter",
+        "hidden": false,
+        "internal": false,
+        "lhs": "num",
+        "mode": "C",
+        "sourceLocation": {
+            "file": "test.c",
+            "function": "main",
+            "line": "16",
+            "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+        },
+        "stepType": "assignment",
+        "thread": 0,
+        "value": {
+            "binary": "00000000000000000000000000001001",
+            "data": "9",
+            "name": "integer",
+            "type": "signed int",
+            "width": 32
+        }
+    },
+    {
+        "hidden": false,
+        "sourceLocation": {
+            "file": "test.c",
+            "function": "isEven",
+            "line": "5",
+            "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+        },
+        "stepType": "location-only",
+        "thread": 0
+    },
+    {
+        "assignmentType": "variable",
+        "hidden": true,
+        "internal": false,
+        "lhs": "goto_symex$$return_value$$isEven",
+        "mode": "C",
+        "sourceLocation": {
+            "file": "test.c",
+            "function": "isEven",
+            "line": "8",
+            "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+        },
+        "stepType": "assignment",
+        "thread": 0,
+        "value": {
+            "binary": "00000000",
+            "data": "FALSE",
+            "name": "integer",
+            "type": "_Bool",
+            "width": 8
+        }
+    },
+    {
+        "function": {
+            "displayName": "isEven",
+            "identifier": "isEven",
+            "sourceLocation": {
+                "file": "test.c",
+                "line": "4",
+                "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            }
+        },
+        "hidden": false,
+        "internal": false,
+        "sourceLocation": {
+            "file": "test.c",
+            "function": "isEven",
+            "line": "9",
+            "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+        },
+        "stepType": "function-return",
+        "thread": 0
+    },
+    {
+        "assignmentType": "variable",
+        "hidden": true,
+        "internal": false,
+        "lhs": "return_value_isEven$0",
+        "mode": "C",
+        "sourceLocation": {
+            "file": "test.c",
+            "function": "main",
+            "line": "16",
+            "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+        },
+        "stepType": "assignment",
+        "thread": 0,
+        "value": {
+            "binary": "00000000",
+            "data": "FALSE",
+            "name": "integer",
+            "type": "_Bool",
+            "width": 8
+        }
+    },
+    {
+        "hidden": false,
+        "internal": false,
+        "property": "main.assertion.2",
+        "reason": "assertion isEven(num2)",
+        "sourceLocation": {
+            "file": "test.c",
+            "function": "main",
+            "line": "16",
+            "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+        },
+        "stepType": "failure",
+        "thread": 0
     }
 ]

@@ -132,6 +132,7 @@ class MainWindow(QMainWindow):
         with open(file_path, 'r') as f:
             fileData = f.read()
         textEdit.setText(fileData)
+        print(textEdit.get_line_text(8))
         if line_number:
             tab_index=self.get_tabindex(file_path)
             if tab_index !=None:

@@ -87,7 +87,6 @@ class TreeViewer(QTreeWidget):
 
         contextMenu.exec_(event.globalPos())     
     def viewFailure(self):
-        print(self.FailureList)
         seachFailure=True
         failureDialog=FailureKeyListDialog(self.FailureList)
         result = failureDialog.exec_()
@@ -155,7 +154,6 @@ class TreeViewer(QTreeWidget):
                         sameFile=False
                         hidden=False
                         value_lst=self.counterexamplesvariable[key]
-                        print(self.FailureSourceList)
                         fileName=self.FailureSourceList[key-1]['file']
                         for value in value_lst:
                             if child.child(0).text(1)==value:
@@ -259,6 +257,7 @@ class TreeViewer(QTreeWidget):
     def ExpandAllCounterExamples(self):
         self.search("lhs",True,True)
         self.generate_counterexamples_source()
+        print(self.counterexamplesSourceDict)
         self.editor_window.counterexmaples=self.counterexamplesSourceDict
     def generate_counterexamples_source(self):
         with open('counterexamplerecord.txt', 'r') as f:

@@ -111,4 +111,20 @@ class TextEdit(QTextEdit):
                 messages.append(f"{key} is {value_str}")
         message = "Property Violated, when " + ", ".join(messages)
         return message
-                        
+    def get_line_text(self, line_number):
+        """Get the text of a specific line in the QTextEdit."""
+        # Create a new QTextCursor attached to the QTextEdit document
+        cursor = QTextCursor(self.document())
+
+        # Move the cursor to the start of the document
+        cursor.movePosition(QTextCursor.Start)
+
+        # Move down by line_number - 1 lines (zero-based)
+        for _ in range(line_number - 1):
+            cursor.movePosition(QTextCursor.Down)
+
+        # Select the text until the end of the line
+        cursor.movePosition(QTextCursor.EndOfLine, QTextCursor.KeepAnchor)
+
+        # Return the selected text
+        return cursor.selectedText()

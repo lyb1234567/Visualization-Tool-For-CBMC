@@ -9,7 +9,7 @@ bool isEven(int num) {
 }
 
 int main() {
-    int num1 = 10;
+    int num1 = 11;
     int num2 = 9;
 
     assert(isEven(num1)); // Asserting that num1 is even
