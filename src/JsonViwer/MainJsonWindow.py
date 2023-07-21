@@ -12,6 +12,8 @@ sys.path.append(root_folder)
 from JsonViwer.TreeViewer import TreeViewer
 from JsonViwer.TextViewer import TextViewer
 from JsonViwer.KeysDialog import KeyListDialog
+from UI.utils import is_trace_file
+from ControlFlowGraph.ControlFlowGraphGenerator import ControlGraphGenerator
 class MainWindow(QMainWindow):
     def __init__(self,filePath=None,editor_window=None):
         super().__init__()
@@ -43,15 +45,12 @@ class MainWindow(QMainWindow):
         self.ViewFailureAction=QAction("View Failure Action")
         self.ViewFailureAction.triggered.connect(self.viewfailure)
         
-        self.ViewTraceAction=QAction("View traces")
-        self.ViewTraceAction.triggered.connect(self.viewtraces)
 
         self.formatdict={}
         # Add actions to menus
         self.fileMenu.addAction(self.loadAction)
         self.searchMenu.addAction(self.searchByKeyAction)
         self.ViewMenu.addAction(self.ViewFailureAction)
-        self.ViewMenu.addAction(self.ViewTraceAction)
         # Add menus to menuBar
         self.menuBar.addMenu(self.fileMenu)
         self.menuBar.addMenu(self.searchMenu)
@@ -131,20 +130,24 @@ class MainWindow(QMainWindow):
                 self.treeViewer.clear()
                 self.textViewer.clear()
                 self.treeViewer.display(json_content)
+                # 清洗生成的trace file
+                if self.treeViewer.trace_files:
+                    for trace_file in self.treeViewer.trace_files:
+                        cfg=ControlGraphGenerator(trace_json_file=trace_file)
+                        cfg.reduce_trace_json()
                 self.textViewer.display(json_content)
                 self.filePath=None
-                if hasattr(self, 'ViewCounterExamplesAction'):  # Check if the attribute exists
-                    self.ViewMenu.removeAction(self.ViewCounterExamplesAction)  # If it does, remove the action
-                if (fileName.endswith("trace.json")):
-                    self.ViewCounterExamplesAction=QAction("View CounterExamples")
-                    self.ViewCounterExamplesAction.triggered.connect(self.treeViewer.viewcounterexamples)
-                    self.ViewMenu.addAction(self.ViewCounterExamplesAction)
+                if hasattr(self, 'self.ViewTraceAction'):  # Check if the attribute exists
+                    self.ViewMenu.removeAction(self.ViewTraceAction)  # If it does, remove the action
+                if (is_trace_file(fileName)):
+                    self.ViewTraceAction=QAction("View traces")
+                    self.ViewTraceAction.triggered.connect(self.viewtraces)
+                    self.ViewMenu.addAction(self.ViewTraceAction)
                 else:
                     if not self.treeViewer.FailureList :
                         QMessageBox.information(self,"Success", "Verification Successful")
                     else:
                         self.treeViewer.ExpandAllFailure()
-                        self.treeViewer.ExpandAllCounterExamples()
                         QMessageBox.critical(self,"Failure", "{0} failed cases!!".format(len(self.treeViewer.FailureList)))
     def search(self):
         current=self.formatdict[self.formatComboBox.currentIndex()]

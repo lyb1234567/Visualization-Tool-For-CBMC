@@ -16,6 +16,14 @@ class TestUtils(unittest.TestCase):
             self.assertEqual(set(extract_variables("assertion var_name <= y")), set(['var_name', 'y']))
             self.assertEqual(set(extract_variables("assertion x < x")), set(['x']))
             self.assertEqual(set(extract_variables("assertion x / (y + z) <= a")), set(['x', 'y', 'z', 'a']))
-
+            self.assertEqual(set(extract_variables("assertion *value")), set(['value']))
+            self.assertEqual(set(extract_variables("assertion array[i] > 0 && array[j] < 0")), set(['i', 'j']))
+            self.assertEqual(set(extract_variables("assertion size > 0")), set(['size']))
+            self.assertEqual(set(extract_variables("assertion value != NULL")), set(['value']))
+            self.assertEqual(set(extract_variables("assertion value != 3")), set(['value']))
+            self.assertEqual(set(extract_variables("assertion array[i+1] == 0")), set(['i']))
+            self.assertEqual(set(extract_variables("assertion array[i] > 0 && array[j] < 0 || array [k] < 3  ")), set(['i','j','k']))
+            self.assertEqual(set(extract_variables("assertion array[i] > 0 && array[j] < 0 || array [k] < 3 && array[u] < 4  ")), set(['i','j','k','u']))
+            self.assertEqual(set(extract_variables("assertion array[i] > 0 && array[j-4] < 0 || array [k+1] < 3  ")), set(['i','j','k']))
 if __name__ == '__main__':
     unittest.main()

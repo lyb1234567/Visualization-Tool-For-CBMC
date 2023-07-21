@@ -11,7 +11,8 @@ sys.path.append(root_folder)
 from PyQt5.QtWidgets import QTreeWidget,QTreeWidgetItem,QMenu,QAction,QDialog
 from PyQt5.QtCore import Qt
 from JsonViwer.FailureKeyDialog import FailureKeyListDialog
-from UI.utils import extract_file_name_without_extension,extract_variables
+from UI.utils import extract_file_name_without_extension,extract_variables,is_trace_file
+from ControlFlowGraph.ControlFlowGraphGenerator import ControlGraphGenerator
 class TreeViewer(QTreeWidget):
     def __init__(self,editor_window=None,json_window=None,filePath=None):
         super().__init__()
@@ -34,6 +35,7 @@ class TreeViewer(QTreeWidget):
         self.trace_num=0
         self.counterNum=0
         self.counterexamplesSourceDict={}
+        self.trace_files=[]
         with open('counterexamplerecord.txt', 'w') as f:
                 pass  # Writing nothing to the file effectively clears it
     def setFilePath(self,filePath):
@@ -53,6 +55,7 @@ class TreeViewer(QTreeWidget):
         self.counterexamplesvariable.clear()
         self.counterexamplesSourceDict.clear()
         self.counterNum=0
+        self.trace_files.clear()
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
             # You can get the item under the cursor with the itemAt method
@@ -80,9 +83,14 @@ class TreeViewer(QTreeWidget):
                 if currentItem.text(1) == 'FAILURE':
                     filename=self.getSourceFile(id(currentItem))['file']
                     linenumber=self.getSourceFile(id(currentItem))['line']
+                    trace_file=self.trace_files[self.FailureDict[id(currentItem)]-1]
                     nodeAction = QAction("View Source File", self)
                     nodeAction.triggered.connect(lambda: self.viewSourceFile(filename,linenumber))
                     contextMenu.addAction(nodeAction)
+                    viewTraceAction = QAction("View Trace", self)
+                    viewTraceAction.triggered.connect(lambda: self.viewtraces(pass_trace_file=trace_file))
+                    contextMenu.addAction(viewTraceAction)
+                    
         # show the context menu
 
         contextMenu.exec_(event.globalPos())     
@@ -94,10 +102,11 @@ class TreeViewer(QTreeWidget):
             query=failureDialog.selected_key
             order=int(failureDialog.selected_keyorder)
             self.search(query,seachFailure,order)
-    def viewtraces(self):
-        self.ExpandAllCounterExamples()
-    def viewcounterexamples(self): 
-        pass
+    def viewtraces(self,pass_trace_file=None):
+        if is_trace_file(self.filePath):
+            self.ExpandAllCounterExamples()
+        elif pass_trace_file:
+            print('sb')
     def viewSourceFile(self,filename,linenumber):
         #  viewer sourcefile TODO
         self.editor_window.openFile(filename,linenumber)
@@ -149,6 +158,9 @@ class TreeViewer(QTreeWidget):
                     self.foundItems.append(child)
                     child.setExpanded(True)
             elif query==key and ifFailure and ifCounterExample:
+                child.parent().parent().setExpanded(True)
+                child.parent().setExpanded(True)
+                child.setExpanded(True)
                 if child.text(0)=="lhs":
                     for key in self.counterexamplesvariable.keys():
                         sameFile=False
@@ -161,6 +173,7 @@ class TreeViewer(QTreeWidget):
                                 for i  in range(parent.childCount()):
                                     sibling=parent.child(i)
                                     if sibling.text(0)=="sourceLocation":
+                                        
                                         for j in range(sibling.childCount()):
                                             sibling_child=sibling.child(j)
                                             if sibling_child.text(0)=="file" and sibling_child.child(0).text(1)==fileName:
@@ -171,6 +184,7 @@ class TreeViewer(QTreeWidget):
                                        else:
                                            hidden=True
                                     if sibling.text(0)=="value":
+                                        sibling.setExpanded(True)
                                         for j in range(sibling.childCount()):
                                             sibling_child=sibling.child(j)
                                             if sibling_child.text(0)=="data" and sameFile and not hidden :
@@ -179,8 +193,7 @@ class TreeViewer(QTreeWidget):
                                                     f.write(value+'\n')
                                                     f.write(sibling_child.child(0).text(1))
                                                     f.write('\n\n')
-                                                
-                     
+                
             self._search(query, child,ifFailure,ifCounterExample)  # Recursive call for child items
             
     def display(self, json_obj, root_item=None):
@@ -206,6 +219,7 @@ class TreeViewer(QTreeWidget):
                     file_name = os.path.join(os.getcwd(), f"{extract_file_name_without_extension(self.json_window.filePath)}_trace_{self.trace_num}.json")
                     with open(file_name, 'w') as f:
                             json.dump(json_obj[key], f, indent=4)
+                    self.trace_files.append(file_name)
                 if key=="description":
                     if json_obj.get('status') !=None:
                         if json_obj.get('status')=='FAILURE':
@@ -256,9 +270,8 @@ class TreeViewer(QTreeWidget):
         self.search("status",True)
     def ExpandAllCounterExamples(self):
         self.search("lhs",True,True)
-        self.generate_counterexamples_source()
-        print(self.counterexamplesSourceDict)
-        self.editor_window.counterexmaples=self.counterexamplesSourceDict
+        self.search("value",True,True)
+        self.search("data",True,True)
     def generate_counterexamples_source(self):
         with open('counterexamplerecord.txt', 'r') as f:
             # Split the file contents into groups

@@ -41,7 +41,7 @@ class TextEdit(QTextEdit):
                 position_in_line = cursor.position()
                 range=self.get_line_positions(self.highlighter.highlight_line_number)
                 if position_in_line>=range[0] and position_in_line<=range[1]:
-                    counterexamplemessage=self.counterexamplemessgae()
+                    counterexamplemessage='sb'
                     QToolTip.showText(event.globalPos(), counterexamplemessage)
 
             else:

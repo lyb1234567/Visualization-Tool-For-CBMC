@@ -36,8 +36,28 @@ def wait_for_file(file_path):
 
 
 def extract_variables(statement):
-    variables = re.findall(r'[a-zA-Z_][a-zA-Z_0-9]*', statement)
-    variables.remove("assertion")
+    # Define the keywords to be excluded
+    keywords = ["assertion", "NULL"]
+
+    # Find array names and indices
+    array_variables = re.findall(r'([a-zA-Z_][a-zA-Z_0-9]*)\[\s*([a-zA-Z_][a-zA-Z_0-9]*)(?:\s*[+\-*/]\s*[a-zA-Z_0-9]*)?\s*\]', statement)
+    array_names = [name for name, _ in array_variables]
+    array_indices = [index for _, index in array_variables]
+
+    # Find all variables
+    all_variables = re.findall(r'\b[a-zA-Z_][a-zA-Z_0-9]*\b', statement)
+
+    # Exclude keywords, array names and ensure unique variables
+    variables = [var for var in all_variables if var not in keywords + array_names]
+
+    # Add array indices back into the variables list
+    variables += array_indices
+
+    # Ensure unique variables
+    variables = list(set(variables))
+
     return variables
 
-
+def is_trace_file(filename):
+    pattern = r"^(.*_)?trace_\d+\.json$"  # 匹配以可选的任何字符串（后面接着 "_"）开头，接着是 "trace_"，然后是一或多个数字，最后是 ".json"
+    return re.match(pattern, filename) is not None

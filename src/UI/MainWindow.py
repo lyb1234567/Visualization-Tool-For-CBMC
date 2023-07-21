@@ -138,7 +138,7 @@ class MainWindow(QMainWindow):
             if tab_index !=None:
                 self.closeTab(tab_index)
             textEdit.highlight_line(int(line_number))
-            textEdit.counterexamples=self.counterexmaples[file_path]
+            # textEdit.counterexamples=self.counterexmaples[file_path]
         textEdit.fileName = file_path
         temp=file_path
         fileName = extract_file_name(file_path)
