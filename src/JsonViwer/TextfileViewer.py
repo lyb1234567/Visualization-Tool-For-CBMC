@@ -27,7 +27,3 @@ class TextFileViewer(QMainWindow):
         self.setCentralWidget(central_widget)
 
 # Example usage
-app = QApplication(sys.argv)
-viewer = TextFileViewer('trace.txt')
-viewer.show()
-sys.exit(app.exec_())

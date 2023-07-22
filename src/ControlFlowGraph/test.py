@@ -16,6 +16,5 @@ if __name__=="__main__":
     cfg=ControlGraphGenerator(trace_file=trace_file)
     cfg.load_trace_data()
     cfg.clean_tarce_file()
+    print(cfg.state_info)
     print(cfg.assertion_trace_total)
-    
-    

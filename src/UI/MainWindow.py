@@ -121,31 +121,33 @@ class MainWindow(QMainWindow):
         dockWidget.setWidget(widget)
         return dockWidget
 
-    def openFile(self, file_path=None,line_number=None):
+    def openFile(self, file_path=None,line_number=None,SOURCE_TYPE=None):
         if not file_path:
             options = QFileDialog.Options()
             options |= QFileDialog.DontUseNativeDialog
             file_path, _ = QFileDialog.getOpenFileName(self, 'Open File', '', 'C Files (*.c);;JSON Files (*.json)', options=options)
             if not file_path:
                 return
-        textEdit = TextEdit(self)
-        with open(file_path, 'r') as f:
-            fileData = f.read()
-        textEdit.setText(fileData)
-        print(textEdit.get_line_text(8))
-        if line_number:
-            tab_index=self.get_tabindex(file_path)
-            if tab_index !=None:
-                self.closeTab(tab_index)
-            textEdit.highlight_line(int(line_number))
-            # textEdit.counterexamples=self.counterexmaples[file_path]
-        textEdit.fileName = file_path
-        temp=file_path
-        fileName = extract_file_name(file_path)
-        if fileName not in  self.check_tab_lst:
-            self.tabWidget.addTab(textEdit, fileName)
-            self.switchToFile(temp)
-            self.check_tab_lst.append(fileName)
+        textEdit = TextEdit(self,SOURCE_TYPE=SOURCE_TYPE)
+        try:
+            with open(file_path, 'r') as f:
+                fileData = f.read()    
+                textEdit.setText(fileData)
+                if line_number:
+                    tab_index=self.get_tabindex(file_path)
+                    if tab_index !=None:
+                        self.closeTab(tab_index)
+                    textEdit.highlight_line(int(line_number))
+                    # textEdit.counterexamples=self.counterexmaples[file_path]
+                textEdit.fileName = file_path
+                temp=file_path
+                fileName = extract_file_name(file_path)
+                if fileName not in  self.check_tab_lst:
+                    self.tabWidget.addTab(textEdit, fileName)
+                    self.switchToFile(temp)
+                    self.check_tab_lst.append(fileName)
+        except:
+            QMessageBox.warning(self,"Warning", "There is no such file in the directory!!")
 
     def createFile(self):
         fileName, ok = QInputDialog.getText(self, 'New File', 'Enter file name (e.g. file.c or file.json):')
@@ -229,6 +231,7 @@ class MainWindow(QMainWindow):
                     self.jsonFileChange=True
                     self.jsonwindow.treeViewer.ExpandAllFailure()
                     self.jsonwindow.show()
+
             print_result(result,self,command)
         else:
             QMessageBox.warning(self,"Warning", "Choose a file to open!!")

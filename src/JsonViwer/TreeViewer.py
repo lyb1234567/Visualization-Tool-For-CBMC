@@ -12,7 +12,7 @@ from PyQt5.QtWidgets import QTreeWidget,QTreeWidgetItem,QMenu,QAction,QDialog
 from PyQt5.QtCore import Qt
 from JsonViwer.FailureKeyDialog import FailureKeyListDialog
 from UI.utils import extract_file_name_without_extension,extract_variables,is_trace_file
-from ControlFlowGraph.ControlFlowGraphGenerator import ControlGraphGenerator
+from ControlFlowGraph.ControlFlowGraphGenerator import ControlGraphGenerator, Source_Type
 class TreeViewer(QTreeWidget):
     def __init__(self,editor_window=None,json_window=None,filePath=None):
         super().__init__()
@@ -85,11 +85,31 @@ class TreeViewer(QTreeWidget):
                     linenumber=self.getSourceFile(id(currentItem))['line']
                     trace_file=self.trace_files[self.FailureDict[id(currentItem)]-1]
                     nodeAction = QAction("View Source File", self)
-                    nodeAction.triggered.connect(lambda: self.viewSourceFile(filename,linenumber))
+                    nodeAction.triggered.connect(lambda: self.viewSourceFile(filename,linenumber,SOURCE_TYPE=Source_Type.FAILURE_SOURCE))
                     contextMenu.addAction(nodeAction)
                     viewTraceAction = QAction("View Trace", self)
                     viewTraceAction.triggered.connect(lambda: self.viewtraces(pass_trace_file=trace_file))
                     contextMenu.addAction(viewTraceAction)
+                if currentItem.parent().text(0)=="lhs":
+                    # TODO:右键点击lhs可以返回到对应的文件代码行中
+                    navigate_file_name=None
+                    naviagte_line_number=None
+                    parent_parent=currentItem.parent().parent()
+                    for i in range(parent_parent.childCount()):
+                        sibling=parent_parent.child(i)
+                        if sibling.text(0)=="sourceLocation":
+                            for j in range(sibling.childCount()):
+                                            sibling_child=sibling.child(j)
+                                            if sibling_child.text(0)=="file":
+                                                navigate_file_name=sibling_child.child(0).text(1)
+                                            if sibling_child.text(0)=="line":
+                                                naviagte_line_number=sibling_child.child(0).text(1)
+                    nodeAction = QAction("View Source File", self)
+                    nodeAction.triggered.connect(lambda: self.viewSourceFile(navigate_file_name,naviagte_line_number,SOURCE_TYPE=Source_Type.TRACE_SOURCE))
+                    contextMenu.addAction(nodeAction)
+                    
+                                            
+                
                     
         # show the context menu
 
@@ -106,10 +126,13 @@ class TreeViewer(QTreeWidget):
         if is_trace_file(self.filePath):
             self.ExpandAllCounterExamples()
         elif pass_trace_file:
-            print('sb')
-    def viewSourceFile(self,filename,linenumber):
+            from JsonViwer.MainJsonWindow import MainWindow as JsonWindow
+            trace_json_window=JsonWindow(filePath=pass_trace_file,editor_window=self.editor_window)
+            trace_json_window.treeViewer.ExpandAllCounterExamples()
+            trace_json_window.show()
+    def viewSourceFile(self,filename,linenumber,SOURCE_TYPE=None):
         #  viewer sourcefile TODO
-        self.editor_window.openFile(filename,linenumber)
+        self.editor_window.openFile(filename,linenumber,SOURCE_TYPE)
     def getSourceFile(self,Failure_id):
         #  viewer sourcefile TODO
          Failure_index= self.FailureDict[Failure_id]
@@ -145,6 +168,7 @@ class TreeViewer(QTreeWidget):
             elif query==key and ifFailure and not ifCounterExample:
                 if child.child(0).text(1)=="FAILURE":
                     parent=child.parent()
+                    parent.setExpanded(True)
                     for i  in range(parent.childCount()):
                         sibling=parent.child(i)
                         if sibling.text(0)=="description":

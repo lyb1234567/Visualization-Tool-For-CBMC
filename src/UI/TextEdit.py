@@ -3,32 +3,37 @@ from PyQt5.QtGui import QTextCursor
 from PyQt5.QtGui import QColor, QTextCursor, QTextCharFormat, QSyntaxHighlighter
 from PyQt5.QtWidgets import QTextEdit,QToolTip
 from PyQt5.QtCore import QEvent
-
+from ControlFlowGraph.ControlFlowGraphGenerator import Source_Type
 
 class MyHighlighter(QSyntaxHighlighter):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None,SOURCE_TYPE=None):
         super(MyHighlighter, self).__init__(parent)
         self.highlight_line_number = -1
         self.highlight_format = QTextCharFormat()
-        self.highlight_format.setUnderlineStyle(QTextCharFormat.WaveUnderline) # Set underline style as wave
-        self.highlight_format.setUnderlineColor(QColor("red"))  # Set underline color as red
+        self.source_type=SOURCE_TYPE
+        self.set_highlight_type()
     def highlightBlock(self, text):
         if self.currentBlock().blockNumber() == self.highlight_line_number:
             self.setFormat(0, len(text), self.highlight_format)
-
+    def set_highlight_type(self):
+            if self.source_type == Source_Type.FAILURE_SOURCE:
+                self.highlight_format.setUnderlineStyle(QTextCharFormat.WaveUnderline)  # Set underline style as wave
+                self.highlight_format.setUnderlineColor(QColor("red"))  # Set underline color as red
+            elif self.source_type == Source_Type.TRACE_SOURCE:
+                self.highlight_format.setBackground(QColor("red"))  # Set background color as red
     def highlight_line(self, line_number):
         self.highlight_line_number = line_number
         self.rehighlight()
 
 
 class TextEdit(QTextEdit):
-    def __init__(self,window,line_number=None,counterexamples=None):
+    def __init__(self,window,line_number=None,counterexamples=None,SOURCE_TYPE=None):
         super().__init__()
         self.fileName = ''
         self.textChanged.connect(self.handleTextChanged)
         self.window=window
         self.line_number=line_number
-        self.highlighter = MyHighlighter(self.document())
+        self.highlighter = MyHighlighter(self.document(),SOURCE_TYPE=SOURCE_TYPE)
         self.counterexamples=counterexamples
     def event(self, event):
         if (event.type() == QEvent.ToolTip):
@@ -41,7 +46,7 @@ class TextEdit(QTextEdit):
                 position_in_line = cursor.position()
                 range=self.get_line_positions(self.highlighter.highlight_line_number)
                 if position_in_line>=range[0] and position_in_line<=range[1]:
-                    counterexamplemessage='sb'
+                    counterexamplemessage=str(self.highlighter.highlight_line_number+1)
                     QToolTip.showText(event.globalPos(), counterexamplemessage)
 
             else:
@@ -74,6 +79,7 @@ class TextEdit(QTextEdit):
         for _ in range(line_number - 1):
             cursor.movePosition(QTextCursor.Down)
 
+        
         # Set this new cursor as the active cursor in the QTextEdit
         cursor.movePosition(QTextCursor.EndOfLine, QTextCursor.KeepAnchor)
 

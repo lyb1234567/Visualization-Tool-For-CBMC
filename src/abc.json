@@ -7,7 +7,7 @@
     "messageType": "STATUS-MESSAGE"
   },
   {
-    "messageText": "Parsing test.c",
+    "messageText": "Parsing test_gdb.c",
     "messageType": "STATUS-MESSAGE"
   },
   {
@@ -15,7 +15,7 @@
     "messageType": "STATUS-MESSAGE"
   },
   {
-    "messageText": "Type-checking test",
+    "messageText": "Type-checking test_gdb",
     "messageType": "STATUS-MESSAGE"
   },
   {
@@ -43,11 +43,51 @@
     "messageType": "STATUS-MESSAGE"
   },
   {
-    "messageText": "Runtime Symex: 0.000882404s",
+    "messageText": "Unwinding loop main.0 iteration 1 file test_gdb.c line 9 function main thread 0",
     "messageType": "STATUS-MESSAGE"
   },
   {
-    "messageText": "size of program expression: 42 steps",
+    "messageText": "Unwinding loop main.0 iteration 2 file test_gdb.c line 9 function main thread 0",
+    "messageType": "STATUS-MESSAGE"
+  },
+  {
+    "messageText": "Unwinding loop main.0 iteration 3 file test_gdb.c line 9 function main thread 0",
+    "messageType": "STATUS-MESSAGE"
+  },
+  {
+    "messageText": "Unwinding loop main.0 iteration 4 file test_gdb.c line 9 function main thread 0",
+    "messageType": "STATUS-MESSAGE"
+  },
+  {
+    "messageText": "Unwinding loop main.0 iteration 5 file test_gdb.c line 9 function main thread 0",
+    "messageType": "STATUS-MESSAGE"
+  },
+  {
+    "messageText": "Unwinding loop main.1 iteration 1 file test_gdb.c line 13 function main thread 0",
+    "messageType": "STATUS-MESSAGE"
+  },
+  {
+    "messageText": "Unwinding loop main.1 iteration 2 file test_gdb.c line 13 function main thread 0",
+    "messageType": "STATUS-MESSAGE"
+  },
+  {
+    "messageText": "Unwinding loop main.1 iteration 3 file test_gdb.c line 13 function main thread 0",
+    "messageType": "STATUS-MESSAGE"
+  },
+  {
+    "messageText": "Unwinding loop main.1 iteration 4 file test_gdb.c line 13 function main thread 0",
+    "messageType": "STATUS-MESSAGE"
+  },
+  {
+    "messageText": "Unwinding loop main.1 iteration 5 file test_gdb.c line 13 function main thread 0",
+    "messageType": "STATUS-MESSAGE"
+  },
+  {
+    "messageText": "Runtime Symex: 0.00131627s",
+    "messageType": "STATUS-MESSAGE"
+  },
+  {
+    "messageText": "size of program expression: 62 steps",
     "messageType": "STATUS-MESSAGE"
   },
   {
@@ -55,11 +95,11 @@
     "messageType": "STATUS-MESSAGE"
   },
   {
-    "messageText": "Generated 2 VCC(s), 1 remaining after simplification",
+    "messageText": "Generated 5 VCC(s), 5 remaining after simplification",
     "messageType": "STATUS-MESSAGE"
   },
   {
-    "messageText": "Runtime Postprocess Equation: 2.0609e-05s",
+    "messageText": "Runtime Postprocess Equation: 1.7253e-05s",
     "messageType": "STATUS-MESSAGE"
   },
   {
@@ -71,7 +111,7 @@
     "messageType": "STATUS-MESSAGE"
   },
   {
-    "messageText": "Runtime Convert SSA: 0.000145042s",
+    "messageText": "Runtime Convert SSA: 0.000142587s",
     "messageType": "STATUS-MESSAGE"
   },
   {
@@ -83,7 +123,7 @@
     "messageType": "STATUS-MESSAGE"
   },
   {
-    "messageText": "Runtime Post-process: 8.426e-06s",
+    "messageText": "Runtime Post-process: 6.872e-06s",
     "messageType": "STATUS-MESSAGE"
   },
   {
@@ -91,7 +131,7 @@
     "messageType": "STATUS-MESSAGE"
   },
   {
-    "messageText": "240 variables, 0 clauses",
+    "messageText": "352 variables, 0 clauses",
     "messageType": "STATUS-MESSAGE"
   },
   {
@@ -99,11 +139,11 @@
     "messageType": "STATUS-MESSAGE"
   },
   {
-    "messageText": "Runtime Solver: 0.000109214s",
+    "messageText": "Runtime Solver: 7.3288e-05s",
     "messageType": "STATUS-MESSAGE"
   },
   {
-    "messageText": "Runtime decision procedure: 0.000358582s",
+    "messageText": "Runtime decision procedure: 0.000294101s",
     "messageType": "STATUS-MESSAGE"
   },
   {
@@ -113,23 +153,12 @@
   {
     "result": [
       {
-        "description": "assertion isEven(10)",
+        "description": "assertion arr[i] == i+1",
         "property": "main.assertion.1",
         "sourceLocation": {
-          "file": "test.c",
+          "file": "test_gdb.c",
           "function": "main",
-          "line": "15",
-          "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-        },
-        "status": "SUCCESS"
-      },
-      {
-        "description": "assertion isEven(num2)",
-        "property": "main.assertion.2",
-        "sourceLocation": {
-          "file": "test.c",
-          "function": "main",
-          "line": "16",
+          "line": "14",
           "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
         },
         "status": "FAILURE",
@@ -266,8 +295,8 @@
           {
             "hidden": false,
             "sourceLocation": {
-              "file": "test.c",
-              "line": "11",
+              "file": "test_gdb.c",
+              "line": "5",
               "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
             },
             "stepType": "location-only",
@@ -278,16 +307,16 @@
               "displayName": "main",
               "identifier": "main",
               "sourceLocation": {
-                "file": "test.c",
-                "line": "11",
+                "file": "test_gdb.c",
+                "line": "5",
                 "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
               }
             },
             "hidden": false,
             "internal": false,
             "sourceLocation": {
-              "file": "test.c",
-              "line": "11",
+              "file": "test_gdb.c",
+              "line": "5",
               "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
             },
             "stepType": "function-call",
@@ -295,102 +324,14 @@
           },
           {
             "assignmentType": "variable",
-            "hidden": true,
-            "internal": false,
-            "lhs": "num1",
-            "mode": "C",
-            "sourceLocation": {
-              "file": "test.c",
-              "function": "main",
-              "line": "12",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "assignment",
-            "thread": 0,
-            "value": {
-              "binary": "00000000000000000000000000000000",
-              "data": "0",
-              "name": "integer",
-              "type": "signed int",
-              "width": 32
-            }
-          },
-          {
-            "assignmentType": "variable",
             "hidden": false,
             "internal": false,
-            "lhs": "num1",
+            "lhs": "arr",
             "mode": "C",
             "sourceLocation": {
-              "file": "test.c",
+              "file": "test_gdb.c",
               "function": "main",
-              "line": "12",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "assignment",
-            "thread": 0,
-            "value": {
-              "binary": "00000000000000000000000000001011",
-              "data": "11",
-              "name": "integer",
-              "type": "signed int",
-              "width": 32
-            }
-          },
-          {
-            "assignmentType": "variable",
-            "hidden": true,
-            "internal": false,
-            "lhs": "num2",
-            "mode": "C",
-            "sourceLocation": {
-              "file": "test.c",
-              "function": "main",
-              "line": "13",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "assignment",
-            "thread": 0,
-            "value": {
-              "binary": "00000000000000000000000000000000",
-              "data": "0",
-              "name": "integer",
-              "type": "signed int",
-              "width": 32
-            }
-          },
-          {
-            "assignmentType": "variable",
-            "hidden": false,
-            "internal": false,
-            "lhs": "num2",
-            "mode": "C",
-            "sourceLocation": {
-              "file": "test.c",
-              "function": "main",
-              "line": "13",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "assignment",
-            "thread": 0,
-            "value": {
-              "binary": "00000000000000000000000000001001",
-              "data": "9",
-              "name": "integer",
-              "type": "signed int",
-              "width": 32
-            }
-          },
-          {
-            "assignmentType": "variable",
-            "hidden": false,
-            "internal": false,
-            "lhs": "array",
-            "mode": "C",
-            "sourceLocation": {
-              "file": "test.c",
-              "function": "main",
-              "line": "14",
+              "line": "6",
               "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
             },
             "stepType": "assignment",
@@ -400,101 +341,51 @@
                 {
                   "index": 0,
                   "value": {
-                    "binary": "00000000",
+                    "binary": "00000000000000000000000000000000",
                     "data": "0",
                     "name": "integer",
-                    "type": "char",
-                    "width": 8
+                    "type": "signed int",
+                    "width": 32
                   }
                 },
                 {
                   "index": 1,
                   "value": {
-                    "binary": "00000000",
+                    "binary": "00000000000000000000000000000000",
                     "data": "0",
                     "name": "integer",
-                    "type": "char",
-                    "width": 8
+                    "type": "signed int",
+                    "width": 32
                   }
                 },
                 {
                   "index": 2,
                   "value": {
-                    "binary": "00000000",
+                    "binary": "00000000000000000000000000000000",
                     "data": "0",
                     "name": "integer",
-                    "type": "char",
-                    "width": 8
+                    "type": "signed int",
+                    "width": 32
                   }
                 },
                 {
                   "index": 3,
                   "value": {
-                    "binary": "00000000",
+                    "binary": "00000000000000000000000000000000",
                     "data": "0",
                     "name": "integer",
-                    "type": "char",
-                    "width": 8
+                    "type": "signed int",
+                    "width": 32
                   }
                 },
                 {
                   "index": 4,
                   "value": {
-                    "binary": "00000000",
+                    "binary": "00000000000000000000000000000000",
                     "data": "0",
                     "name": "integer",
-                    "type": "char",
-                    "width": 8
-                  }
-                },
-                {
-                  "index": 5,
-                  "value": {
-                    "binary": "00000000",
-                    "data": "0",
-                    "name": "integer",
-                    "type": "char",
-                    "width": 8
-                  }
-                },
-                {
-                  "index": 6,
-                  "value": {
-                    "binary": "00000000",
-                    "data": "0",
-                    "name": "integer",
-                    "type": "char",
-                    "width": 8
-                  }
-                },
-                {
-                  "index": 7,
-                  "value": {
-                    "binary": "00000000",
-                    "data": "0",
-                    "name": "integer",
-                    "type": "char",
-                    "width": 8
-                  }
-                },
-                {
-                  "index": 8,
-                  "value": {
-                    "binary": "00000000",
-                    "data": "0",
-                    "name": "integer",
-                    "type": "char",
-                    "width": 8
-                  }
-                },
-                {
-                  "index": 9,
-                  "value": {
-                    "binary": "00000000",
-                    "data": "0",
-                    "name": "integer",
-                    "type": "char",
-                    "width": 8
+                    "type": "signed int",
+                    "width": 32
                   }
                 }
               ],
@@ -503,64 +394,43 @@
           },
           {
             "assignmentType": "variable",
-            "hidden": true,
+            "hidden": false,
             "internal": false,
-            "lhs": "return_value_isEven",
+            "lhs": "i",
             "mode": "C",
             "sourceLocation": {
-              "file": "test.c",
+              "file": "test_gdb.c",
               "function": "main",
-              "line": "15",
+              "line": "7",
               "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
             },
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "00000000",
-              "data": "FALSE",
+              "binary": "00000000000000000000000000000000",
+              "data": "0",
               "name": "integer",
-              "type": "_Bool",
-              "width": 8
+              "type": "signed int",
+              "width": 32
             }
           },
           {
-            "function": {
-              "displayName": "isEven",
-              "identifier": "isEven",
-              "sourceLocation": {
-                "file": "test.c",
-                "line": "4",
-                "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-              }
-            },
+            "assignmentType": "variable",
             "hidden": false,
             "internal": false,
-            "sourceLocation": {
-              "file": "test.c",
-              "function": "main",
-              "line": "15",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "function-call",
-            "thread": 0
-          },
-          {
-            "assignmentType": "actual-parameter",
-            "hidden": false,
-            "internal": false,
-            "lhs": "num",
+            "lhs": "i",
             "mode": "C",
             "sourceLocation": {
-              "file": "test.c",
+              "file": "test_gdb.c",
               "function": "main",
-              "line": "15",
+              "line": "9",
               "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
             },
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "00000000000000000000000000001010",
-              "data": "10",
+              "binary": "00000000000000000000000000000000",
+              "data": "0",
               "name": "integer",
               "type": "signed int",
               "width": 32
@@ -569,139 +439,53 @@
           {
             "hidden": false,
             "sourceLocation": {
-              "file": "test.c",
-              "function": "isEven",
-              "line": "5",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "location-only",
-            "thread": 0
-          },
-          {
-            "assignmentType": "variable",
-            "hidden": true,
-            "internal": false,
-            "lhs": "goto_symex$$return_value$$isEven",
-            "mode": "C",
-            "sourceLocation": {
-              "file": "test.c",
-              "function": "isEven",
-              "line": "6",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "assignment",
-            "thread": 0,
-            "value": {
-              "binary": "00000001",
-              "data": "TRUE",
-              "name": "integer",
-              "type": "_Bool",
-              "width": 8
-            }
-          },
-          {
-            "function": {
-              "displayName": "isEven",
-              "identifier": "isEven",
-              "sourceLocation": {
-                "file": "test.c",
-                "line": "4",
-                "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-              }
-            },
-            "hidden": false,
-            "internal": false,
-            "sourceLocation": {
-              "file": "test.c",
-              "function": "isEven",
+              "file": "test_gdb.c",
+              "function": "main",
               "line": "9",
               "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
             },
-            "stepType": "function-return",
+            "stepType": "loop-head",
             "thread": 0
           },
           {
             "assignmentType": "variable",
-            "hidden": true,
+            "hidden": false,
             "internal": false,
-            "lhs": "return_value_isEven",
+            "lhs": "arr[0l]",
             "mode": "C",
             "sourceLocation": {
-              "file": "test.c",
+              "file": "test_gdb.c",
               "function": "main",
-              "line": "15",
+              "line": "10",
               "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
             },
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "00000001",
-              "data": "TRUE",
+              "binary": "00000000000000000000000000000000",
+              "data": "0",
               "name": "integer",
-              "type": "_Bool",
-              "width": 8
+              "type": "signed int",
+              "width": 32
             }
           },
           {
             "assignmentType": "variable",
-            "hidden": true,
+            "hidden": false,
             "internal": false,
-            "lhs": "return_value_isEven$0",
+            "lhs": "i",
             "mode": "C",
             "sourceLocation": {
-              "file": "test.c",
+              "file": "test_gdb.c",
               "function": "main",
-              "line": "16",
+              "line": "9",
               "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
             },
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "00000000",
-              "data": "FALSE",
-              "name": "integer",
-              "type": "_Bool",
-              "width": 8
-            }
-          },
-          {
-            "function": {
-              "displayName": "isEven",
-              "identifier": "isEven",
-              "sourceLocation": {
-                "file": "test.c",
-                "line": "4",
-                "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-              }
-            },
-            "hidden": false,
-            "internal": false,
-            "sourceLocation": {
-              "file": "test.c",
-              "function": "main",
-              "line": "16",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "function-call",
-            "thread": 0
-          },
-          {
-            "assignmentType": "actual-parameter",
-            "hidden": false,
-            "internal": false,
-            "lhs": "num",
-            "mode": "C",
-            "sourceLocation": {
-              "file": "test.c",
-              "function": "main",
-              "line": "16",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "assignment",
-            "thread": 0,
-            "value": {
-              "binary": "00000000000000000000000000001001",
-              "data": "9",
+              "binary": "00000000000000000000000000000001",
+              "data": "1",
               "name": "integer",
               "type": "signed int",
               "width": 32
@@ -710,88 +494,276 @@
           {
             "hidden": false,
             "sourceLocation": {
-              "file": "test.c",
-              "function": "isEven",
-              "line": "5",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "location-only",
-            "thread": 0
-          },
-          {
-            "assignmentType": "variable",
-            "hidden": true,
-            "internal": false,
-            "lhs": "goto_symex$$return_value$$isEven",
-            "mode": "C",
-            "sourceLocation": {
-              "file": "test.c",
-              "function": "isEven",
-              "line": "8",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "assignment",
-            "thread": 0,
-            "value": {
-              "binary": "00000000",
-              "data": "FALSE",
-              "name": "integer",
-              "type": "_Bool",
-              "width": 8
-            }
-          },
-          {
-            "function": {
-              "displayName": "isEven",
-              "identifier": "isEven",
-              "sourceLocation": {
-                "file": "test.c",
-                "line": "4",
-                "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-              }
-            },
-            "hidden": false,
-            "internal": false,
-            "sourceLocation": {
-              "file": "test.c",
-              "function": "isEven",
+              "file": "test_gdb.c",
+              "function": "main",
               "line": "9",
               "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
             },
-            "stepType": "function-return",
+            "stepType": "loop-head",
             "thread": 0
           },
           {
             "assignmentType": "variable",
-            "hidden": true,
+            "hidden": false,
             "internal": false,
-            "lhs": "return_value_isEven$0",
+            "lhs": "arr[1l]",
             "mode": "C",
             "sourceLocation": {
-              "file": "test.c",
+              "file": "test_gdb.c",
               "function": "main",
-              "line": "16",
+              "line": "10",
               "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
             },
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "00000000",
-              "data": "FALSE",
+              "binary": "00000000000000000000000000000001",
+              "data": "1",
               "name": "integer",
-              "type": "_Bool",
-              "width": 8
+              "type": "signed int",
+              "width": 32
+            }
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": false,
+            "internal": false,
+            "lhs": "i",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "test_gdb.c",
+              "function": "main",
+              "line": "9",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "00000000000000000000000000000010",
+              "data": "2",
+              "name": "integer",
+              "type": "signed int",
+              "width": 32
             }
           },
           {
             "hidden": false,
-            "internal": false,
-            "property": "main.assertion.2",
-            "reason": "assertion isEven(num2)",
             "sourceLocation": {
-              "file": "test.c",
+              "file": "test_gdb.c",
               "function": "main",
-              "line": "16",
+              "line": "9",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "loop-head",
+            "thread": 0
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": false,
+            "internal": false,
+            "lhs": "arr[2l]",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "test_gdb.c",
+              "function": "main",
+              "line": "10",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "00000000000000000000000000000010",
+              "data": "2",
+              "name": "integer",
+              "type": "signed int",
+              "width": 32
+            }
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": false,
+            "internal": false,
+            "lhs": "i",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "test_gdb.c",
+              "function": "main",
+              "line": "9",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "00000000000000000000000000000011",
+              "data": "3",
+              "name": "integer",
+              "type": "signed int",
+              "width": 32
+            }
+          },
+          {
+            "hidden": false,
+            "sourceLocation": {
+              "file": "test_gdb.c",
+              "function": "main",
+              "line": "9",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "loop-head",
+            "thread": 0
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": false,
+            "internal": false,
+            "lhs": "arr[3l]",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "test_gdb.c",
+              "function": "main",
+              "line": "10",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "00000000000000000000000000000011",
+              "data": "3",
+              "name": "integer",
+              "type": "signed int",
+              "width": 32
+            }
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": false,
+            "internal": false,
+            "lhs": "i",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "test_gdb.c",
+              "function": "main",
+              "line": "9",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "00000000000000000000000000000100",
+              "data": "4",
+              "name": "integer",
+              "type": "signed int",
+              "width": 32
+            }
+          },
+          {
+            "hidden": false,
+            "sourceLocation": {
+              "file": "test_gdb.c",
+              "function": "main",
+              "line": "9",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "loop-head",
+            "thread": 0
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": false,
+            "internal": false,
+            "lhs": "arr[4l]",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "test_gdb.c",
+              "function": "main",
+              "line": "10",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "00000000000000000000000000000100",
+              "data": "4",
+              "name": "integer",
+              "type": "signed int",
+              "width": 32
+            }
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": false,
+            "internal": false,
+            "lhs": "i",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "test_gdb.c",
+              "function": "main",
+              "line": "9",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "00000000000000000000000000000101",
+              "data": "5",
+              "name": "integer",
+              "type": "signed int",
+              "width": 32
+            }
+          },
+          {
+            "hidden": false,
+            "sourceLocation": {
+              "file": "test_gdb.c",
+              "function": "main",
+              "line": "9",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "loop-head",
+            "thread": 0
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": false,
+            "internal": false,
+            "lhs": "i",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "test_gdb.c",
+              "function": "main",
+              "line": "13",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "00000000000000000000000000000000",
+              "data": "0",
+              "name": "integer",
+              "type": "signed int",
+              "width": 32
+            }
+          },
+          {
+            "hidden": false,
+            "sourceLocation": {
+              "file": "test_gdb.c",
+              "function": "main",
+              "line": "13",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "loop-head",
+            "thread": 0
+          },
+          {
+            "hidden": false,
+            "internal": false,
+            "property": "main.assertion.1",
+            "reason": "assertion arr[i] == i+1",
+            "sourceLocation": {
+              "file": "test_gdb.c",
+              "function": "main",
+              "line": "14",
               "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
             },
             "stepType": "failure",
