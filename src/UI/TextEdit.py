@@ -46,6 +46,7 @@ class TextEdit(QTextEdit):
                 position_in_line = cursor.position()
                 range=self.get_line_positions(self.highlighter.highlight_line_number)
                 if position_in_line>=range[0] and position_in_line<=range[1]:
+                    # TODO: 当用户鼠标悬停高亮代码的时候，应该得到对应文件中对应行数代码的state information
                     counterexamplemessage=str(self.highlighter.highlight_line_number+1)
                     QToolTip.showText(event.globalPos(), counterexamplemessage)
 

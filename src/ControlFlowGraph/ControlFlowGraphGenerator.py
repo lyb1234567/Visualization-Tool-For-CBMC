@@ -76,6 +76,8 @@ class ControlGraphGenerator():
                 assertion_trace[traces[-1]].append(traces[i])
             return [assertion_trace,temp_dict]
     def build_state_info(self,traces, line_nums):
+        # TODO：因为当前assertion statement可能会收到其他文件中同一行state的影响，所以我们在记录行数的同时还需要记录对应的文件名
+        # 可以理解为 {'fileName':{'8':[x,x,x,x,]}}
         temp_dict={}
         if not temp_dict:
             for line, line_num in zip(traces, line_nums):
@@ -107,6 +109,12 @@ class ControlGraphGenerator():
         match = re.search(pattern, statement)
         if match:
             return int(match.group(1))
+        else:
+            return None
+    def extract_file(self,state_str):
+        match = re.search(r'file (\S+)', state_str)
+        if match:
+            return match.group(1)
         else:
             return None
     # 清洗trace json file的结构，将不需要的key去掉
