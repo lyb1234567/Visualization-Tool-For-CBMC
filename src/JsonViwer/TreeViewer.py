@@ -201,7 +201,6 @@ class TreeViewer(QTreeWidget):
                                 for i  in range(parent.childCount()):
                                     sibling=parent.child(i)
                                     if sibling.text(0)=="sourceLocation":
-                                        
                                         for j in range(sibling.childCount()):
                                             sibling_child=sibling.child(j)
                                             if sibling_child.text(0)=="file" and sibling_child.child(0).text(1)==fileName:

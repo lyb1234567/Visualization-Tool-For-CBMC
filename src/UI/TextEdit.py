@@ -52,8 +52,7 @@ class TextEdit(QTextEdit):
                     trace_name='trace_'+str(self.trace_num)
                     line_number=self.highlighter.highlight_line_number+1
                     state_info=self.cfg.get_state_info(fileName=self.fileName,trace_name=trace_name,line_number=line_number)
-                    counterexamplemessage=state_info
-                    QToolTip.showText(event.globalPos(), counterexamplemessage)
+                    QToolTip.showText(event.globalPos(), state_info)
 
             else:
                 QToolTip.hideText()

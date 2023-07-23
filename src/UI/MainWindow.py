@@ -273,7 +273,9 @@ class MainWindow(QMainWindow):
             if build_goto_file:
                 subprocess.run([build_goto_file], shell=True, capture_output=True, text=True)
                 generate_json_file='cbmc {0} --trace --json-ui > {1}.json'.format(outputFile,outputFile)
+                generate_trace_file='cbmc {0} --trace  > trace.txt'.format(outputFile,outputFile)
             result = subprocess.run([generate_json_file], shell=True, capture_output=True, text=True)
+            subprocess.run([generate_trace_file], shell=True, capture_output=True, text=True)
             print_result(result,self,generate_json_file)
             jsonfile="{0}.json".format(outputFile)
             wait_for_file(jsonfile)
