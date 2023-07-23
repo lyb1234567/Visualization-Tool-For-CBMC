@@ -15,10 +15,12 @@ from JsonViwer.KeysDialog import KeyListDialog
 from UI.utils import is_trace_file
 from ControlFlowGraph.ControlFlowGraphGenerator import ControlGraphGenerator
 class MainWindow(QMainWindow):
-    def __init__(self,filePath=None,editor_window=None):
+    def __init__(self,filePath=None,editor_window=None,cfg=None,trace_num=None):
         super().__init__()
         self.filePath=filePath
         self.editor_window=editor_window
+        self.editor_cfg=cfg
+        self.trace_num=trace_num
         self.initUI()
         if filePath:
             self.loadJSON()
@@ -60,9 +62,9 @@ class MainWindow(QMainWindow):
         self.setMenuBar(self.menuBar)
 
         if self.filePath:
-            self.treeViewer = TreeViewer(self.editor_window,self,filePath=self.filePath)
+            self.treeViewer = TreeViewer(self.editor_window,self,filePath=self.filePath,cfg=self.editor_cfg,trace_num=self.trace_num)
         else:
-            self.treeViewer = TreeViewer(self.editor_window,self)
+            self.treeViewer = TreeViewer(self.editor_window,self,cfg=self.editor_cfg,trace_num=self.trace_num)
         self.textViewer = TextViewer()
 
         self.stackedLayout = QStackedLayout()

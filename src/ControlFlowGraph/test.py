@@ -15,8 +15,6 @@ if __name__=="__main__":
     trace_file="trace.txt"
     cfg=ControlGraphGenerator(trace_file=trace_file)
     state_str = "State 91 file <builtin-library-printf> function printf line 17 thread 0"
-    print(cfg.extract_file(state_str))  # 输出：file3.c
-    # cfg.load_trace_data()
-    # cfg.clean_tarce_file()
-    # print(cfg.state_info)
+    cfg.load_trace_data()
+    cfg.clean_tarce_file()
     # print(cfg.assertion_trace_total)

@@ -14,7 +14,7 @@ from JsonViwer.FailureKeyDialog import FailureKeyListDialog
 from UI.utils import extract_file_name_without_extension,extract_variables,is_trace_file
 from ControlFlowGraph.ControlFlowGraphGenerator import ControlGraphGenerator, Source_Type
 class TreeViewer(QTreeWidget):
-    def __init__(self,editor_window=None,json_window=None,filePath=None):
+    def __init__(self,editor_window=None,json_window=None,filePath=None,cfg=None,trace_num=None):
         super().__init__()
         self.setColumnCount(2)
         self.setHeaderLabels(['Key', 'Value'])
@@ -33,6 +33,9 @@ class TreeViewer(QTreeWidget):
         self.editor_window=editor_window
         self.json_window=json_window
         self.trace_num=0
+        self.cfg=cfg
+        # 这个变量是用来传递trace name的，在用户想要看trace的时候
+        self.trace_view_num=trace_num
         self.counterNum=0
         self.counterexamplesSourceDict={}
         self.trace_files=[]
@@ -84,11 +87,12 @@ class TreeViewer(QTreeWidget):
                     filename=self.getSourceFile(id(currentItem))['file']
                     linenumber=self.getSourceFile(id(currentItem))['line']
                     trace_file=self.trace_files[self.FailureDict[id(currentItem)]-1]
+                    trace_num=self.FailureDict[id(currentItem)]
                     nodeAction = QAction("View Source File", self)
-                    nodeAction.triggered.connect(lambda: self.viewSourceFile(filename,linenumber,SOURCE_TYPE=Source_Type.FAILURE_SOURCE))
+                    nodeAction.triggered.connect(lambda: self.viewSourceFile(filename,linenumber,SOURCE_TYPE=Source_Type.FAILURE_SOURCE,cfg=self.cfg,trace_num=trace_num))
                     contextMenu.addAction(nodeAction)
                     viewTraceAction = QAction("View Trace", self)
-                    viewTraceAction.triggered.connect(lambda: self.viewtraces(pass_trace_file=trace_file))
+                    viewTraceAction.triggered.connect(lambda: self.viewtraces(pass_trace_file=trace_file,cfg=self.cfg,trace_num=trace_num))
                     contextMenu.addAction(viewTraceAction)
                 if currentItem.parent().text(0)=="lhs":
                     # TODO:右键点击lhs可以返回到对应的文件代码行中
@@ -105,7 +109,7 @@ class TreeViewer(QTreeWidget):
                                             if sibling_child.text(0)=="line":
                                                 naviagte_line_number=sibling_child.child(0).text(1)
                     nodeAction = QAction("View Source File", self)
-                    nodeAction.triggered.connect(lambda: self.viewSourceFile(navigate_file_name,naviagte_line_number,SOURCE_TYPE=Source_Type.TRACE_SOURCE))
+                    nodeAction.triggered.connect(lambda: self.viewSourceFile(navigate_file_name,naviagte_line_number,SOURCE_TYPE=Source_Type.TRACE_SOURCE,cfg=self.cfg,trace_num=self.trace_view_num))
                     contextMenu.addAction(nodeAction)
                     
                                             
@@ -122,17 +126,17 @@ class TreeViewer(QTreeWidget):
             query=failureDialog.selected_key
             order=int(failureDialog.selected_keyorder)
             self.search(query,seachFailure,order)
-    def viewtraces(self,pass_trace_file=None):
+    def viewtraces(self,pass_trace_file=None,cfg=None,trace_num=None):
         if is_trace_file(self.filePath):
             self.ExpandAllCounterExamples()
         elif pass_trace_file:
             from JsonViwer.MainJsonWindow import MainWindow as JsonWindow
-            trace_json_window=JsonWindow(filePath=pass_trace_file,editor_window=self.editor_window)
+            trace_json_window=JsonWindow(filePath=pass_trace_file,editor_window=self.editor_window,cfg=cfg,trace_num=trace_num)
             trace_json_window.treeViewer.ExpandAllCounterExamples()
             trace_json_window.show()
-    def viewSourceFile(self,filename,linenumber,SOURCE_TYPE=None):
+    def viewSourceFile(self,filename,linenumber,SOURCE_TYPE=None,cfg=None,trace_num=None):
         #  viewer sourcefile TODO
-        self.editor_window.openFile(filename,linenumber,SOURCE_TYPE)
+        self.editor_window.openFile(filename,linenumber,SOURCE_TYPE,cfg=cfg,trace_num=trace_num)
     def getSourceFile(self,Failure_id):
         #  viewer sourcefile TODO
          Failure_index= self.FailureDict[Failure_id]

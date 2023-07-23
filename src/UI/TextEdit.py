@@ -27,14 +27,16 @@ class MyHighlighter(QSyntaxHighlighter):
 
 
 class TextEdit(QTextEdit):
-    def __init__(self,window,line_number=None,counterexamples=None,SOURCE_TYPE=None):
+    def __init__(self,window,line_number=None,counterexamples=None,SOURCE_TYPE=None,cfg=None,trace_num=None,fileName=None):
         super().__init__()
-        self.fileName = ''
+        self.fileName = fileName
         self.textChanged.connect(self.handleTextChanged)
         self.window=window
         self.line_number=line_number
         self.highlighter = MyHighlighter(self.document(),SOURCE_TYPE=SOURCE_TYPE)
         self.counterexamples=counterexamples
+        self.cfg=cfg
+        self.trace_num=trace_num
     def event(self, event):
         if (event.type() == QEvent.ToolTip):
             pos = event.pos()
@@ -47,7 +49,10 @@ class TextEdit(QTextEdit):
                 range=self.get_line_positions(self.highlighter.highlight_line_number)
                 if position_in_line>=range[0] and position_in_line<=range[1]:
                     # TODO: 当用户鼠标悬停高亮代码的时候，应该得到对应文件中对应行数代码的state information
-                    counterexamplemessage=str(self.highlighter.highlight_line_number+1)
+                    trace_name='trace_'+str(self.trace_num)
+                    line_number=self.highlighter.highlight_line_number+1
+                    state_info=self.cfg.get_state_info(fileName=self.fileName,trace_name=trace_name,line_number=line_number)
+                    counterexamplemessage=state_info
                     QToolTip.showText(event.globalPos(), counterexamplemessage)
 
             else:

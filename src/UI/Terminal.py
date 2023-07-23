@@ -8,6 +8,7 @@ root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(root_folder)
 from UI.utils import extract_command,extract_file_name_without_extension,print_result,wait_for_file
 from JsonViwer.MainJsonWindow import MainWindow as jsonWindow
+from ControlFlowGraph.ControlFlowGraphGenerator import ControlGraphGenerator
 class Terminal(QPlainTextEdit):
     def __init__(self, parent=None,editor_window=None):
         super(Terminal, self).__init__(parent)
@@ -15,6 +16,7 @@ class Terminal(QPlainTextEdit):
         self.jsonwindow=None
         self.editor_window=editor_window
         self.jsonFileChange=False
+        self.cfg=None
         self.process.readyRead.connect(self.dataReady)
         self.process.start('cmd.exe')
         welcome_message = "Welcome to the terminal! You can now only use the following commands: xxx \n"
@@ -43,10 +45,14 @@ class Terminal(QPlainTextEdit):
                 if len(file_lst)==1:
                     file_name=extract_file_name_without_extension(file_lst[0])
                     command='cbmc {0} --trace --json-ui > {1}.json'.format(file_lst[0],file_name)
+                    command_trace_file='cbmc {0} --trace > trace.txt'.format(file_lst[0],file_name)
                     result = subprocess.run([command], shell=True, capture_output=True, text=True)
+                    subprocess.run([command_trace_file], shell=True, capture_output=True, text=True)
                     jsonfile="{0}.json".format(file_name)
+                    self.cfg=ControlGraphGenerator(trace_file='trace.txt')
+                    self.editor_window.cfg=self.cfg
                     if not self.jsonwindow or  self.jsonFileChange:
-                        self.jsonwindow=jsonWindow(jsonfile,editor_window=self.editor_window)
+                        self.jsonwindow=jsonWindow(jsonfile,editor_window=self.editor_window,cfg=self.cfg)
                         self.jsonwindow.treeViewer.ExpandAllFailure()
                         self.jsonFileChange=True
                     self.jsonwindow.show()
@@ -69,7 +75,9 @@ class Terminal(QPlainTextEdit):
                     if build_goto_file:
                         subprocess.run([build_goto_file], shell=True, capture_output=True, text=True)
                         generate_json_file='cbmc {0} --trace --json-ui > {1}.json'.format(outputFile,outputFile)
+                        generate_trace_file = 'cbmc {0} --trace > trace.txt'.format(outputFile)
                     result = subprocess.run([generate_json_file], shell=True, capture_output=True, text=True)
+                    subprocess.run([generate_trace_file], shell=True, capture_output=True, text=True)
                     if result.stdout:
                         self.appendPlainText(result.stdout)
                         self.process.write(b'\n')
@@ -81,9 +89,11 @@ class Terminal(QPlainTextEdit):
                         self.process.write(b'\n')
                     jsonfile="{0}.json".format(outputFile)
                     wait_for_file(jsonfile)
+                    self.cfg=ControlGraphGenerator(trace_file='trace.txt')
+                    self.editor_window.cfg=self.cfg
                     if os.path.exists(jsonfile):
                         if not self.jsonwindow or self.jsonFileChange:
-                            self.jsonwindow=jsonWindow(jsonfile)
+                            self.jsonwindow=jsonWindow(jsonfile,editor_window=self.editor_window,cfg=self.cfg)
                             self.jsonFileChange=True
                         self.jsonwindow.show() 
             else:

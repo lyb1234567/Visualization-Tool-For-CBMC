@@ -21,6 +21,9 @@ class ControlGraphGenerator():
         # assertion_trace的数据结构应该是{'assertion_statement':[trace1,trace2,trace3]}
         self.assertion_trace_total={}
         self.assertion_variables=assertion_variables
+        if self.trace_file!=None:
+            self.load_trace_data()
+            self.clean_tarce_file()
     def load_trace_data(self):
         if self.trace_file:
             with open(self.trace_file,'r') as f:
@@ -36,10 +39,10 @@ class ControlGraphGenerator():
             fileName='trace_{}.txt'.format(i+1)
             with open(fileName,'w') as f:
                 f.write(traces[i])
-            assertion_trace=self.get_assertion_trace(fileName)[0]
-            cur_state_info[trace_name]=self.get_assertion_trace(fileName)[1]
-            self.state_info.update(cur_state_info)
+            [assertion_trace,temp_state]=self.get_assertion_trace(fileName)
+            cur_state_info[trace_name]=temp_state
             self.assertion_trace_total.update(assertion_trace)
+            self.state_info.update(cur_state_info)
         self.remove_trace_files()
     def remove_trace_files(self):
         trace_files = glob.glob('trace_*.txt')
@@ -53,39 +56,34 @@ class ControlGraphGenerator():
         with open(fileName, 'r') as file:
             traces=[]
             assertion_trace={}
-            line_lst=[]
+            file_line={}
             try:
                 while True:
                     line=next(file)
-                    if self.is_assignment(line):
-                        traces.append(line)
                     if self.is_state(line):
-                       line_lst.append(self.extract_line_number(line))
+                       line_number=self.extract_line_number(line)
+                       file_name=self.extract_file(line)
+                       next(file)
+                       assignment=next(file)
+                       temp_assignment_line={}
+                       temp_assignment_line[line_number]=assignment
+                       if file_line.get(file_name)==None:
+                           file_line[file_name]=[]
+                           file_line[file_name].append(temp_assignment_line)
+                       else:
+                           file_line[file_name].append(temp_assignment_line)
                     if 'Violated property:' in line:
                         line_number=next(file)
-                        line_lst.append(self.extract_line_number(line_number))
                         assertion_line = next(file)
                         assertion = assertion_line.strip()
                         traces.append(assertion)
                         next(file)
             except StopIteration:
                 pass
-            temp_dict=self.build_state_info(traces,line_lst)
             assertion_trace[traces[-1]]=[]
             for i in range(len(traces)):
                 assertion_trace[traces[-1]].append(traces[i])
-            return [assertion_trace,temp_dict]
-    def build_state_info(self,traces, line_nums):
-        # TODO：因为当前assertion statement可能会收到其他文件中同一行state的影响，所以我们在记录行数的同时还需要记录对应的文件名
-        # 可以理解为 {'fileName':{'8':[x,x,x,x,]}}
-        temp_dict={}
-        if not temp_dict:
-            for line, line_num in zip(traces, line_nums):
-                if line_num in temp_dict:
-                    temp_dict[line_num].append(line)
-                else:
-                    temp_dict[line_num] = [line]
-            return temp_dict
+            return [assertion_trace,file_line]
     def find_file_in_sourceLocation(self,data_dict):
         if isinstance(data_dict, dict):
             if "sourceLocation" in data_dict and isinstance(data_dict["sourceLocation"], dict) and "file" in data_dict["sourceLocation"]:
@@ -100,8 +98,6 @@ class ControlGraphGenerator():
                 if result:
                     return result
         return False
-    def is_assignment(self,statement):
-        return ("=" in statement) and (not ">=" in statement) and (not "==" in statement) and (not "<=" in statement)
     def is_state(self,statement):
         return "State" in statement
     def extract_line_number(self,statement):
@@ -117,6 +113,12 @@ class ControlGraphGenerator():
             return match.group(1)
         else:
             return None
+    def get_state_info(self,fileName,trace_name,line_number):
+        res=""
+        for dic in self.state_info[trace_name][fileName]:
+            if dic.get(line_number)!=None:
+                res=res+dic[line_number]
+        return res
     # 清洗trace json file的结构，将不需要的key去掉
     def reduce_trace_json(self):
         if self.trace_json_file !=None:

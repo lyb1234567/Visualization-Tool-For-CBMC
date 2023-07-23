@@ -9,9 +9,10 @@ class MultiFileDialog(QDialog):
         self.layout = QVBoxLayout(self)
         self.checkboxes = []
         for file in files:
-            checkbox = QCheckBox(file, self)
-            self.layout.addWidget(checkbox)
-            self.checkboxes.append(checkbox)
+            if file.endswith('.c') or file.endswith('.h'):
+                checkbox = QCheckBox(file, self)
+                self.layout.addWidget(checkbox)
+                self.checkboxes.append(checkbox)
 
         self.buttonBox = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel, self)
         self.buttonBox.accepted.connect(self.accept)

@@ -12,6 +12,7 @@ from UI.utils import extract_file_name_without_extension,wait_for_file
 from UI.Terminal import Terminal
 from UI.Fileselection import MultiFileDialog
 from JsonViwer.MainJsonWindow import MainWindow as jsonWindow
+from ControlFlowGraph.ControlFlowGraphGenerator import ControlGraphGenerator
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -20,6 +21,7 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.mainWidget)
         self.jsonwindow=None
         self.fileChange=False
+        self.cfg=None
         self.mainLayout = QVBoxLayout(self.mainWidget)  # Create main layout
 
         self.tabWidget = QTabWidget()
@@ -121,14 +123,14 @@ class MainWindow(QMainWindow):
         dockWidget.setWidget(widget)
         return dockWidget
 
-    def openFile(self, file_path=None,line_number=None,SOURCE_TYPE=None):
+    def openFile(self, file_path=None,line_number=None,SOURCE_TYPE=None,cfg=None,trace_num=None):
         if not file_path:
             options = QFileDialog.Options()
             options |= QFileDialog.DontUseNativeDialog
             file_path, _ = QFileDialog.getOpenFileName(self, 'Open File', '', 'C Files (*.c);;JSON Files (*.json)', options=options)
             if not file_path:
                 return
-        textEdit = TextEdit(self,SOURCE_TYPE=SOURCE_TYPE)
+        textEdit = TextEdit(self,SOURCE_TYPE=SOURCE_TYPE,fileName=extract_file_name(file_path),trace_num=trace_num,cfg=cfg)
         try:
             with open(file_path, 'r') as f:
                 fileData = f.read()    
@@ -222,17 +224,19 @@ class MainWindow(QMainWindow):
         tab = self.tabWidget.widget(index)
         if tab:
             fileName=extract_file_name(tab.fileName)
-            command='cbmc {0} --trace --json-ui > {1}.json'.format(fileName,extract_file_name_without_extension(tab.fileName))
-            result = subprocess.run([command], shell=True, capture_output=True, text=True)
+            command_1='cbmc {0} --trace --json-ui > {1}.json'.format(fileName,extract_file_name_without_extension(tab.fileName))
+            command_2='cbmc {0} --trace > trace.txt'.format(fileName,extract_file_name_without_extension(tab.fileName))
+            result = subprocess.run([command_1], shell=True, capture_output=True, text=True)
+            subprocess.run([command_2], shell=True, capture_output=True, text=True)
             jsonfile="{0}.json".format(extract_file_name_without_extension(tab.fileName))
+            self.cfg=ControlGraphGenerator(trace_file='trace.txt')
             if (os.path.exists(jsonfile)):
                 if not self.jsonwindow or  self.jsonFileChange:
-                    self.jsonwindow=jsonWindow(jsonfile,editor_window=self)
+                    self.jsonwindow=jsonWindow(jsonfile,editor_window=self,cfg=self.cfg)
                     self.jsonFileChange=True
                     self.jsonwindow.treeViewer.ExpandAllFailure()
                     self.jsonwindow.show()
-
-            print_result(result,self,command)
+            print_result(result,self,command_1)
         else:
             QMessageBox.warning(self,"Warning", "Choose a file to open!!")
     
@@ -257,26 +261,42 @@ class MainWindow(QMainWindow):
             selected_files=None
         combined_file_name=""
 
-        if selected_files:
-           for file in selected_files:
-               file=extract_file_name(file)
-               combined_file_name=combined_file_name+file+" "
-        build_goto_file=None
-        generate_json_file=None
-        outputFile, ok = QInputDialog.getText(self, 'Output file', 'Enter output file name')
-        if ok and outputFile:
-            build_goto_file="goto-cc "+combined_file_name+"-o "+outputFile
-        if build_goto_file:
-            subprocess.run([build_goto_file], shell=True, capture_output=True, text=True)
-            generate_json_file='cbmc {0} --trace --json-ui > {1}.json'.format(outputFile,outputFile)
-        result = subprocess.run([generate_json_file], shell=True, capture_output=True, text=True)
-        print_result(result,self,generate_json_file)
-        jsonfile="{0}.json".format(outputFile)
-        wait_for_file(jsonfile)
-        if os.path.exists(jsonfile):
-            if not self.jsonwindow or self.fileChange:
-                self.jsonwindow=jsonWindow(jsonfile,editor_window=self)
-                self.jsonFileChange=True
-                self.jsonwindow.show() 
+        if selected_files and len(selected_files)>1:
+            for file in selected_files:
+                file=extract_file_name(file)
+                combined_file_name=combined_file_name+file+" "
+            build_goto_file=None
+            generate_json_file=None
+            outputFile, ok = QInputDialog.getText(self, 'Output file', 'Enter output file name')
+            if ok and outputFile:
+                build_goto_file="goto-cc "+combined_file_name+"-o "+outputFile
+            if build_goto_file:
+                subprocess.run([build_goto_file], shell=True, capture_output=True, text=True)
+                generate_json_file='cbmc {0} --trace --json-ui > {1}.json'.format(outputFile,outputFile)
+            result = subprocess.run([generate_json_file], shell=True, capture_output=True, text=True)
+            print_result(result,self,generate_json_file)
+            jsonfile="{0}.json".format(outputFile)
+            wait_for_file(jsonfile)
+            self.cfg=ControlGraphGenerator(trace_file='trace.txt')
+            if os.path.exists(jsonfile):
+                if not self.jsonwindow or self.fileChange:
+                    self.jsonwindow=jsonWindow(jsonfile,editor_window=self,cfg=self.cfg)
+                    self.jsonFileChange=True
+                    self.jsonwindow.show()
+        elif selected_files and len(selected_files)==1:
+            fileName=selected_files[0]
+            command_1='cbmc {0} --trace --json-ui > {1}.json'.format(fileName,extract_file_name_without_extension(fileName))
+            command_2='cbmc {0} --trace > trace.txt'.format(fileName,extract_file_name_without_extension(fileName))
+            result = subprocess.run([command_1], shell=True, capture_output=True, text=True)
+            subprocess.run([command_2], shell=True, capture_output=True, text=True)
+            jsonfile="{0}.json".format(extract_file_name_without_extension(fileName))
+            self.cfg=ControlGraphGenerator(trace_file='trace.txt')
+            if (os.path.exists(jsonfile)):
+                if not self.jsonwindow or  self.jsonFileChange:
+                    self.jsonwindow=jsonWindow(jsonfile,editor_window=self,cfg=self.cfg)
+                    self.jsonFileChange=True
+                    self.jsonwindow.treeViewer.ExpandAllFailure()
+                    self.jsonwindow.show()
+            print_result(result,self,command_1)
         
         
