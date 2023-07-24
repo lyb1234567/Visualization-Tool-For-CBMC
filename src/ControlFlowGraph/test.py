@@ -17,4 +17,4 @@ if __name__=="__main__":
     state_str = "State 91 file <builtin-library-printf> function printf line 17 thread 0"
     cfg.load_trace_data()
     cfg.clean_tarce_file()
-    # print(cfg.assertion_trace_total)
+    print(cfg.state_info)

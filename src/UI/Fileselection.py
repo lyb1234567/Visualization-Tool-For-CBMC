@@ -18,6 +18,5 @@ class MultiFileDialog(QDialog):
         self.buttonBox.accepted.connect(self.accept)
         self.buttonBox.rejected.connect(self.reject)
         self.layout.addWidget(self.buttonBox)
-
     def getSelectedFiles(self):
         return [cb.text() for cb in self.checkboxes if cb.isChecked()]

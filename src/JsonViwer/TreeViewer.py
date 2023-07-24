@@ -3,6 +3,7 @@ TODO
 1. Visualization of trace trees
 2. user should be able to see the counterexamples by hovering around the highlighted code
 '''
+from graphviz import Digraph
 import os
 import sys
 import json
@@ -11,6 +12,7 @@ sys.path.append(root_folder)
 from PyQt5.QtWidgets import QTreeWidget,QTreeWidgetItem,QMenu,QAction,QDialog
 from PyQt5.QtCore import Qt
 from JsonViwer.FailureKeyDialog import FailureKeyListDialog
+from JsonViwer.TextfileViewer import TextFileViewer
 from UI.utils import extract_file_name_without_extension,extract_variables,is_trace_file
 from ControlFlowGraph.ControlFlowGraphGenerator import ControlGraphGenerator, Source_Type
 class TreeViewer(QTreeWidget):
@@ -94,6 +96,16 @@ class TreeViewer(QTreeWidget):
                     viewTraceAction = QAction("View Trace", self)
                     viewTraceAction.triggered.connect(lambda: self.viewtraces(pass_trace_file=trace_file,cfg=self.cfg,trace_num=trace_num))
                     contextMenu.addAction(viewTraceAction)
+                    parent=currentItem.parent().parent()
+                    assertion_statement=None
+                    for i in range(parent.childCount()):
+                        sibling=parent.child(i)
+                        if sibling.text(0)=="description":
+                            assertion_statement=sibling.child(0).text(1)
+                    if assertion_statement!=None:
+                        printTraceAction = QAction("print traces", self)
+                        printTraceAction.triggered.connect(lambda: self.print_traces(assertion_statement))
+                        contextMenu.addAction(printTraceAction)
                 if currentItem.parent().text(0)=="lhs":
                     # TODO:右键点击lhs可以返回到对应的文件代码行中
                     navigate_file_name=None
@@ -116,8 +128,19 @@ class TreeViewer(QTreeWidget):
                 
                     
         # show the context menu
-
         contextMenu.exec_(event.globalPos())     
+    def print_traces(self,assertion_statement):
+        import time
+        dot = Digraph(comment='Assertion Tracing')
+        assertion_trace=self.cfg.assertion_trace_total[assertion_statement]
+        for idx, step in enumerate(assertion_trace):
+                # Adding the index to the node name to differentiate nodes with the same value
+                dot.node(f'{step}_{idx}', label=step, shape='box', style='rounded', width='2', height='1')
+
+                # Don't try to add an edge for the first item in the list
+                if idx > 0:
+                    dot.edge(f'{assertion_trace[idx-1]}_{idx-1}', f'{step}_{idx}')
+        dot.render('Trace_graph/assertion_trace.gv', view=False)
     def viewFailure(self):
         seachFailure=True
         failureDialog=FailureKeyListDialog(self.FailureList)

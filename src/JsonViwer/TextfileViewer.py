@@ -25,5 +25,3 @@ class TextFileViewer(QMainWindow):
 
         # Set the QWidget as the central widget of the QMainWindow
         self.setCentralWidget(central_widget)
-
-# Example usage

@@ -65,6 +65,7 @@ class ControlGraphGenerator():
                        file_name=self.extract_file(line)
                        next(file)
                        assignment=next(file)
+                       traces.append(assignment)
                        temp_assignment_line={}
                        temp_assignment_line[line_number]=assignment
                        if file_line.get(file_name)==None:
