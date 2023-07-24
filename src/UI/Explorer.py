@@ -6,7 +6,7 @@ root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(root_folder)
 from UI.utils import extract_file_name
 from UI.TextEdit import TextEdit
-from UI.utils import extract_file_name_without_extension
+from UI.utils import extract_file_name_without_extension,extract_file_name
 from JsonViwer.MainJsonWindow import MainWindow as jsonWindow
 class ExplorerWidget(QWidget):
     def __init__(self,window):
@@ -30,9 +30,11 @@ class ExplorerWidget(QWidget):
         else:
             if file_path not in self.check_file_lst:
                 self.window.openFile(file_path)
+                self.window.cur_Text_Edit=TextEdit(window=self.window,fileName=extract_file_name(file_path))
                 self.check_file_lst.append(file_path)
             else:
                 self.window.switchToFile(file_path)
+                self.window.cur_Text_Edit=TextEdit(window=self.window,fileName=extract_file_name(file_path))
 
     def getFilesInFolder(self, folder_path):
         folder_model = QFileSystemModel()

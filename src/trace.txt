@@ -18,22 +18,22 @@ Unwinding loop zero_array.0 iteration 7 file test_2.c line 23 function zero_arra
 Unwinding loop zero_array.0 iteration 8 file test_2.c line 23 function zero_array thread 0
 Unwinding loop zero_array.0 iteration 9 file test_2.c line 23 function zero_array thread 0
 Unwinding loop zero_array.0 iteration 10 file test_2.c line 23 function zero_array thread 0
-Runtime Symex: 0.002154s
+Runtime Symex: 0.00194009s
 size of program expression: 119 steps
 simple slicing removed 9 assignments
 Generated 13 VCC(s), 13 remaining after simplification
-Runtime Postprocess Equation: 1.4968e-05s
+Runtime Postprocess Equation: 9.037e-06s
 Passing problem to propositional reduction
 converting SSA
-Runtime Convert SSA: 0.000423414s
+Runtime Convert SSA: 0.000396363s
 Running propositional reduction
 Post-processing
-Runtime Post-process: 2.685e-06s
+Runtime Post-process: 2.545e-06s
 Solving with MiniSAT 2.2.1 with simplifier
 817 variables, 601 clauses
 SAT checker: instance is SATISFIABLE
-Runtime Solver: 0.000325581s
-Runtime decision procedure: 0.00083807s
+Runtime Solver: 0.000257843s
+Runtime decision procedure: 0.000725028s
 Building error trace
 
 ** Results:

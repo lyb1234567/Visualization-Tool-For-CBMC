@@ -1,10 +1,28 @@
 
 from PyQt5.QtGui import QTextCursor
-from PyQt5.QtGui import QColor, QTextCursor, QTextCharFormat, QSyntaxHighlighter
+from PyQt5.QtGui import QColor, QTextCursor, QTextCharFormat, QSyntaxHighlighter,QTextDocument
 from PyQt5.QtWidgets import QTextEdit,QToolTip
 from PyQt5.QtCore import QEvent
 from ControlFlowGraph.ControlFlowGraphGenerator import Source_Type
+class SearchHighlighter(QSyntaxHighlighter):
+    def __init__(self, parent=None):
+        super(SearchHighlighter, self).__init__(parent)
+        self.text_to_highlight = ""
+        self.highlight_format = QTextCharFormat()
+        self.highlight_format.setBackground(QColor("yellow"))  # Set the highlight background to yellow
 
+    def set_highlight_text(self, text):
+        
+        self.text_to_highlight = text
+        self.rehighlight()
+
+    def highlightBlock(self, text):
+        if self.text_to_highlight:
+            index = text.lower().find(self.text_to_highlight.lower())
+            while index >= 0:
+                length = len(self.text_to_highlight)
+                self.setFormat(index, length, self.highlight_format)
+                index = text.lower().find(self.text_to_highlight.lower(), index + length)
 class MyHighlighter(QSyntaxHighlighter):
     def __init__(self, parent=None,SOURCE_TYPE=None):
         super(MyHighlighter, self).__init__(parent)
@@ -37,6 +55,7 @@ class TextEdit(QTextEdit):
         self.counterexamples=counterexamples
         self.cfg=cfg
         self.trace_num=trace_num
+        self.text_to_search = ''
     def event(self, event):
         if (event.type() == QEvent.ToolTip):
             pos = event.pos()
@@ -114,14 +133,6 @@ class TextEdit(QTextEdit):
         end_position = cursor.position()
         start_position=end_position-len(line_text.strip())
         return start_position, end_position-1
-    def counterexamplemessgae(self):
-        messages = []
-        if self.counterexamples:
-            for key, values in self.counterexamples.items():
-                value_str = " and ".join(str(value) for value in values)
-                messages.append(f"{key} is {value_str}")
-        message = "Property Violated, when " + ", ".join(messages)
-        return message
     def get_line_text(self, line_number):
         """Get the text of a specific line in the QTextEdit."""
         # Create a new QTextCursor attached to the QTextEdit document
@@ -139,3 +150,21 @@ class TextEdit(QTextEdit):
 
         # Return the selected text
         return cursor.selectedText()
+    def search_and_highlight(self, text):
+        self.text_to_search = text
+        self.highlight_all_occurrences()
+
+    def highlight_all_occurrences(self):
+        extra_selections = []
+        if self.text_to_search:
+            highlight_format = QTextCharFormat()
+            highlight_format.setBackground(QColor("yellow"))
+            cursor = self.document().find(self.text_to_search)
+            while not cursor.isNull():
+                selection = QTextEdit.ExtraSelection()
+                selection.format = highlight_format
+                selection.cursor = cursor
+                extra_selections.append(selection)
+                cursor = self.document().find(self.text_to_search, cursor.position() + 1)
+        print(extra_selections)
+        self.setExtraSelections(extra_selections)

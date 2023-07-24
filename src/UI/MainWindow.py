@@ -2,8 +2,9 @@ import os
 import sys
 root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(root_folder)
-from PyQt5.QtWidgets import QMainWindow,QAction, QFileDialog, QInputDialog, QTabWidget, QDockWidget, QFileSystemModel,QVBoxLayout,QWidget,QDialog,QMessageBox
+from PyQt5.QtWidgets import QMainWindow,QAction, QFileDialog, QInputDialog, QTabWidget, QDockWidget, QFileSystemModel,QVBoxLayout,QWidget,QDialog,QMessageBox,QShortcut
 from PyQt5.QtCore import QDir
+from PyQt5.QtGui import QKeySequence
 import subprocess
 from UI.utils import extract_file_name,print_result
 from UI.TextEdit import TextEdit
@@ -19,13 +20,14 @@ class MainWindow(QMainWindow):
         self.setGeometry(100, 100, 800, 600)
         self.mainWidget = QWidget(self)  # Create main widget
         self.setCentralWidget(self.mainWidget)
+        self.cur_Text_Edit=None
         self.jsonwindow=None
         self.fileChange=False
         self.cfg=None
         self.mainLayout = QVBoxLayout(self.mainWidget)  # Create main layout
 
         self.tabWidget = QTabWidget()
-
+        self.tabWidget.currentChanged.connect(self.on_tab_changed)
         # Add tabWidget to the layout instead of setting it as centralWidget
         self.mainLayout.addWidget(self.tabWidget)
         
@@ -33,7 +35,9 @@ class MainWindow(QMainWindow):
         self.mainLayout.addWidget(self.terminal)  # Add the terminal to the layout
 
 
-    
+        self.find_shortcut = QShortcut(QKeySequence("Ctrl+F"), self)
+                # Connect the triggered signal of the shortcut to a slot method
+        self.find_shortcut.activated.connect(self.handle_find)
         self.tabWidget.setTabsClosable(True)
         self.tabWidget.tabCloseRequested.connect(self.closeTab)
 
@@ -103,7 +107,25 @@ class MainWindow(QMainWindow):
         self.check_tab_lst=[]
         self.counterexmaples={}
 
-    
+    def on_tab_changed(self, index):
+        # Get the currently selected TextEdit
+        currentTextEdit = self.tabWidget.widget(index)
+        # Get the fileName property of the current TextEdit
+        fileName = currentTextEdit.fileName if currentTextEdit else None
+        # Now you can use fileName or currentTextEdit for whatever you want
+        # For example, if you want to create a new editor for the selected file:
+        if fileName:
+            self.cur_Text_Edit= TextEdit(self,fileName=extract_file_name(fileName))
+    def handle_find(self):
+        text, ok = QInputDialog.getText(self, "Search", "Enter text to search:")
+        if ok and text:
+            # Assume self.editor is a reference to your TextEdit instance
+            if self.cur_Text_Edit.fileName:
+                if not self.cur_Text_Edit.toPlainText():
+                    with open(self.cur_Text_Edit.fileName, 'r') as f:
+                        fileData = f.read()  
+                        self.cur_Text_Edit.setText(fileData)  
+            self.cur_Text_Edit.search_and_highlight(text)
     def openExplorer(self):
         self.explorer=self.setupExplorer()
     
@@ -131,6 +153,7 @@ class MainWindow(QMainWindow):
             if not file_path:
                 return
         textEdit = TextEdit(self,SOURCE_TYPE=SOURCE_TYPE,fileName=extract_file_name(file_path),trace_num=trace_num,cfg=cfg)
+        self.cur_Text_Edit=textEdit
         try:
             with open(file_path, 'r') as f:
                 fileData = f.read()    

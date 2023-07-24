@@ -104,7 +104,7 @@ class TreeViewer(QTreeWidget):
                             assertion_statement=sibling.child(0).text(1)
                     if assertion_statement!=None:
                         printTraceAction = QAction("print traces", self)
-                        printTraceAction.triggered.connect(lambda: self.print_traces(assertion_statement))
+                        printTraceAction.triggered.connect(lambda: self.print_traces_graph(assertion_statement))
                         contextMenu.addAction(printTraceAction)
                 if currentItem.parent().text(0)=="lhs":
                     # TODO:右键点击lhs可以返回到对应的文件代码行中
@@ -129,7 +129,7 @@ class TreeViewer(QTreeWidget):
                     
         # show the context menu
         contextMenu.exec_(event.globalPos())     
-    def print_traces(self,assertion_statement):
+    def print_traces_graph(self,assertion_statement):
         import time
         dot = Digraph(comment='Assertion Tracing')
         assertion_trace=self.cfg.assertion_trace_total[assertion_statement]
