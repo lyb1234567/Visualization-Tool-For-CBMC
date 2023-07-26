@@ -9,12 +9,14 @@ import sys
 import json
 root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(root_folder)
-from PyQt5.QtWidgets import QTreeWidget,QTreeWidgetItem,QMenu,QAction,QDialog
+from PyQt5.QtWidgets import QTreeWidget,QTreeWidgetItem,QMenu,QAction,QDialog,QGraphicsScene,QGraphicsView
 from PyQt5.QtCore import Qt
 from JsonViwer.FailureKeyDialog import FailureKeyListDialog
 from JsonViwer.TextfileViewer import TextFileViewer
 from UI.utils import extract_file_name_without_extension,extract_variables,is_trace_file
 from ControlFlowGraph.ControlFlowGraphGenerator import ControlGraphGenerator, Source_Type
+from GraphViewer.NodeItem import Node
+from GraphViewer.ArrowItem import Arrow
 class TreeViewer(QTreeWidget):
     def __init__(self,editor_window=None,json_window=None,filePath=None,cfg=None,trace_num=None):
         super().__init__()
@@ -36,6 +38,7 @@ class TreeViewer(QTreeWidget):
         self.json_window=json_window
         self.trace_num=0
         self.cfg=cfg
+        self.graphicView=None
         # 这个变量是用来传递trace name的，在用户想要看trace的时候
         self.trace_view_num=trace_num
         self.counterNum=0
@@ -104,43 +107,42 @@ class TreeViewer(QTreeWidget):
                             assertion_statement=sibling.child(0).text(1)
                     if assertion_statement!=None:
                         printTraceAction = QAction("print traces", self)
-                        printTraceAction.triggered.connect(lambda: self.print_traces_graph(assertion_statement))
-                        contextMenu.addAction(printTraceAction)
-                if currentItem.parent().text(0)=="lhs":
-                    # TODO:右键点击lhs可以返回到对应的文件代码行中
-                    navigate_file_name=None
-                    naviagte_line_number=None
-                    parent_parent=currentItem.parent().parent()
-                    for i in range(parent_parent.childCount()):
-                        sibling=parent_parent.child(i)
-                        if sibling.text(0)=="sourceLocation":
-                            for j in range(sibling.childCount()):
-                                            sibling_child=sibling.child(j)
-                                            if sibling_child.text(0)=="file":
-                                                navigate_file_name=sibling_child.child(0).text(1)
-                                            if sibling_child.text(0)=="line":
-                                                naviagte_line_number=sibling_child.child(0).text(1)
-                    nodeAction = QAction("View Source File", self)
-                    nodeAction.triggered.connect(lambda: self.viewSourceFile(navigate_file_name,naviagte_line_number,SOURCE_TYPE=Source_Type.TRACE_SOURCE,cfg=self.cfg,trace_num=self.trace_view_num))
-                    contextMenu.addAction(nodeAction)
-                    
-                                            
-                
-                    
+                        printTraceAction.triggered.connect(lambda: self.print_traces_graph(assertion_statement,trace_num=trace_num))
+                        contextMenu.addAction(printTraceAction)              
         # show the context menu
         contextMenu.exec_(event.globalPos())     
-    def print_traces_graph(self,assertion_statement):
-        import time
-        dot = Digraph(comment='Assertion Tracing')
+    def print_traces_graph(self,assertion_statement,trace_num=None):
         assertion_trace=self.cfg.assertion_trace_total[assertion_statement]
-        for idx, step in enumerate(assertion_trace):
-                # Adding the index to the node name to differentiate nodes with the same value
-                dot.node(f'{step}_{idx}', label=step, shape='box', style='rounded', width='2', height='1')
-
-                # Don't try to add an edge for the first item in the list
-                if idx > 0:
-                    dot.edge(f'{assertion_trace[idx-1]}_{idx-1}', f'{step}_{idx}')
-        dot.render('Trace_graph/assertion_trace.gv', view=False)
+        y = 0
+        prev_node = None
+        scene = QGraphicsScene()
+        for statement in assertion_trace:
+            if isinstance(statement,dict):
+                for key in statement.keys():
+                    node = Node(text=key,cfg=self.cfg,trace_num=trace_num,tree_viewer=self)
+                    node.node_info.update(statement[key])
+                node.setPos(0, y)
+                y += 100  # Adjust this value to change the vertical spacing between nodes
+                scene.addItem(node)
+                if prev_node is not None:
+                    arrow = Arrow(prev_node, node)
+                    scene.addItem(arrow)
+                prev_node = node
+            else:
+                node = Node(text=statement,cfg=self.cfg,trace_num=trace_num,tree_viewer=self)
+                node.setPos(0, y)
+                y += 100  # Adjust this value to change the vertical spacing between nodes
+                scene.addItem(node)
+                if prev_node is not None:
+                    arrow = Arrow(prev_node, node)
+                    scene.addItem(arrow)
+                prev_node = node
+        self.graphicView = QGraphicsView(scene)
+        self.graphicView.resize(800, 600)
+        self.graphicView.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.graphicView.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.graphicView.show()
+            
     def viewFailure(self):
         seachFailure=True
         failureDialog=FailureKeyListDialog(self.FailureList)

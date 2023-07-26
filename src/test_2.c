@@ -22,7 +22,7 @@ void increment_ptr(int *value) {
 void zero_array(int *array, int size) {
     for(int i = 0; i < size; i++) {
         array[i] = 1;  // Set the value to 1 to make the next assertion fail
-        assert(array[i+1] == 0);
+        assert(i<4);
     }
 }
 
