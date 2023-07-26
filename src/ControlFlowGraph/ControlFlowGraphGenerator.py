@@ -46,38 +46,11 @@ class ControlGraphGenerator():
             self.assertion_trace_total.update(assertion_trace)
             self.state_info.update(cur_state_info)
         self.remove_trace_files()
-    # 
-    def update_iteration_state_info(self):
-        if self.state_info:
-            for trace_name in self.state_info.keys():
-                cur_trace_dict=self.state_info[trace_name]
-                for cur_item in cur_trace_dict.items():
-                    cur_item=self.add_iteration_info(cur_item)
-    def add_iteration_info(self,trace):
-        line_counts = {}
-        new_trace = []
-        for item in trace:
-            if isinstance(item,dict):
-                for line in item.keys():
-                    if line_counts.get(line)==None:
-                        line_counts[line]=1
-                    else:
-                        line_counts[line]=line_counts[line]+1
-        trace_iteration_cnt={}
-        for item in trace:
-            if isinstance(item,dict):
-                for line,trace_statement in item.items():
-                    if line_counts[line]>1:
-                        if trace_iteration_cnt.get(line)==None:
-                            trace_iteration_cnt[line]=1
-                            item={line:"iteration"+" {0}".format(trace_iteration_cnt[line])+": "+trace_statement}
-                        else:
-                            trace_iteration_cnt[line]=trace_iteration_cnt[line]+1
-                            item={line:"iteration"+" {0}".format(trace_iteration_cnt[line])+": "+trace_statement}
-                    new_trace.append(item)
-            else:
-                new_trace.append(item)
-        return new_trace
+    # 遍历某个文件的对应行数的信息，如果对应的variable,并且是在同一行，那么就判定为循环中的varibale
+    # 所以输入格式就是类似于：
+    # {'test.c': [{12: '  num1=11'}, {13: '  num2=9'}, {14: '  array={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }'}, {15: '  num=10'}, {16: '  num=9'}]}
+    def update_iteration(self,trace):
+        pass
     # 删除所有trace文件
     def remove_trace_files(self):
         trace_files = glob.glob('trace_*.txt')
@@ -107,7 +80,9 @@ class ControlGraphGenerator():
                     #   获取十进制的值以及二进制的值
                        [assignment,binary_format]=self.clean_assignment(next(file))
                        binary_format=binary_format.replace(")","")
+                       variable_name=self.extract_assignment_variable(assignment.strip())
                        temp_assignment_info[assignment]={}
+                       temp_assignment_info[assignment]['variable']=variable_name
                        temp_assignment_info[assignment]['file']=file_name
                        temp_assignment_info[assignment]['line']=line_number
                        temp_assignment_info[assignment]['binary_format']=binary_format
@@ -139,6 +114,7 @@ class ControlGraphGenerator():
             assertion_trace[assertion_key]=[]
             for i in range(len(traces)):
                 assertion_trace[assertion_key].append(traces[i])
+            print(file_line)
             return [assertion_trace,file_line]
     # 从sourceLocation 获得 file name
     def find_file_in_sourceLocation(self,data_dict):
