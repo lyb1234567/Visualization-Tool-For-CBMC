@@ -114,7 +114,6 @@ class ControlGraphGenerator():
             assertion_trace[assertion_key]=[]
             for i in range(len(traces)):
                 assertion_trace[assertion_key].append(traces[i])
-            print(file_line)
             return [assertion_trace,file_line]
     # 从sourceLocation 获得 file name
     def find_file_in_sourceLocation(self,data_dict):

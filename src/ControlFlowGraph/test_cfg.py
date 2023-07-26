@@ -14,6 +14,7 @@ if __name__=="__main__":
 ]
     trace_file="trace.txt"
     cfg=ControlGraphGenerator(trace_file=trace_file)
+    print(cfg.assertion_trace_total)
     # statement='value=1'
     # print(cfg.extract_assignment_variable(statement))
     # for key,value in cfg.state_info['trace_4'].items():
