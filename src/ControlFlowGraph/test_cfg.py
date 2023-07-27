@@ -14,7 +14,15 @@ if __name__=="__main__":
 ]
     trace_file="trace.txt"
     cfg=ControlGraphGenerator(trace_file=trace_file)
-    print(cfg.assertion_trace_total)
+    # assertion_stmt='assertion i<4'
+    # print(cfg.get_assertion_info(assertion_statement='assertion x > 3',fileName='file2.c',line_number=9))
+    # print(cfg.assertion_trace_total['assertion x > 3'])
+    # fileName='test_2.c'
+    # trace_name='trace_4'
+    # line_number=23
+    # print(cfg.state_info['trace_4'])
+    # print(cfg.state_info[trace_name])
+    # print(cfg.state_info[trace_name][fileName])
     # statement='value=1'
     # print(cfg.extract_assignment_variable(statement))
     # for key,value in cfg.state_info['trace_4'].items():

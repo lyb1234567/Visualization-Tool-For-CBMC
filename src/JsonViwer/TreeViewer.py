@@ -121,6 +121,7 @@ class TreeViewer(QTreeWidget):
                 for key in statement.keys():
                     node = Node(text=key,cfg=self.cfg,trace_num=trace_num,tree_viewer=self)
                     node.node_info.update(statement[key])
+                    node.node_info.update({'assertion_statement':assertion_statement})
                 node.setPos(0, y)
                 y += 100  # Adjust this value to change the vertical spacing between nodes
                 scene.addItem(node)
@@ -159,9 +160,9 @@ class TreeViewer(QTreeWidget):
             trace_json_window=JsonWindow(filePath=pass_trace_file,editor_window=self.editor_window,cfg=cfg,trace_num=trace_num)
             trace_json_window.treeViewer.ExpandAllCounterExamples()
             trace_json_window.show()
-    def viewSourceFile(self,filename,linenumber,SOURCE_TYPE=None,cfg=None,trace_num=None):
+    def viewSourceFile(self,filename,linenumber,SOURCE_TYPE=None,cfg=None,trace_num=None,assertion_statement=None):
         #  viewer sourcefile TODO
-        self.editor_window.openFile(filename,linenumber,SOURCE_TYPE,cfg=cfg,trace_num=trace_num)
+        self.editor_window.openFile(filename,linenumber,SOURCE_TYPE,cfg=cfg,trace_num=trace_num,assertion_statement=assertion_statement)
     def getSourceFile(self,Failure_id):
         #  viewer sourcefile TODO
          Failure_index= self.FailureDict[Failure_id]

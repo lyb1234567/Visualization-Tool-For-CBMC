@@ -45,7 +45,7 @@ class MyHighlighter(QSyntaxHighlighter):
 
 
 class TextEdit(QTextEdit):
-    def __init__(self,window,line_number=None,counterexamples=None,SOURCE_TYPE=None,cfg=None,trace_num=None,fileName=None):
+    def __init__(self,window,line_number=None,counterexamples=None,SOURCE_TYPE=None,cfg=None,trace_num=None,fileName=None,assertion_statement=None):
         super().__init__()
         self.fileName = fileName
         self.textChanged.connect(self.handleTextChanged)
@@ -56,6 +56,7 @@ class TextEdit(QTextEdit):
         self.cfg=cfg
         self.trace_num=trace_num
         self.text_to_search = ''
+        self.assertion_statement=assertion_statement
     def event(self, event):
         if (event.type() == QEvent.ToolTip):
             pos = event.pos()
@@ -70,7 +71,7 @@ class TextEdit(QTextEdit):
                     # TODO: 当用户鼠标悬停高亮代码的时候，应该得到对应文件中对应行数代码的state information
                     trace_name='trace_'+str(self.trace_num)
                     line_number=self.highlighter.highlight_line_number+1
-                    state_info=self.cfg.get_state_info(fileName=self.fileName,trace_name=trace_name,line_number=line_number)
+                    state_info=self.cfg.get_assertion_info(fileName=self.fileName,line_number=self.line_number,assertion_statement=self.assertion_statement)
                     QToolTip.showText(event.globalPos(), state_info)
 
             else:
@@ -166,5 +167,4 @@ class TextEdit(QTextEdit):
                 selection.cursor = cursor
                 extra_selections.append(selection)
                 cursor = self.document().find(self.text_to_search, cursor.position() + 1)
-        print(extra_selections)
         self.setExtraSelections(extra_selections)

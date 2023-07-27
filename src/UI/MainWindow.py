@@ -145,14 +145,14 @@ class MainWindow(QMainWindow):
         dockWidget.setWidget(widget)
         return dockWidget
 
-    def openFile(self, file_path=None,line_number=None,SOURCE_TYPE=None,cfg=None,trace_num=None):
+    def openFile(self, file_path=None,line_number=None,SOURCE_TYPE=None,cfg=None,trace_num=None,assertion_statement=None):
         if not file_path:
             options = QFileDialog.Options()
             options |= QFileDialog.DontUseNativeDialog
             file_path, _ = QFileDialog.getOpenFileName(self, 'Open File', '', 'C Files (*.c);;JSON Files (*.json)', options=options)
             if not file_path:
                 return
-        textEdit = TextEdit(self,SOURCE_TYPE=SOURCE_TYPE,fileName=extract_file_name(file_path),trace_num=trace_num,cfg=cfg)
+        textEdit = TextEdit(self,SOURCE_TYPE=SOURCE_TYPE,fileName=extract_file_name(file_path),trace_num=trace_num,cfg=cfg,assertion_statement=assertion_statement,line_number=line_number)
         self.cur_Text_Edit=textEdit
         try:
             with open(file_path, 'r') as f:

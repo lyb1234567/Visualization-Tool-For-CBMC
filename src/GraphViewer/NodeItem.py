@@ -27,8 +27,9 @@ class Node(QGraphicsItem):
         result=""
         if self.node_info:
             for key in self.node_info.keys():
-                temp="{0}:{1}".format(key,self.node_info[key])+'\n'
-                result=result+temp 
+                if key!='assertion_statement':
+                    temp="{0}:{1}".format(key,self.node_info[key])+'\n'
+                    result=result+temp 
         return result 
     def hoverEnterEvent(self, event):
         info=self.info()
@@ -38,7 +39,8 @@ class Node(QGraphicsItem):
     def viewSourceFile(self):
         filename=self.node_info['file']
         line_number=self.node_info['line']
-        self.tree_viewer.viewSourceFile(filename,line_number,SOURCE_TYPE=Source_Type.TRACE_SOURCE,cfg=self.cfg,trace_num=self.trace_num)
+        assertion_statement=self.node_info['assertion_statement']
+        self.tree_viewer.viewSourceFile(filename,line_number,SOURCE_TYPE=Source_Type.TRACE_SOURCE,cfg=self.cfg,trace_num=self.trace_num,assertion_statement=assertion_statement)
     def add_child(self, child):
         arrow = Arrow(self, child)
         self.arrows.append(arrow)

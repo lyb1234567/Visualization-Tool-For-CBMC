@@ -24,6 +24,7 @@ class ControlGraphGenerator():
         if self.trace_file!=None:
             self.load_trace_data()
             self.clean_tarce_file()
+            self.update_assertion_statement_total()
     # 导入trace.ext文件
     def load_trace_data(self):
         if self.trace_file:
@@ -46,12 +47,40 @@ class ControlGraphGenerator():
             self.assertion_trace_total.update(assertion_trace)
             self.state_info.update(cur_state_info)
         self.remove_trace_files()
-    # 遍历某个文件的对应行数的信息，如果对应的variable,并且是在同一行，那么就判定为循环中的varibale
-    # 所以输入格式就是类似于：
-    # {'test.c': [{12: '  num1=11'}, {13: '  num2=9'}, {14: '  array={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }'}, {15: '  num=10'}, {16: '  num=9'}]}
-    def update_iteration(self,trace):
-        pass
-    # 删除所有trace文件
+
+    def update_assertion_statement_total(self):
+        for assertion_statement in self.assertion_trace_total.keys():
+            self.assertion_trace_total[assertion_statement]=self.add_iteration_to_statements(assertion_statement)
+    # 给定某个trace 的 state,然后遍历所有的文件，都更新一遍iteration
+    def add_iteration_to_statements(self,assertion_statement):
+        trace_lst=self.assertion_trace_total[assertion_statement]
+        matching_statements = {}
+        # 和之前一样，我们先找出满足条件的语句
+        for trace_dict in trace_lst:
+            for statement, info in trace_dict.items():
+                if 'variable' in info:
+                    variable_name = info['variable']
+                    key = (info['file'], info['line'], variable_name)
+
+                    if key in matching_statements:
+                        matching_statements[key].append(trace_dict)
+                    else:
+                        matching_statements[key] = [trace_dict]
+
+        # 对于每一个满足条件的语句，我们修改其在trace_lst中的对应字典元素的key
+        for key, stmts in matching_statements.items():
+            if len(stmts) > 1:
+                for i, stmt_dict in enumerate(stmts, start=1):
+                    # 获取原先的key
+                    old_key = list(stmt_dict.keys())[0]
+
+                    # 创建新的key
+                    new_key = f'iteration {i} : {old_key.strip()}'
+
+                    # 从字典中删除旧的key并添加新的key
+                    stmt_dict[new_key] = stmt_dict.pop(old_key)
+
+        return trace_lst
     def remove_trace_files(self):
         trace_files = glob.glob('trace_*.txt')
         # Delete all trace files
@@ -151,6 +180,17 @@ class ControlGraphGenerator():
             return match.group(1)
         else:
             return None
+    def get_assertion_info(self,fileName,line_number,assertion_statement):
+        assertion_traces=self.assertion_trace_total[assertion_statement]
+        res=""
+        for trace_dict in assertion_traces:
+            for statement in trace_dict.keys():
+                info=trace_dict[statement]
+                checkFile=info['file']==fileName
+                checkLine=info['line']==line_number
+                if checkFile and checkLine:
+                    res=res+statement+'\n'
+        return res
     # 从特定的trace中，特定的文件特定的行数中获取state information
     # 因为可能会存在loop，所以用叠加的方式
     def get_state_info(self,fileName,trace_name,line_number):
