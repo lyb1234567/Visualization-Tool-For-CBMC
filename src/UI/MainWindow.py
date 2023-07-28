@@ -13,7 +13,7 @@ from UI.Explorer import ExplorerWidget
 from UI.utils import extract_file_name_without_extension,wait_for_file
 from UI.Terminal import Terminal
 from UI.Fileselection import MultiFileDialog
-from UI.Search import SearchDialog
+from UI.SearchDialog import SearchDialog
 from JsonViwer.MainJsonWindow import MainWindow as jsonWindow
 from ControlFlowGraph.ControlFlowGraphGenerator import ControlGraphGenerator
 class MainWindow(QMainWindow):
@@ -124,8 +124,9 @@ class MainWindow(QMainWindow):
         #     self.editor= TextEdit(self,fileName=extract_file_name(fileName))
     def handle_find(self):
         currentTextEdit = self.tabWidget.currentWidget()
-        self.search_dialog.text_edit=currentTextEdit
-        self.search_dialog.setVisible(not self.search_dialog.isVisible())
+        if currentTextEdit:
+            self.search_dialog.text_edit=currentTextEdit
+            self.search_dialog.setVisible(not self.search_dialog.isVisible())
     def openExplorer(self):
         self.explorer=self.setupExplorer()
     
@@ -184,10 +185,12 @@ class MainWindow(QMainWindow):
                 pass
             textEdit.fileName = fileName
             fileName = extract_file_name(fileName)
-        if fileName not in  self.check_tab_lst:
-            self.tabWidget.addTab(textEdit, fileName)
-            self.switchToFile(temp)
-            self.check_tab_lst.append(fileName)
+            if fileName not in  self.check_tab_lst:
+                self.tabWidget.addTab(textEdit, fileName)
+                self.switchToFile(temp)
+                self.check_tab_lst.append(fileName)
+        else:
+            pass
 
     def saveFile(self):
         textEdit = self.tabWidget.currentWidget()
@@ -254,7 +257,7 @@ class MainWindow(QMainWindow):
             self.cfg=ControlGraphGenerator(trace_file='trace.txt')
             if (os.path.exists(jsonfile)):
                 if not self.jsonwindow or  self.jsonFileChange:
-                    self.jsonwindow=jsonWindow(jsonfile,editor_window=self,cfg=self.cfg)
+                    self.jsonwindow=jsonWindow(jsonfile,editor_window=self,cfg=self.cfg,run_by_editor=True)
                     self.jsonFileChange=True
                     self.jsonwindow.treeViewer.ExpandAllFailure()
                     self.jsonwindow.show()
@@ -304,7 +307,7 @@ class MainWindow(QMainWindow):
             self.cfg=ControlGraphGenerator(trace_file='trace.txt')
             if os.path.exists(jsonfile):
                 if not self.jsonwindow or self.fileChange:
-                    self.jsonwindow=jsonWindow(jsonfile,editor_window=self,cfg=self.cfg)
+                    self.jsonwindow=jsonWindow(jsonfile,editor_window=self,cfg=self.cfg,run_by_editor=True)
                     self.jsonFileChange=True
                     self.jsonwindow.show()
         elif selected_files and len(selected_files)==1:
@@ -317,7 +320,7 @@ class MainWindow(QMainWindow):
             self.cfg=ControlGraphGenerator(trace_file='trace.txt')
             if (os.path.exists(jsonfile)):
                 if not self.jsonwindow or  self.jsonFileChange:
-                    self.jsonwindow=jsonWindow(jsonfile,editor_window=self,cfg=self.cfg)
+                    self.jsonwindow=jsonWindow(jsonfile,editor_window=self,cfg=self.cfg,run_by_editor=True)
                     self.jsonFileChange=True
                     self.jsonwindow.treeViewer.ExpandAllFailure()
                     self.jsonwindow.show()

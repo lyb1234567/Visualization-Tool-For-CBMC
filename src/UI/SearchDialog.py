@@ -29,6 +29,7 @@ class SearchDialog(QDialog):
 
         self.matches = []
         self.current_match = -1
+        self.resize(300,100)
     def perform_search(self):
         self.matches.clear()
         self.current_match = -1

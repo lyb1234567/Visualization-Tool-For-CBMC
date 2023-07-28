@@ -184,21 +184,3 @@ class TextEdit(QTextEdit):
 
         # Return the selected text
         return cursor.selectedText()
-    def search_and_highlight(self, text):
-        self.text_to_search = text
-        self.highlight_all_occurrences()
-
-    def highlight_all_occurrences(self):
-        extra_selections = []
-        if self.text_to_search:
-            highlight_format = QTextCharFormat()
-            highlight_format.setBackground(QColor("yellow"))
-            cursor = self.document().find(self.text_to_search)
-            while not cursor.isNull():
-                selection = QTextEdit.ExtraSelection()
-                selection.format = highlight_format
-                selection.cursor = cursor
-                extra_selections.append(selection)
-                cursor = self.document().find(self.text_to_search, cursor.position() + 1)
-        print(extra_selections)
-        self.setExtraSelections(extra_selections)

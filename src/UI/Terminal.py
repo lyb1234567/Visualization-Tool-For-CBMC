@@ -52,7 +52,7 @@ class Terminal(QPlainTextEdit):
                     self.cfg=ControlGraphGenerator(trace_file='trace.txt')
                     self.editor_window.cfg=self.cfg
                     if not self.jsonwindow or  self.jsonFileChange:
-                        self.jsonwindow=jsonWindow(jsonfile,editor_window=self.editor_window,cfg=self.cfg)
+                        self.jsonwindow=jsonWindow(jsonfile,editor_window=self.editor_window,cfg=self.cfg,run_by_editor=True)
                         self.jsonwindow.treeViewer.ExpandAllFailure()
                         self.jsonFileChange=True
                     self.jsonwindow.show()
@@ -93,7 +93,7 @@ class Terminal(QPlainTextEdit):
                     self.editor_window.cfg=self.cfg
                     if os.path.exists(jsonfile):
                         if not self.jsonwindow or self.jsonFileChange:
-                            self.jsonwindow=jsonWindow(jsonfile,editor_window=self.editor_window,cfg=self.cfg)
+                            self.jsonwindow=jsonWindow(jsonfile,editor_window=self.editor_window,cfg=self.cfg,run_by_editor=True)
                             self.jsonFileChange=True
                         self.jsonwindow.show() 
             else:

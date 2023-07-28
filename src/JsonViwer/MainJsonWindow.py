@@ -15,12 +15,13 @@ from JsonViwer.KeysDialog import KeyListDialog
 from UI.utils import is_trace_file
 from ControlFlowGraph.ControlFlowGraphGenerator import ControlGraphGenerator
 class MainWindow(QMainWindow):
-    def __init__(self,filePath=None,editor_window=None,cfg=None,trace_num=None):
+    def __init__(self,filePath=None,editor_window=None,cfg=None,trace_num=None,run_by_editor=False):
         super().__init__()
         self.filePath=filePath
         self.editor_window=editor_window
         self.editor_cfg=cfg
         self.trace_num=trace_num
+        self.run_by_editor=run_by_editor
         self.initUI()
         if filePath:
             self.loadJSON()
@@ -148,9 +149,11 @@ class MainWindow(QMainWindow):
                 else:
                     if not self.treeViewer.FailureList :
                         QMessageBox.information(self,"Success", "Verification Successful")
-                    else:
+                    elif self.treeViewer.FailureList and self.run_by_editor:
                         self.treeViewer.ExpandAllFailure()
                         QMessageBox.critical(self,"Failure", "{0} failed cases!!".format(len(self.treeViewer.FailureList)))
+                    else:
+                        pass
     def search(self):
         current=self.formatdict[self.formatComboBox.currentIndex()]
         if not self.checkLoad:
