@@ -28,8 +28,10 @@ class MainWindow(QMainWindow):
 
     def initUI(self):
         self.setGeometry(300, 300, 600, 500)
-        self.setWindowTitle('JSON Viewer')
-
+        if self.run_by_editor==True:
+            self.setWindowTitle('JSON Viewer')
+        else:
+            self.setWindowTitle('JSON Viewer(only view)')
         self.checkLoad=False
         # Create QMenuBar
         self.menuBar = QMenuBar(self)
@@ -63,9 +65,9 @@ class MainWindow(QMainWindow):
         self.setMenuBar(self.menuBar)
 
         if self.filePath:
-            self.treeViewer = TreeViewer(self.editor_window,self,filePath=self.filePath,cfg=self.editor_cfg,trace_num=self.trace_num)
+            self.treeViewer = TreeViewer(self.editor_window,self,filePath=self.filePath,cfg=self.editor_cfg,trace_num=self.trace_num,run_by_editor=self.run_by_editor)
         else:
-            self.treeViewer = TreeViewer(self.editor_window,self,cfg=self.editor_cfg,trace_num=self.trace_num)
+            self.treeViewer = TreeViewer(self.editor_window,self,cfg=self.editor_cfg,trace_num=self.trace_num,run_by_editor=self.run_by_editor)
         self.textViewer = TextViewer()
 
         self.stackedLayout = QStackedLayout()

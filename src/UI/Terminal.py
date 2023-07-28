@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow,QAction, QFileDialog, QInputDialog, QTabWidget, QDockWidget, QFileSystemModel,QPlainTextEdit,QVBoxLayout
+from PyQt5.QtWidgets import QMainWindow,QAction, QFileDialog, QInputDialog, QTabWidget, QDockWidget, QFileSystemModel,QPlainTextEdit,QVBoxLayout,QMessageBox
 from PyQt5.QtCore import QProcess,Qt
 from PyQt5.QtGui import QTextCursor
 import subprocess
@@ -21,81 +21,117 @@ class Terminal(QPlainTextEdit):
         self.process.start('cmd.exe')
         welcome_message = "Welcome to the terminal! You can now only use the following commands: xxx \n"
         self.appendPlainText(welcome_message)
+        self.break_point_info=[]
 
-
+    # 记录断点的文件名和位置，当用户选择某个asssertion statement的trace的时候，
+    # 会遍历这个字典，获取所有的trace信息，并且打印出来
+    # 更新的信息格式如下：{'filename':line_number}，比如{'file2.c':12}
+    def set_breakpoint(self,file_name,line_number):
+        self.break_point_info.append({file_name:line_number})
+    # 清空所有break point的信息，比如把某个trace 图关闭之后
+    def clear_breakpoint(self):
+        self.break_point_info.clear()
     def dataReady(self):
         cursor = self.textCursor()
         cursor.movePosition(QTextCursor.End)
         cursor.insertText(str(self.process.readAll(), 'utf-8'))
         self.ensureCursorVisible()
-
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_Return:
             print(self.toPlainText())
             command = self.toPlainText().split('\n')[-2]
             last_command=self.toPlainText().split('\n')[-1]
             last_command=extract_command(last_command)
-            print(last_command)
+            
             if last_command.strip() == 'clear':
                 self.process.write(command.encode('utf-8'))
                 self.process.write(b'\n')
                 self.clear()
+            elif last_command.strip().startswith('breakpoint'):
+                args = last_command.split(' ')
+                if len(args) == 3:
+                    file_name, line_number = args[1], args[2]
+                    self.set_breakpoint(file_name, line_number)
+                    self.process.write(b'\n')
+                else:
+                    self.appendPlainText('Invalid command. Usage: breakpoint <filename> <line_number>')
+                    self.process.write(b'\n')
             elif last_command.strip().startswith('run'):
                 file_lst=last_command.split(' ')[1:]
-                if len(file_lst)==1:
+                if len(file_lst)==0:
+                   QMessageBox.warning(self,"Warning", "Need a file to run!")
+                   self.process.write(b'\n')
+                elif len(file_lst)==1:
                     file_name=extract_file_name_without_extension(file_lst[0])
-                    command='cbmc {0} --trace --json-ui > {1}.json'.format(file_lst[0],file_name)
-                    command_trace_file='cbmc {0} --trace > trace.txt'.format(file_lst[0],file_name)
-                    result = subprocess.run([command], shell=True, capture_output=True, text=True)
-                    subprocess.run([command_trace_file], shell=True, capture_output=True, text=True)
-                    jsonfile="{0}.json".format(file_name)
-                    self.cfg=ControlGraphGenerator(trace_file='trace.txt')
-                    self.editor_window.cfg=self.cfg
-                    if not self.jsonwindow or  self.jsonFileChange:
-                        self.jsonwindow=jsonWindow(jsonfile,editor_window=self.editor_window,cfg=self.cfg,run_by_editor=True)
-                        self.jsonwindow.treeViewer.ExpandAllFailure()
-                        self.jsonFileChange=True
-                    self.jsonwindow.show()
-                    if result.stdout:
-                        self.appendPlainText(result.stdout)
-                        self.process.write(b'\n')
-                    elif result.stderr:
-                        self.appendPlainText(result.stderr)
-                        self.process.write(b'\n')
+                    if os.path.exists(file_name):
+                        command='cbmc {0} --trace --json-ui > {1}.json'.format(file_lst[0],file_name)
+                        command_trace_file='cbmc {0} --trace > trace.txt'.format(file_lst[0],file_name)
+                        result = subprocess.run([command], shell=True, capture_output=True, text=True)
+                        subprocess.run([command_trace_file], shell=True, capture_output=True, text=True)
+                        jsonfile="{0}.json".format(file_name)
+                        self.cfg=ControlGraphGenerator(trace_file='trace.txt')
+                        self.editor_window.cfg=self.cfg
+                        if not self.jsonwindow or  self.jsonFileChange:
+                            self.jsonwindow=jsonWindow(jsonfile,editor_window=self.editor_window,cfg=self.cfg,run_by_editor=True)
+                            self.jsonwindow.treeViewer.ExpandAllFailure()
+                            self.jsonFileChange=True
+                        self.jsonwindow.show()
+                        if result.stdout:
+                            self.appendPlainText(result.stdout)
+                            self.process.write(b'\n')
+                        elif result.stderr:
+                            self.appendPlainText(result.stderr)
+                            self.process.write(b'\n')
+                        else:
+                            self.appendPlainText(command)
+                            self.process.write(b'\n')
                     else:
-                        self.appendPlainText(command)
+                        QMessageBox.warning(self,"Warning", "{0} is not in the directory!!".format(file_name))
                         self.process.write(b'\n')
                 else:
                     file_combined=""
+                    file_not_exists=""
+                    all_exists=True
+                    non_exist_lst=[]
+                    # 检查文件名是否存在，如果存在就执行，不存在提示
                     for file in file_lst:
-                        file_combined=file_combined+file+" "
-                    outputFile, ok = QInputDialog.getText(self, 'Output file', 'Enter output file name')
-                    if outputFile and ok:
-                        build_goto_file="goto-cc "+file_combined+"-o "+outputFile
-                    if build_goto_file:
-                        subprocess.run([build_goto_file], shell=True, capture_output=True, text=True)
-                        generate_json_file='cbmc {0} --trace --json-ui > {1}.json'.format(outputFile,outputFile)
-                        generate_trace_file = 'cbmc {0} --trace > trace.txt'.format(outputFile)
-                    result = subprocess.run([generate_json_file], shell=True, capture_output=True, text=True)
-                    subprocess.run([generate_trace_file], shell=True, capture_output=True, text=True)
-                    if result.stdout:
-                        self.appendPlainText(result.stdout)
-                        self.process.write(b'\n')
-                    elif result.stderr:
-                        self.appendPlainText(result.stderr)
-                        self.process.write(b'\n')
+                        if not os.path.exists(file):
+                            non_exist_lst.append(file)
+                            all_exists=False
+                            file_not_exists=file_not_exists+file+", "
+                        else:
+                            file_combined=file_combined+file+" "
+                    if all_exists:
+                        outputFile, ok = QInputDialog.getText(self, 'Output file', 'Enter output file name')
+                        if outputFile and ok:
+                            build_goto_file="goto-cc "+file_combined+"-o "+outputFile
+                        if build_goto_file:
+                            subprocess.run([build_goto_file], shell=True, capture_output=True, text=True)
+                            generate_json_file='cbmc {0} --trace --json-ui > {1}.json'.format(outputFile,outputFile)
+                            generate_trace_file = 'cbmc {0} --trace > trace.txt'.format(outputFile)
+                        result = subprocess.run([generate_json_file], shell=True, capture_output=True, text=True)
+                        subprocess.run([generate_trace_file], shell=True, capture_output=True, text=True)
+                        if result.stdout:
+                            self.appendPlainText(result.stdout)
+                            self.process.write(b'\n')
+                        elif result.stderr:
+                            self.appendPlainText(result.stderr)
+                            self.process.write(b'\n')
+                        else:
+                            self.appendPlainText(generate_json_file)
+                            self.process.write(b'\n')
+                        jsonfile="{0}.json".format(outputFile)
+                        wait_for_file(jsonfile)
+                        self.cfg=ControlGraphGenerator(trace_file='trace.txt')
+                        self.editor_window.cfg=self.cfg
+                        if os.path.exists(jsonfile):
+                            if not self.jsonwindow or self.jsonFileChange:
+                                self.jsonwindow=jsonWindow(jsonfile,editor_window=self.editor_window,cfg=self.cfg,run_by_editor=True)
+                                self.jsonFileChange=True
+                            self.jsonwindow.show()
                     else:
-                        self.appendPlainText(generate_json_file)
+                        QMessageBox.warning(self,"Warning", "{0} not in the directory!!".format(file_not_exists))
                         self.process.write(b'\n')
-                    jsonfile="{0}.json".format(outputFile)
-                    wait_for_file(jsonfile)
-                    self.cfg=ControlGraphGenerator(trace_file='trace.txt')
-                    self.editor_window.cfg=self.cfg
-                    if os.path.exists(jsonfile):
-                        if not self.jsonwindow or self.jsonFileChange:
-                            self.jsonwindow=jsonWindow(jsonfile,editor_window=self.editor_window,cfg=self.cfg,run_by_editor=True)
-                            self.jsonFileChange=True
-                        self.jsonwindow.show() 
             else:
                 result = subprocess.run([last_command], shell=True, capture_output=True, text=True)
                 if result.stdout:

@@ -17,8 +17,16 @@ from UI.utils import extract_file_name_without_extension,extract_variables,is_tr
 from ControlFlowGraph.ControlFlowGraphGenerator import ControlGraphGenerator, Source_Type
 from GraphViewer.NodeItem import Node
 from GraphViewer.ArrowItem import Arrow
+class MyGraphicsView(QGraphicsView):
+    def __init__(self, scene,editor_window=None):
+        self.editor_window=editor_window
+        super().__init__(scene)
+    def closeEvent(self, event):
+        self.editor_window.terminal.clear_breakpoint()
+        # 在这里做你想做的事
+        event.accept()  # 确认关闭事件
 class TreeViewer(QTreeWidget):
-    def __init__(self,editor_window=None,json_window=None,filePath=None,cfg=None,trace_num=None):
+    def __init__(self,editor_window=None,json_window=None,filePath=None,cfg=None,trace_num=None,run_by_editor=False):
         super().__init__()
         self.setColumnCount(2)
         self.setHeaderLabels(['Key', 'Value'])
@@ -39,6 +47,7 @@ class TreeViewer(QTreeWidget):
         self.trace_num=0
         self.cfg=cfg
         self.graphicView=None
+        self.run_by_editor=run_by_editor
         # 这个变量是用来传递trace name的，在用户想要看trace的时候
         self.trace_view_num=trace_num
         self.counterNum=0
@@ -81,13 +90,13 @@ class TreeViewer(QTreeWidget):
         if not currentItem:
             pass
         # Check the text of the current item and adjust the context menu accordingly
-        if currentItem.text(0):
+        if currentItem.text(0) and self.run_by_editor:
             if currentItem.text(0) == 'result':
                 failureAction = QAction("View failure", self)
                 failureAction.triggered.connect(self.viewFailure)
                 contextMenu.addAction(failureAction)
         else:
-            if currentItem.text(1):
+            if currentItem.text(1) and self.run_by_editor:
                 if currentItem.text(1) == 'FAILURE':
                     filename=self.getSourceFile(id(currentItem))['file']
                     linenumber=self.getSourceFile(id(currentItem))['line']
@@ -107,8 +116,20 @@ class TreeViewer(QTreeWidget):
                         printTraceAction.triggered.connect(lambda: self.print_traces_graph(assertion_statement,trace_num=trace_num))
                         contextMenu.addAction(printTraceAction)              
         # show the context menu
-        contextMenu.exec_(event.globalPos())     
+        contextMenu.exec_(event.globalPos())
+    # 获取某个特定assertion_statement，对应的break point trace 信息
+    # break point的列表信息可能如下[{'file2.c':12},{'file2.c':13}]
+    def get_break_point_info(self,assertion_statement):
+        res=""
+        for file_line_dict in self.editor_window.terminal.break_point_info:
+            for file_name,line_number in file_line_dict.items():
+                temp_info=self.cfg.get_assertion_info(fileName=file_name,line_number=int(line_number),assertion_statement=assertion_statement)
+                print('temp_info:',temp_info)
+                temp_res="at {0}, line {1}".format(file_name,line_number)+"\n"+'\t'+temp_info+'\n'
+                res=res+temp_res
+        return res
     def print_traces_graph(self,assertion_statement,trace_num=None):
+        self.editor_window.terminal.appendPlainText(self.get_break_point_info(assertion_statement))
         assertion_trace=self.cfg.assertion_trace_total[assertion_statement]
         y = 0
         prev_node = None
@@ -135,12 +156,11 @@ class TreeViewer(QTreeWidget):
                     arrow = Arrow(prev_node, node)
                     scene.addItem(arrow)
                 prev_node = node
-        self.graphicView = QGraphicsView(scene)
+        self.graphicView = MyGraphicsView(scene,editor_window=self.editor_window)
         self.graphicView.resize(800, 600)
         self.graphicView.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.graphicView.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.graphicView.show()
-            
     def viewFailure(self):
         seachFailure=True
         failureDialog=FailureKeyListDialog(self.FailureList)

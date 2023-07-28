@@ -189,7 +189,7 @@ class ControlGraphGenerator():
                 checkFile=info['file']==fileName
                 checkLine=info['line']==line_number
                 if checkFile and checkLine:
-                    res=res+statement+'\n'
+                    res=res+statement.strip()+'\n'
         return res
     # 从特定的trace中，特定的文件特定的行数中获取state information
     # 因为可能会存在loop，所以用叠加的方式

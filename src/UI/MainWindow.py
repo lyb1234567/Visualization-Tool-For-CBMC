@@ -2,7 +2,7 @@ import os
 import sys
 root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(root_folder)
-from PyQt5.QtWidgets import QMainWindow,QAction, QFileDialog, QInputDialog, QTabWidget, QDockWidget
+from PyQt5.QtWidgets import QMainWindow,QAction, QFileDialog, QInputDialog, QTabWidget, QDockWidget,QSplitter
 from PyQt5.QtWidgets import QFileSystemModel,QVBoxLayout,QWidget,QDialog,QMessageBox,QShortcut,QLineEdit,QPushButton,QLabel,QHBoxLayout,QVBoxLayout
 from PyQt5.QtCore import Qt, QEvent
 from PyQt5.QtGui import QKeySequence
@@ -27,7 +27,7 @@ class MainWindow(QMainWindow):
         self.fileChange=False
         self.cfg=None
         self.mainLayout = QVBoxLayout(self.mainWidget)  # Create main layout
-
+        self.splitter = QSplitter()
         self.tabWidget = QTabWidget()
         self.tabWidget.currentChanged.connect(self.on_tab_changed)
         # Add tabWidget to the layout instead of setting it as centralWidget
