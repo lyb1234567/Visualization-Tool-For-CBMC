@@ -2,8 +2,9 @@ import os
 import sys
 root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(root_folder)
-from PyQt5.QtWidgets import QMainWindow,QAction, QFileDialog, QInputDialog, QTabWidget, QDockWidget, QFileSystemModel,QVBoxLayout,QWidget,QDialog,QMessageBox,QShortcut
-from PyQt5.QtCore import QDir
+from PyQt5.QtWidgets import QMainWindow,QAction, QFileDialog, QInputDialog, QTabWidget, QDockWidget
+from PyQt5.QtWidgets import QFileSystemModel,QVBoxLayout,QWidget,QDialog,QMessageBox,QShortcut,QLineEdit,QPushButton,QLabel,QHBoxLayout,QVBoxLayout
+from PyQt5.QtCore import Qt, QEvent
 from PyQt5.QtGui import QKeySequence
 import subprocess
 from UI.utils import extract_file_name,print_result
@@ -12,6 +13,7 @@ from UI.Explorer import ExplorerWidget
 from UI.utils import extract_file_name_without_extension,wait_for_file
 from UI.Terminal import Terminal
 from UI.Fileselection import MultiFileDialog
+from UI.Search import SearchDialog
 from JsonViwer.MainJsonWindow import MainWindow as jsonWindow
 from ControlFlowGraph.ControlFlowGraphGenerator import ControlGraphGenerator
 class MainWindow(QMainWindow):
@@ -20,7 +22,7 @@ class MainWindow(QMainWindow):
         self.setGeometry(100, 100, 800, 600)
         self.mainWidget = QWidget(self)  # Create main widget
         self.setCentralWidget(self.mainWidget)
-        self.cur_Text_Edit=None
+        self.editor=None
         self.jsonwindow=None
         self.fileChange=False
         self.cfg=None
@@ -33,13 +35,16 @@ class MainWindow(QMainWindow):
         
         self.terminal = Terminal(editor_window=self)  # Initialize the terminal
         self.mainLayout.addWidget(self.terminal)  # Add the terminal to the layout
-
-
         self.find_shortcut = QShortcut(QKeySequence("Ctrl+F"), self)
                 # Connect the triggered signal of the shortcut to a slot method
         self.find_shortcut.activated.connect(self.handle_find)
         self.tabWidget.setTabsClosable(True)
         self.tabWidget.tabCloseRequested.connect(self.closeTab)
+
+        self.search_dialog = SearchDialog(self)
+        self.search_dialog.hide()
+        self.installEventFilter(self)
+
 
         menubar = self.menuBar()
         fileMenu = menubar.addMenu('File')
@@ -107,6 +112,7 @@ class MainWindow(QMainWindow):
         self.check_tab_lst=[]
         self.counterexmaples={}
 
+
     def on_tab_changed(self, index):
         # Get the currently selected TextEdit
         currentTextEdit = self.tabWidget.widget(index)
@@ -114,18 +120,12 @@ class MainWindow(QMainWindow):
         fileName = currentTextEdit.fileName if currentTextEdit else None
         # Now you can use fileName or currentTextEdit for whatever you want
         # For example, if you want to create a new editor for the selected file:
-        if fileName:
-            self.cur_Text_Edit= TextEdit(self,fileName=extract_file_name(fileName))
+        # if fileName:
+        #     self.editor= TextEdit(self,fileName=extract_file_name(fileName))
     def handle_find(self):
-        text, ok = QInputDialog.getText(self, "Search", "Enter text to search:")
-        if ok and text:
-            # Assume self.editor is a reference to your TextEdit instance
-            if self.cur_Text_Edit.fileName:
-                if not self.cur_Text_Edit.toPlainText():
-                    with open(self.cur_Text_Edit.fileName, 'r') as f:
-                        fileData = f.read()  
-                        self.cur_Text_Edit.setText(fileData)  
-            self.cur_Text_Edit.search_and_highlight(text)
+        currentTextEdit = self.tabWidget.currentWidget()
+        self.search_dialog.text_edit=currentTextEdit
+        self.search_dialog.setVisible(not self.search_dialog.isVisible())
     def openExplorer(self):
         self.explorer=self.setupExplorer()
     
@@ -145,30 +145,29 @@ class MainWindow(QMainWindow):
         dockWidget.setWidget(widget)
         return dockWidget
 
-    def openFile(self, file_path=None,line_number=None,SOURCE_TYPE=None,cfg=None,trace_num=None,assertion_statement=None):
+    def openFile(self, file_path=None,line_number=None,SOURCE_TYPE=None,cfg=None,assertion_statement=None):
         if not file_path:
             options = QFileDialog.Options()
             options |= QFileDialog.DontUseNativeDialog
             file_path, _ = QFileDialog.getOpenFileName(self, 'Open File', '', 'C Files (*.c);;JSON Files (*.json)', options=options)
             if not file_path:
                 return
-        textEdit = TextEdit(self,SOURCE_TYPE=SOURCE_TYPE,fileName=extract_file_name(file_path),trace_num=trace_num,cfg=cfg,assertion_statement=assertion_statement,line_number=line_number)
-        self.cur_Text_Edit=textEdit
+        self.editor=TextEdit(self,SOURCE_TYPE=SOURCE_TYPE,fileName=extract_file_name(file_path),cfg=cfg,assertion_statement=assertion_statement,line_number=line_number)
         try:
             with open(file_path, 'r') as f:
-                fileData = f.read()    
-                textEdit.setText(fileData)
+                fileData = f.read()  
+                self.editor.setText(fileData)
                 if line_number:
                     tab_index=self.get_tabindex(file_path)
                     if tab_index !=None:
                         self.closeTab(tab_index)
-                    textEdit.highlight_line(int(line_number))
+                    self.editor.highlight_line(int(line_number))
                     # textEdit.counterexamples=self.counterexmaples[file_path]
-                textEdit.fileName = file_path
+                self.editor.fileName = file_path
                 temp=file_path
                 fileName = extract_file_name(file_path)
                 if fileName not in  self.check_tab_lst:
-                    self.tabWidget.addTab(textEdit, fileName)
+                    self.tabWidget.addTab(self.editor, fileName)
                     self.switchToFile(temp)
                     self.check_tab_lst.append(fileName)
         except:

@@ -1,22 +1,11 @@
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTextEdit, QPushButton, QLabel, QLineEdit, QVBoxLayout, QHBoxLayout, QDialog
 from PyQt5.QtGui import QTextCursor
 from PyQt5.QtCore import Qt, QEvent
-
-class TextEdit(QTextEdit):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.text = ''
-    
-    def setText(self, text):
-        super().setText(text)
-        self.text = text
-
-
 class SearchDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setWindowTitle('Search')
-        self.text_edit = parent.text_edit
+        self.text_edit = parent.tabWidget.currentWidget()
 
         self.search_box = QLineEdit(self)
         self.search_box.textChanged.connect(self.perform_search)  # change here
@@ -79,34 +68,3 @@ class SearchDialog(QDialog):
             self.match_label.setText('No results')
         else:
             self.match_label.setText(f'{self.current_match + 1} of {len(self.matches)}')
-
-class MainWindow(QMainWindow):
-    def __init__(self):
-        super().__init__()
-
-        self.text_edit = TextEdit(self)
-        self.text_edit.setText("Sample Text for Testing the Search Functionality.")
-        self.setCentralWidget(self.text_edit)
-
-        self.search_dialog = SearchDialog(self)
-        self.search_dialog.hide()
-
-        self.installEventFilter(self)
-
-    def eventFilter(self, obj, event):
-        if obj is self and event.type() == QEvent.KeyPress and event.key() == Qt.Key_F and event.modifiers() == Qt.ControlModifier:
-            self.search_dialog.setVisible(not self.search_dialog.isVisible())
-            return True
-        return super().eventFilter(obj, event)
-
-def main():
-    app = QApplication([])
-
-    window = MainWindow()
-    window.show()
-
-    app.exec_()
-
-if __name__ == '__main__':
-    main()
-

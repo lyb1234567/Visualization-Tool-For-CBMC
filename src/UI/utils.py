@@ -34,7 +34,6 @@ def wait_for_file(file_path):
         time.sleep(0.1)
     return
 
-
 def extract_variables(statement):
     # Define the keywords to be excluded
     keywords = ["assertion", "NULL"]

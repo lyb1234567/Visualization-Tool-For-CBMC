@@ -96,9 +96,6 @@ class TreeViewer(QTreeWidget):
                     nodeAction = QAction("View Source File", self)
                     nodeAction.triggered.connect(lambda: self.viewSourceFile(filename,linenumber,SOURCE_TYPE=Source_Type.FAILURE_SOURCE,cfg=self.cfg,trace_num=trace_num))
                     contextMenu.addAction(nodeAction)
-                    viewTraceAction = QAction("View Trace", self)
-                    viewTraceAction.triggered.connect(lambda: self.viewtraces(pass_trace_file=trace_file,cfg=self.cfg,trace_num=trace_num))
-                    contextMenu.addAction(viewTraceAction)
                     parent=currentItem.parent().parent()
                     assertion_statement=None
                     for i in range(parent.childCount()):
@@ -106,7 +103,7 @@ class TreeViewer(QTreeWidget):
                         if sibling.text(0)=="description":
                             assertion_statement=sibling.child(0).text(1)
                     if assertion_statement!=None:
-                        printTraceAction = QAction("print traces", self)
+                        printTraceAction = QAction("View traces", self)
                         printTraceAction.triggered.connect(lambda: self.print_traces_graph(assertion_statement,trace_num=trace_num))
                         contextMenu.addAction(printTraceAction)              
         # show the context menu
@@ -162,7 +159,7 @@ class TreeViewer(QTreeWidget):
             trace_json_window.show()
     def viewSourceFile(self,filename,linenumber,SOURCE_TYPE=None,cfg=None,trace_num=None,assertion_statement=None):
         #  viewer sourcefile TODO
-        self.editor_window.openFile(filename,linenumber,SOURCE_TYPE,cfg=cfg,trace_num=trace_num,assertion_statement=assertion_statement)
+        self.editor_window.openFile(filename,linenumber,SOURCE_TYPE,cfg=cfg,assertion_statement=assertion_statement)
     def getSourceFile(self,Failure_id):
         #  viewer sourcefile TODO
          Failure_index= self.FailureDict[Failure_id]

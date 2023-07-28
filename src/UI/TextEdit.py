@@ -45,18 +45,54 @@ class MyHighlighter(QSyntaxHighlighter):
 
 
 class TextEdit(QTextEdit):
-    def __init__(self,window,line_number=None,counterexamples=None,SOURCE_TYPE=None,cfg=None,trace_num=None,fileName=None,assertion_statement=None):
+    def __init__(self,editor_window,line_number=None,counterexamples=None,SOURCE_TYPE=None,cfg=None,fileName=None,assertion_statement=None):
         super().__init__()
         self.fileName = fileName
         self.textChanged.connect(self.handleTextChanged)
-        self.window=window
+        self.editor_window=editor_window
         self.line_number=line_number
         self.highlighter = MyHighlighter(self.document(),SOURCE_TYPE=SOURCE_TYPE)
         self.counterexamples=counterexamples
         self.cfg=cfg
-        self.trace_num=trace_num
         self.text_to_search = ''
         self.assertion_statement=assertion_statement
+        self.search_text = ""
+        self.match_count = 0
+        self.current_match = -1
+        self.matches = []
+
+    def search(self, text):
+        self.search_text = text
+        self.matches = []
+        self.match_count = 0
+        self.current_match = -1
+
+        # Find all matches
+        cursor = self.textCursor()
+        cursor.setPosition(0)
+
+        while cursor.find(text):
+            self.matches.append(cursor.position())
+            self.match_count += 1
+
+        self.find_next()
+
+    def find_next(self):
+        if self.matches:
+            self.current_match = (self.current_match + 1) % self.match_count
+            self.highlight_match()
+
+    def find_previous(self):
+        if self.matches:
+            self.current_match = (self.current_match - 1) % self.match_count
+            self.highlight_match()
+
+    def highlight_match(self):
+        # Highlight the current match
+        cursor = self.textCursor()
+        cursor.setPosition(self.matches[self.current_match])
+        cursor.movePosition(QTextCursor.Left, n=self.search_text)
+        self.setTextCursor(cursor)
     def event(self, event):
         if (event.type() == QEvent.ToolTip):
             pos = event.pos()
@@ -69,11 +105,8 @@ class TextEdit(QTextEdit):
                 range=self.get_line_positions(self.highlighter.highlight_line_number)
                 if position_in_line>=range[0] and position_in_line<=range[1]:
                     # TODO: 当用户鼠标悬停高亮代码的时候，应该得到对应文件中对应行数代码的state information
-                    trace_name='trace_'+str(self.trace_num)
-                    line_number=self.highlighter.highlight_line_number+1
                     state_info=self.cfg.get_assertion_info(fileName=self.fileName,line_number=self.line_number,assertion_statement=self.assertion_statement)
                     QToolTip.showText(event.globalPos(), state_info)
-
             else:
                 QToolTip.hideText()
             return True
@@ -88,10 +121,10 @@ class TextEdit(QTextEdit):
 
 
     def handleTextChanged(self):
-        currentIndex = self.window.tabWidget.currentIndex()
-        currentTitle = self.window.tabWidget.tabText(currentIndex)
+        currentIndex = self.editor_window.tabWidget.currentIndex()
+        currentTitle = self.editor_window.tabWidget.tabText(currentIndex)
         if not currentTitle.endswith('*'):
-           self.window.tabWidget.setTabText(currentIndex, currentTitle+'*')
+           self.editor_window.tabWidget.setTabText(currentIndex, currentTitle+'*')
     def navigate_to_line(self, line_number):
         """Navigate to a specific line in the QTextEdit."""
         # Create a new QTextCursor attached to the QTextEdit document
@@ -167,4 +200,5 @@ class TextEdit(QTextEdit):
                 selection.cursor = cursor
                 extra_selections.append(selection)
                 cursor = self.document().find(self.text_to_search, cursor.position() + 1)
+        print(extra_selections)
         self.setExtraSelections(extra_selections)

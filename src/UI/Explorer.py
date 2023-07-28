@@ -9,7 +9,7 @@ from UI.TextEdit import TextEdit
 from UI.utils import extract_file_name_without_extension,extract_file_name
 from JsonViwer.MainJsonWindow import MainWindow as jsonWindow
 class ExplorerWidget(QWidget):
-    def __init__(self,window):
+    def __init__(self,editor_window):
         super().__init__()
         self.treeView = QTreeView(self)
         self.model = QFileSystemModel()
@@ -20,7 +20,7 @@ class ExplorerWidget(QWidget):
         self.treeView.customContextMenuRequested.connect(self.showContextMenu)
         self.treeView.clicked.connect(self.handleItemClicked)
         self.check_file_lst=[]
-        self.window=window
+        self.editor_window=editor_window
         self.jsonwindow=None
 
     def handleItemClicked(self, index):
@@ -29,12 +29,12 @@ class ExplorerWidget(QWidget):
             self.treeView.expand(index)
         else:
             if file_path not in self.check_file_lst:
-                self.window.openFile(file_path)
-                self.window.cur_Text_Edit=TextEdit(window=self.window,fileName=extract_file_name(file_path))
+                self.editor_window.editor=TextEdit(editor_window=self.editor_window,fileName=extract_file_name(file_path))
+                self.editor_window.openFile(file_path)
                 self.check_file_lst.append(file_path)
             else:
-                self.window.switchToFile(file_path)
-                self.window.cur_Text_Edit=TextEdit(window=self.window,fileName=extract_file_name(file_path))
+                self.editor_window.editor=TextEdit(editor_window=self.editor_window,fileName=extract_file_name(file_path))
+                self.editor_window.switchToFile(file_path)
 
     def getFilesInFolder(self, folder_path):
         folder_model = QFileSystemModel()
@@ -65,7 +65,7 @@ class ExplorerWidget(QWidget):
 
     def loadjson(self,index):
         filePath=self.model.filePath(index)
-        self.jsonwindow=jsonWindow(filePath,editor_window=self.window)
+        self.jsonwindow=jsonWindow(filePath,editor_window=self.editor_window)
         self.jsonwindow.treeViewer.ExpandAllFailure()
         self.jsonwindow.show()
         
@@ -86,7 +86,7 @@ class ExplorerWidget(QWidget):
         if ok and fileName:
             if os.path.exists(fileName):
                 return
-            textEdit = TextEdit(self.window)  # create TextEdit instance
+            textEdit = TextEdit(editor_window=self.editor_window)  # create TextEdit instance
             with open(folder_name+'/'+fileName, 'w') as f:  # create an empty file
                 pass
             
