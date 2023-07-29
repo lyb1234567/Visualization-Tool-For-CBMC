@@ -22,7 +22,7 @@ class MyGraphicsView(QGraphicsView):
         self.editor_window=editor_window
         super().__init__(scene)
     def closeEvent(self, event):
-        self.editor_window.terminal.clear_breakpoint()
+        self.editor_window.terminal.clear_tracepoint()
         # 在这里做你想做的事
         event.accept()  # 确认关闭事件
 class TreeViewer(QTreeWidget):
@@ -119,17 +119,22 @@ class TreeViewer(QTreeWidget):
         contextMenu.exec_(event.globalPos())
     # 获取某个特定assertion_statement，对应的break point trace 信息
     # break point的列表信息可能如下[{'file2.c':12},{'file2.c':13}]
-    def get_break_point_info(self,assertion_statement):
+    def get_trace_point_info(self,assertion_statement):
         res=""
-        for file_line_dict in self.editor_window.terminal.break_point_info:
+        for file_line_dict in self.editor_window.terminal.trace_point_info:
             for file_name,line_number in file_line_dict.items():
                 temp_info=self.cfg.get_assertion_info(fileName=file_name,line_number=int(line_number),assertion_statement=assertion_statement)
-                print('temp_info:',temp_info)
-                temp_res="at {0}, line {1}".format(file_name,line_number)+"\n"+'\t'+temp_info+'\n'
+                if temp_info:
+                    temp_res="at {0}, line {1}".format(file_name,line_number)+"\n"+'\t'+temp_info+'\n'
+                else:
+                    temp_res="at {0}, line {1}".format(file_name,line_number)+"\n"+'\t'+"There is no specific trace information"+'\n'
                 res=res+temp_res
         return res
     def print_traces_graph(self,assertion_statement,trace_num=None):
-        self.editor_window.terminal.appendPlainText(self.get_break_point_info(assertion_statement))
+        self.editor_window.terminal.cur_assertion_statement=assertion_statement
+        self.editor_window.terminal.cfg=self.cfg
+        self.editor_window.terminal.appendPlainText(self.get_trace_point_info(assertion_statement))
+        self.editor_window.terminal.process.write(b'\n')
         assertion_trace=self.cfg.assertion_trace_total[assertion_statement]
         y = 0
         prev_node = None

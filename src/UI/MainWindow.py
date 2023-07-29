@@ -146,6 +146,7 @@ class MainWindow(QMainWindow):
         dockWidget.setWidget(widget)
         return dockWidget
 
+
     def openFile(self, file_path=None,line_number=None,SOURCE_TYPE=None,cfg=None,assertion_statement=None):
         if not file_path:
             options = QFileDialog.Options()

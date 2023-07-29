@@ -15,6 +15,5 @@ int main() {
     assert(isEven(11));
     assert(isEven(10)); // Asserting that num1 is even
     assert(isEven(num2)); // Asserting that num2 is not even
-
     return 0;
 }

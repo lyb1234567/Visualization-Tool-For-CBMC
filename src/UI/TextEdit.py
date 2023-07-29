@@ -134,7 +134,7 @@ class TextEdit(QTextEdit):
         cursor.movePosition(QTextCursor.Start)
 
         # Move down by line_number - 1 lines (zero-based)
-        for _ in range(line_number - 1):
+        for _ in range(line_number+1):
             cursor.movePosition(QTextCursor.Down)
 
         
@@ -145,6 +145,7 @@ class TextEdit(QTextEdit):
         self.setTextCursor(cursor)
     def highlight_line(self, line_number):
         self.highlighter.highlight_line(line_number - 1)
+        self.navigate_to_line(line_number)
     def get_line_positions(self, line_number):
         # Create a new QTextCursor attached to the QTextEdit document
         cursor = QTextCursor(self.document())
