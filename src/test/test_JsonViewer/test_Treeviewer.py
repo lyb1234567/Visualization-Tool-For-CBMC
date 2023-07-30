@@ -1,6 +1,6 @@
 import os
 import sys
-root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 sys.path.append(root_folder)
 from PyQt5.QtWidgets import QApplication
 from JsonViwer.TreeViewer import TreeViewer
@@ -74,6 +74,8 @@ class TestTreeViewer(unittest.TestCase):
         self.assertEqual(self.tree_viewer.foundItems[0].child(0).text(1),'FAILURE')
         self.assertEqual(self.tree_viewer.foundItems[1].text(0), 'status')
         self.assertEqual(self.tree_viewer.foundItems[1].child(0).text(1),'SUCCESS')
+
+        
            
 
 logger.add("/home/mirage/Visualization-Tool-For-CBMC/src/test/log/Test_JsonTreeViwer.log")

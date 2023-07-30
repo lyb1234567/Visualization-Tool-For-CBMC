@@ -60,33 +60,6 @@ class TextEdit(QTextEdit):
         self.match_count = 0
         self.current_match = -1
         self.matches = []
-
-    def search(self, text):
-        self.search_text = text
-        self.matches = []
-        self.match_count = 0
-        self.current_match = -1
-
-        # Find all matches
-        cursor = self.textCursor()
-        cursor.setPosition(0)
-
-        while cursor.find(text):
-            self.matches.append(cursor.position())
-            self.match_count += 1
-
-        self.find_next()
-
-    def find_next(self):
-        if self.matches:
-            self.current_match = (self.current_match + 1) % self.match_count
-            self.highlight_match()
-
-    def find_previous(self):
-        if self.matches:
-            self.current_match = (self.current_match - 1) % self.match_count
-            self.highlight_match()
-
     def highlight_match(self):
         # Highlight the current match
         cursor = self.textCursor()
@@ -105,8 +78,11 @@ class TextEdit(QTextEdit):
                 range=self.get_line_positions(self.highlighter.highlight_line_number)
                 if position_in_line>=range[0] and position_in_line<=range[1]:
                     # TODO: 当用户鼠标悬停高亮代码的时候，应该得到对应文件中对应行数代码的state information
-                    state_info=self.cfg.get_assertion_info(fileName=self.fileName,line_number=self.line_number,assertion_statement=self.assertion_statement)
-                    QToolTip.showText(event.globalPos(), state_info)
+                    try:
+                        state_info=self.cfg.get_assertion_info(fileName=self.fileName,line_number=self.line_number,assertion_statement=self.assertion_statement)
+                        QToolTip.showText(event.globalPos(), state_info)
+                    except KeyError:
+                        pass
             else:
                 QToolTip.hideText()
             return True
@@ -121,10 +97,11 @@ class TextEdit(QTextEdit):
 
 
     def handleTextChanged(self):
-        currentIndex = self.editor_window.tabWidget.currentIndex()
-        currentTitle = self.editor_window.tabWidget.tabText(currentIndex)
-        if not currentTitle.endswith('*'):
-           self.editor_window.tabWidget.setTabText(currentIndex, currentTitle+'*')
+        if hasattr(self.editor_window.tabWidget, 'currentIndex'):
+            currentIndex = self.editor_window.tabWidget.currentIndex()
+            currentTitle = self.editor_window.tabWidget.tabText(currentIndex)
+            if not currentTitle.endswith('*'):
+                self.editor_window.tabWidget.setTabText(currentIndex, currentTitle+'*')
     def navigate_to_line(self, line_number):
         """Navigate to a specific line in the QTextEdit."""
         # Create a new QTextCursor attached to the QTextEdit document

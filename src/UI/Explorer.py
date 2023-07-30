@@ -8,11 +8,17 @@ from UI.utils import extract_file_name
 from UI.TextEdit import TextEdit
 from UI.utils import extract_file_name_without_extension,extract_file_name
 from JsonViwer.MainJsonWindow import MainWindow as jsonWindow
+
+class MyFileSystemModel(QFileSystemModel):
+    def data(self, index, role):
+        if role == Qt.ToolTipRole:
+            return super().data(index, Qt.DisplayRole)
+        return super().data(index, role)
 class ExplorerWidget(QWidget):
     def __init__(self,editor_window):
         super().__init__()
         self.treeView = QTreeView(self)
-        self.model = QFileSystemModel()
+        self.model =MyFileSystemModel()
         self.model.setRootPath(QDir.currentPath())
         self.treeView.setModel(self.model)
         self.treeView.setRootIndex(self.model.index(QDir.currentPath()))

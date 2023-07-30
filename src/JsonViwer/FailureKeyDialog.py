@@ -1,12 +1,12 @@
 from PyQt5.QtWidgets import QDialog,QVBoxLayout,QListWidgetItem,QListWidget
 import copy
-class FailureKeyListDialog(QDialog):
-    def __init__(self, failure_lst,dict=None,parent=None):
-        super(FailureKeyListDialog, self).__init__(parent)
+class AssertionKeyListDialog(QDialog):
+    def __init__(self, assertion_lst,dict=None,parent=None):
+        super(AssertionKeyListDialog, self).__init__(parent)
 
-        self.failures = failure_lst 
+        self.assertion_lst = assertion_lst 
 
-        self.selected_key = None
+        self.selected_assertion_statement = None
         self.selected_keyorder=None
 
         self.initUI()
@@ -15,8 +15,8 @@ class FailureKeyListDialog(QDialog):
         self.layout = QVBoxLayout(self)
 
         self.listWidget = QListWidget(self)
-        for i  in range(len(self.failures)):
-            QListWidgetItem('Falure'+"_"+str(i), self.listWidget)
+        for i  in range(len(self.assertion_lst)):
+            QListWidgetItem(self.assertion_lst[i], self.listWidget)
 
         self.listWidget.itemClicked.connect(self.onItemClicked)
         self.layout.addWidget(self.listWidget)
@@ -25,8 +25,5 @@ class FailureKeyListDialog(QDialog):
         self.setGeometry(300, 300, 250, 150)
 
     def onItemClicked(self, item):
-        self.selected_key = item.text()
-        temp=self.selected_key.split('_')
-        self.selected_key='status'
-        self.selected_keyorder=temp[1]
+        self.selected_assertion_statement = item.text()
         self.accept()

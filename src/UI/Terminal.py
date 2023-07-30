@@ -63,14 +63,17 @@ class Terminal(QPlainTextEdit):
                 # make the text clickable (or perform whatever action you want to implement)
                 selected_text = self.textCursor().selectedText()
                 if selected_text:
-                    check_file_line,file_path,line_number=self.is_valid_file_path_with_line(selected_text)
-                    # Perform your action here, e.g., print the selected text
-                    if check_file_line:
-                       self.editor_window.openFile(cfg=self.cfg,file_path=file_path,line_number=line_number,SOURCE_TYPE=Source_Type.TRACE_SOURCE,assertion_statement=self.cur_assertion_statement)
-                    elif self.is_valid_file_path(file_path) and not check_file_line:
-                        self.editor_window.openFile(file_path=file_path)
-                    else:
-                        print(f"'{selected_text}' is not a valid file path.")
+                    try:
+                        check_file_line,file_path,line_number=self.is_valid_file_path_with_line(selected_text)
+                        # Perform your action here, e.g., print the selected text
+                        if check_file_line:
+                            self.editor_window.openFile(cfg=self.cfg,file_path=file_path,line_number=line_number,SOURCE_TYPE=Source_Type.TRACE_SOURCE,assertion_statement=self.cur_assertion_statement)
+                        elif self.is_valid_file_path(file_path) and not check_file_line:
+                            self.editor_window.openFile(file_path=file_path)
+                        else:
+                            print(f"'{selected_text}' is not a valid file path.")
+                    except:
+                            pass
     def eventFilter(self, source, event):
             if event.type() == QEvent.KeyPress and event.key() == Qt.Key_Control:
                 QApplication.setOverrideCursor(QCursor(Qt.PointingHandCursor))

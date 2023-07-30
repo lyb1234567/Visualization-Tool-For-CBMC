@@ -11,10 +11,9 @@ root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(root_folder)
 from PyQt5.QtWidgets import QTreeWidget,QTreeWidgetItem,QMenu,QAction,QDialog,QGraphicsScene,QGraphicsView
 from PyQt5.QtCore import Qt
-from JsonViwer.FailureKeyDialog import FailureKeyListDialog
-from JsonViwer.TextfileViewer import TextFileViewer
+from JsonViwer.FailureKeyDialog import AssertionKeyListDialog
 from UI.utils import extract_file_name_without_extension,extract_variables,is_trace_file
-from ControlFlowGraph.ControlFlowGraphGenerator import ControlGraphGenerator, Source_Type
+from ControlFlowGraph.ControlFlowGraphGenerator import Source_Type
 from GraphViewer.NodeItem import Node
 from GraphViewer.ArrowItem import Arrow
 class MyGraphicsView(QGraphicsView):
@@ -41,7 +40,7 @@ class TreeViewer(QTreeWidget):
         self.FailureReasonList=[]
         self.variableDict={}
         self.FailureDict={}
-        self.counterexamplesvariable={}
+        self.assertion_lst=[]
         self.editor_window=editor_window
         self.json_window=json_window
         self.trace_num=0
@@ -53,8 +52,6 @@ class TreeViewer(QTreeWidget):
         self.counterNum=0
         self.counterexamplesSourceDict={}
         self.trace_files=[]
-        with open('counterexamplerecord.txt', 'w') as f:
-                pass  # Writing nothing to the file effectively clears it
     def setFilePath(self,filePath):
         self.filePath=filePath
     def clear(self):
@@ -69,7 +66,6 @@ class TreeViewer(QTreeWidget):
         self.trace_num=0
         self.FailureReasonDict.clear()
         self.FailureReasonList.clear()
-        self.counterexamplesvariable.clear()
         self.counterexamplesSourceDict.clear()
         self.counterNum=0
         self.trace_files.clear()
@@ -93,7 +89,7 @@ class TreeViewer(QTreeWidget):
         if currentItem.text(0) and self.run_by_editor:
             if currentItem.text(0) == 'result':
                 failureAction = QAction("View failure", self)
-                failureAction.triggered.connect(self.viewFailure)
+                failureAction.triggered.connect(self.viewAssertion)
                 contextMenu.addAction(failureAction)
         else:
             if currentItem.text(1) and self.run_by_editor:
@@ -166,22 +162,13 @@ class TreeViewer(QTreeWidget):
         self.graphicView.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.graphicView.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.graphicView.show()
-    def viewFailure(self):
+    def viewAssertion(self):
         seachFailure=True
-        failureDialog=FailureKeyListDialog(self.FailureList)
+        failureDialog=AssertionKeyListDialog(self.assertion_lst)
         result = failureDialog.exec_()
         if result == QDialog.Accepted:
-            query=failureDialog.selected_key
-            order=int(failureDialog.selected_keyorder)
-            self.search(query,seachFailure,order)
-    def viewtraces(self,pass_trace_file=None,cfg=None,trace_num=None):
-        if is_trace_file(self.filePath):
-            self.ExpandAllCounterExamples()
-        elif pass_trace_file:
-            from JsonViwer.MainJsonWindow import MainWindow as JsonWindow
-            trace_json_window=JsonWindow(filePath=pass_trace_file,editor_window=self.editor_window,cfg=cfg,trace_num=trace_num)
-            trace_json_window.treeViewer.ExpandAllCounterExamples()
-            trace_json_window.show()
+            selected_assertion_statement=failureDialog.selected_assertion_statement
+            self.search(selected_assertion_statement,seachFailure)
     def viewSourceFile(self,filename,linenumber,SOURCE_TYPE=None,cfg=None,trace_num=None,assertion_statement=None):
         #  viewer sourcefile TODO
         self.editor_window.openFile(filename,linenumber,SOURCE_TYPE,cfg=cfg,assertion_statement=assertion_statement)
@@ -217,6 +204,15 @@ class TreeViewer(QTreeWidget):
             if query == key and not ifFailure and not ifCounterExample:
                 self.foundItems.append(child)
                 child.setExpanded(True)
+            elif key=="description" and child.child(0).text(1)==query:
+                 parent=child.parent()
+                 parent.setExpanded(True)
+                 for i  in range(parent.childCount()):
+                    sibling=parent.child(i)
+                    if sibling.text(0)=="description":
+                        sibling.setExpanded(True)
+                    if sibling.text(0)=='status':
+                        sibling.setExpanded(True)
             elif query==key and ifFailure and not ifCounterExample:
                 if child.child(0).text(1)=="FAILURE":
                     parent=child.parent()
@@ -233,42 +229,6 @@ class TreeViewer(QTreeWidget):
                             self.FailureSourceList.append(source_dict)
                     self.foundItems.append(child)
                     child.setExpanded(True)
-            elif query==key and ifFailure and ifCounterExample:
-                child.parent().parent().setExpanded(True)
-                child.parent().setExpanded(True)
-                child.setExpanded(True)
-                if child.text(0)=="lhs":
-                    for key in self.counterexamplesvariable.keys():
-                        sameFile=False
-                        hidden=False
-                        value_lst=self.counterexamplesvariable[key]
-                        fileName=self.FailureSourceList[key-1]['file']
-                        for value in value_lst:
-                            if child.child(0).text(1)==value:
-                                parent=child.parent()
-                                for i  in range(parent.childCount()):
-                                    sibling=parent.child(i)
-                                    if sibling.text(0)=="sourceLocation":
-                                        for j in range(sibling.childCount()):
-                                            sibling_child=sibling.child(j)
-                                            if sibling_child.text(0)=="file" and sibling_child.child(0).text(1)==fileName:
-                                                sameFile=True
-                                    if sibling.text(0)=="hidden":
-                                       if sibling.child(0).text(1)=='False':
-                                           hidden=False
-                                       else:
-                                           hidden=True
-                                    if sibling.text(0)=="value":
-                                        sibling.setExpanded(True)
-                                        for j in range(sibling.childCount()):
-                                            sibling_child=sibling.child(j)
-                                            if sibling_child.text(0)=="data" and sameFile and not hidden :
-                                                with open('counterexamplerecord.txt',"a") as f:
-                                                    f.write(fileName+'\n')
-                                                    f.write(value+'\n')
-                                                    f.write(sibling_child.child(0).text(1))
-                                                    f.write('\n\n')
-                
             self._search(query, child,ifFailure,ifCounterExample)  # Recursive call for child items
             
     def display(self, json_obj, root_item=None):
@@ -297,10 +257,9 @@ class TreeViewer(QTreeWidget):
                     self.trace_files.append(file_name)
                 if key=="description":
                     if json_obj.get('status') !=None:
-                        if json_obj.get('status')=='FAILURE':
                             self.counterNum=self.counterNum+1
                             assertion_statement=json_obj[key]
-                            self.counterexamplesvariable[self.counterNum]=extract_variables(assertion_statement)
+                            self.assertion_lst.append(assertion_statement)
                 if key=="reason":
                     if not self.FailureReasonList:
                         self.FailureReasonList.append(1)
@@ -343,35 +302,4 @@ class TreeViewer(QTreeWidget):
                     self.OutKeyDict[key].append(temp)
     def ExpandAllFailure(self):
         self.search("status",True)
-    def ExpandAllCounterExamples(self):
-        self.search("lhs",True,True)
-        self.search("value",True,True)
-        self.search("data",True,True)
-    def generate_counterexamples_source(self):
-        with open('counterexamplerecord.txt', 'r') as f:
-            # Split the file contents into groups
-            groups = f.read().split('\n\n')
-
-            # Process each group
-            for group in groups:
-                # Split the group into lines
-                lines = group.split('\n')
-
-                if(len(lines)!=3):
-                    break
-                # Get the filename, variable, and counterexample
-                filename, variable, counterexample = lines[0],lines[1],lines[2]
-
-                # Convert counterexample to integer
-                counterexample = int(counterexample)
-
-                # If the filename is not yet in the data, add it with an empty dictionary as its value
-                if filename not in self.counterexamplesSourceDict:
-                    self.counterexamplesSourceDict[filename] = {}
-
-                # If the variable is not yet in the filename's dictionary, add it with an empty list as its value
-                if variable not in self.counterexamplesSourceDict[filename]:
-                    self.counterexamplesSourceDict[filename][variable] = set()
-                # Append the counterexample to the variable's list
-                self.counterexamplesSourceDict[filename][variable].add(counterexample)
         

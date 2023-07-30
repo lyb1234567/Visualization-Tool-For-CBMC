@@ -47,8 +47,8 @@ class MainWindow(QMainWindow):
         self.searchByKeyAction = QAction("Search By Key", self)  # Placeholder for your custom action
         self.searchByKeyAction.triggered.connect(self.search)
 
-        self.ViewFailureAction=QAction("View Failure Action")
-        self.ViewFailureAction.triggered.connect(self.viewfailure)
+        self.ViewFailureAction=QAction("View Assertion")
+        self.ViewFailureAction.triggered.connect(self.viewAssertion)
         
 
         self.formatdict={}
@@ -98,21 +98,13 @@ class MainWindow(QMainWindow):
         self.checkLoad = False
         self.editor_window.jsonwindow=None
         event.accept()  # let the window close
-    def viewtraces(self):
-        current=self.formatdict[self.formatComboBox.currentIndex()]
-        if not self.checkLoad:
-            QMessageBox.warning(self,"Warning", "There is no file loaded")
-        if current=="Tree" and self.checkLoad:
-            self.treeViewer.viewtraces() 
-        elif current=="Text" and self.checkLoad:
-            QMessageBox.critical(self,"Failure", "Viewing failure only works for Tree !!!")
-    def viewfailure(self):
+    def viewAssertion(self):
         current=self.formatdict[self.formatComboBox.currentIndex()]
         if not self.checkLoad:
             QMessageBox.warning(self,"Warning", "There is no file loaded")
         if current=="Tree" and self.checkLoad:
             if self.treeViewer.FailureList:
-                self.treeViewer.viewFailure()
+                self.treeViewer.viewAssertion()
             else:
                 QMessageBox.information (self,"Success", "Verification Successful!!")
         elif current=="Text" and self.checkLoad:
@@ -142,20 +134,13 @@ class MainWindow(QMainWindow):
                         cfg.reduce_trace_json()
                 self.textViewer.display(json_content)
                 self.filePath=None
-                if hasattr(self, 'self.ViewTraceAction'):  # Check if the attribute exists
-                    self.ViewMenu.removeAction(self.ViewTraceAction)  # If it does, remove the action
-                if (is_trace_file(fileName)):
-                    self.ViewTraceAction=QAction("View traces")
-                    self.ViewTraceAction.triggered.connect(self.viewtraces)
-                    self.ViewMenu.addAction(self.ViewTraceAction)
+                if not self.treeViewer.FailureList :
+                    QMessageBox.information(self,"Success", "Verification Successful")
+                elif self.treeViewer.FailureList and self.run_by_editor:
+                    self.treeViewer.ExpandAllFailure()
+                    QMessageBox.critical(self,"Failure", "{0} failed cases!!".format(len(self.treeViewer.FailureList)))
                 else:
-                    if not self.treeViewer.FailureList :
-                        QMessageBox.information(self,"Success", "Verification Successful")
-                    elif self.treeViewer.FailureList and self.run_by_editor:
-                        self.treeViewer.ExpandAllFailure()
-                        QMessageBox.critical(self,"Failure", "{0} failed cases!!".format(len(self.treeViewer.FailureList)))
-                    else:
-                        pass
+                    pass
     def search(self):
         current=self.formatdict[self.formatComboBox.currentIndex()]
         if not self.checkLoad:

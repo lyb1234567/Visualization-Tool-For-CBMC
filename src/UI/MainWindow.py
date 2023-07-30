@@ -172,8 +172,12 @@ class MainWindow(QMainWindow):
                     self.tabWidget.addTab(self.editor, fileName)
                     self.switchToFile(temp)
                     self.check_tab_lst.append(fileName)
-        except:
-            QMessageBox.warning(self,"Warning", "There is no such file in the directory!!")
+        except UnicodeDecodeError:
+        # 文件存在，但是格式不正确
+                 QMessageBox.warning(self,"Warning", "Wrong format")
+        except FileNotFoundError:
+        # 文件不存在
+                 QMessageBox.warning(self,"Warning", "There is no such file in the directory!!")
 
     def createFile(self):
         fileName, ok = QInputDialog.getText(self, 'New File', 'Enter file name (e.g. file.c or file.json):')
