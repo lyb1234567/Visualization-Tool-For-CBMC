@@ -31,6 +31,18 @@ class Terminal(QPlainTextEdit):
         self.command_index=0
         self.cursorPositionChanged.connect(self.handle_cursor_position_changed)
         self.cur_assertion_statement=None
+    # 打印目前已有的tracepoint 信息
+    def print_trace_point_info(self):
+        num_trace_point=len(self.trace_point_info)
+        res=""
+        for i in range(num_trace_point):
+            trace_info_dict=self.trace_point_info[i]
+            assert(isinstance(trace_info_dict,dict))
+            for key in trace_info_dict.keys():
+                file_name=key
+                line_number=trace_info_dict[key]
+                res=res+" {0} tracepoint".format(i+1)+" at "+" {0}: line {1}".format(file_name,line_number)+"\n"
+        return res
     def is_valid_file_path(self,path):
         if os.path.isfile(path):
             return True
@@ -114,6 +126,18 @@ class Terminal(QPlainTextEdit):
             # Join the lines and set the new text
             self.setPlainText('\n'.join(lines))
     def keyPressEvent(self, event):
+        cursor = self.textCursor()
+        blockNumber = cursor.blockNumber()
+        positionInBlock = cursor.positionInBlock()
+        last_line = self.document().lastBlock().text()
+        if ">" in last_line:
+            index_of_gt = last_line.index(">") + 1  # consider space after ">"
+        else:
+            index_of_gt = 0
+    # Disallow modification before ">" character
+        if blockNumber == self.document().blockCount() - 1 and positionInBlock <= index_of_gt:
+            if event.key() in {Qt.Key_Backspace, Qt.Key_Left, Qt.Key_Delete, Qt.Key_Right}:
+                return
         if event.key() == Qt.Key_Up:
             if self.command_index > 0:
                 self.command_index -= 1
@@ -132,6 +156,10 @@ class Terminal(QPlainTextEdit):
                 self.process.write(command.encode('utf-8'))
                 self.process.write(b'\n')
                 self.clear()
+            elif last_command.strip() == 'info tracepoint':
+                trace_info=self.print_trace_point_info()
+                self.appendPlainText(trace_info)
+                self.process.write(b'\n')
             elif last_command.strip().startswith('tracepoint'):
                 args = last_command.split(' ')
                 if len(args) == 3:
