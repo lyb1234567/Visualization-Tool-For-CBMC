@@ -121,7 +121,7 @@ class TreeViewer(QTreeWidget):
             for file_name,line_number in file_line_dict.items():
                 temp_info=self.cfg.get_assertion_info(fileName=file_name,line_number=int(line_number),assertion_statement=assertion_statement)
                 if temp_info:
-                    temp_res="at {0}, line {1}".format(file_name,line_number)+"\n"+'\t'+temp_info+'\n'
+                    temp_res="at {0}, line {1}:".format(file_name,line_number)+"\n"+temp_info+'\n'
                 else:
                     temp_res="at {0}, line {1}".format(file_name,line_number)+"\n"+'\t'+"There is no specific trace information"+'\n'
                 res=res+temp_res
@@ -129,16 +129,24 @@ class TreeViewer(QTreeWidget):
     def print_traces_graph(self,assertion_statement,trace_num=None):
         self.editor_window.terminal.cur_assertion_statement=assertion_statement
         self.editor_window.terminal.cfg=self.cfg
+        tracepoint_info=self.editor_window.terminal.trace_point_info
         self.editor_window.terminal.appendPlainText(self.get_trace_point_info(assertion_statement))
         self.editor_window.terminal.process.write(b'\n')
         assertion_trace=self.cfg.assertion_trace_total[assertion_statement]
+        print(tracepoint_info)
         y = 0
         prev_node = None
         scene = QGraphicsScene()
         for statement in assertion_trace:
             if isinstance(statement,dict):
                 for key in statement.keys():
-                    node = Node(text=key,cfg=self.cfg,trace_num=trace_num,tree_viewer=self)
+                    # 看看filename 和line_number 是否与 设置的 tracepoint吻合,如果有就染色
+                    if statement[key].get('file')!=None and statement[key].get('line')!=None:
+                        temp_dict={statement[key]['file']:str(statement[key]['line'])}
+                        if temp_dict in tracepoint_info:
+                            node = Node(text=key,cfg=self.cfg,trace_num=trace_num,tree_viewer=self,set_back_ground_flag=True)
+                        else:
+                             node = Node(text=key,cfg=self.cfg,trace_num=trace_num,tree_viewer=self,set_back_ground_flag=False)
                     node.node_info.update(statement[key])
                     node.node_info.update({'assertion_statement':assertion_statement})
                 node.setPos(0, y)

@@ -1,54 +1,80 @@
-import os
-import sys
-root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-sys.path.append(root_folder)
-from PyQt5.QtWidgets import QApplication, QWidget, QTextEdit, QTextBrowser, QSplitter, QVBoxLayout, QHBoxLayout,QListWidget
-from PyQt5.QtCore import Qt
-from  UI.Explorer import ExplorerWidget  # 这里我们导入你的 ExplorerWidget
+from PyQt5.QtWidgets import QPlainTextEdit, QWidget, QVBoxLayout, QApplication
+from PyQt5.QtCore import Qt, QRect
+from PyQt5.QtGui import QPainter, QColor, QTextFormat
+from PyQt5.QtCore import QSize
 
-class CustomWidget(QWidget):
-    def __init__(self, parent=None):
-        super(CustomWidget, self).__init__(parent)
-        self.initUI()
+class LineNumberArea(QWidget):
+    def __init__(self, editor):
+        super().__init__(editor)
+        self.myeditor = editor
 
-    def initUI(self):
-        self.text_edit = QTextEdit()
-        self.list_widget = QListWidget()
+    def sizeHint(self):
+        return QSize(self.editor.lineNumberAreaWidth(), 0)
 
-        # Add some items to the list widget
-        self.list_widget.addItem("Item 1")
-        self.list_widget.addItem("Item 2")
-        self.list_widget.addItem("Item 3")
+    def paintEvent(self, event):
+        self.myeditor.lineNumberAreaPaintEvent(event)
 
-        # Create the explorer widget
-        self.explorer_widget = ExplorerWidget(self)
+class CodeEditor(QPlainTextEdit):
+    def __init__(self):
+        super().__init__()
+        self.lineNumberArea = LineNumberArea(self)
 
-        # Create the splitter for right widgets and add widgets
-        right_splitter = QSplitter(Qt.Vertical)
-        right_splitter.addWidget(self.text_edit)
-        right_splitter.addWidget(self.list_widget)
+    def lineNumberAreaWidth(self):
+        digits = 1
+        max_value = max(1, self.blockCount())
+        while max_value >= 10:
+            max_value /= 10
+            digits += 1
+        space = 3 + self.fontMetrics().horizontalAdvance('9') * digits
+        return space
 
-        # Create a QSplitter for all widgets
-        main_splitter = QSplitter(Qt.Horizontal)
-        main_splitter.addWidget(self.explorer_widget)
-        main_splitter.addWidget(right_splitter)
+    def updateLineNumberAreaWidth(self, _):
+        self.setViewportMargins(self.lineNumberAreaWidth(), 0, 0, 0)
 
-        # Give the explorer widget more space
-        main_splitter.setStretchFactor(0, 1)
-        main_splitter.setStretchFactor(1, 0)
+    def updateLineNumberArea(self, rect, dy):
+        if dy:
+            self.lineNumberArea.scroll(0, dy)
+        else:
+            self.lineNumberArea.update(0, rect.y(), self.lineNumberArea.width(), rect.height())
+        if rect.contains(self.viewport().rect()):
+            self.updateLineNumberAreaWidth(0)
 
-        # Create the layout and add the splitter
-        layout = QVBoxLayout()
-        layout.addWidget(main_splitter, stretch=1)  # Give the splitter a larger stretch factor
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        cr = self.contentsRect();
+        self.lineNumberArea.setGeometry(QRect(cr.left(), cr.top(), self.lineNumberAreaWidth(), cr.height()))
 
-        # Set the layout
-        self.setLayout(layout)
+    def lineNumberAreaPaintEvent(self, event):
+        mypainter = QPainter(self.lineNumberArea)
+        mypainter.fillRect(event.rect(), QColor(230, 220, 220))
 
-def main():
-    app = QApplication([])
-    widget = CustomWidget()
-    widget.show()
-    app.exec_()
+        block = self.firstVisibleBlock()
+        blockNumber = block.blockNumber()
+        top = self.blockBoundingGeometry(block).translated(self.contentOffset()).top()
+        bottom = top + self.blockBoundingRect(block).height()
+
+        height = self.fontMetrics().height()
+        while block.isValid() and (top <= event.rect().bottom()):
+            if block.isVisible() and (bottom >= event.rect().top()):
+                number = str(blockNumber + 1)
+                mypainter.setPen(QColor(100, 100, 100))
+                mypainter.drawText(0, int(top), self.lineNumberArea.width(), height, Qt.AlignRight, number)
+
+            block = block.next()
+            top = bottom
+            bottom = top + self.blockBoundingRect(block).height()
+            blockNumber += 1
+
+class Main(QWidget):
+    def __init__(self):
+        super().__init__()
+
+        self.editor = CodeEditor()
+        layout = QVBoxLayout(self)
+        layout.addWidget(self.editor)
 
 if __name__ == "__main__":
-    main()
+    app = QApplication([])
+    main = Main()
+    main.show()
+    app.exec_()

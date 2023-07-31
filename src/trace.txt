@@ -1,249 +1,293 @@
 CBMC version 5.85.0 (cbmc-5.85.0) 64-bit x86_64 linux
-Reading GOTO program from file myprogram
+Parsing test_2.c
+Converting
+Type-checking test_2
 Generating GOTO Program
 Adding CPROVER library (x86_64)
 Removal of function pointers and virtual functions
 Generic Property Instrumentation
 Running with 8 object bits, 56 offset bits (default)
 Starting Bounded Model Checking
-Runtime Symex: 0.00238752s
-size of program expression: 140 steps
-simple slicing removed 20 assignments
-Generated 2 VCC(s), 2 remaining after simplification
-Runtime Postprocess Equation: 1.2253e-05s
+Unwinding loop zero_array.0 iteration 1 file test_2.c line 23 function zero_array thread 0
+Unwinding loop zero_array.0 iteration 2 file test_2.c line 23 function zero_array thread 0
+Unwinding loop zero_array.0 iteration 3 file test_2.c line 23 function zero_array thread 0
+Unwinding loop zero_array.0 iteration 4 file test_2.c line 23 function zero_array thread 0
+Unwinding loop zero_array.0 iteration 5 file test_2.c line 23 function zero_array thread 0
+Unwinding loop zero_array.0 iteration 6 file test_2.c line 23 function zero_array thread 0
+Unwinding loop zero_array.0 iteration 7 file test_2.c line 23 function zero_array thread 0
+Unwinding loop zero_array.0 iteration 8 file test_2.c line 23 function zero_array thread 0
+Unwinding loop zero_array.0 iteration 9 file test_2.c line 23 function zero_array thread 0
+Unwinding loop zero_array.0 iteration 10 file test_2.c line 23 function zero_array thread 0
+Runtime Symex: 0.00189097s
+size of program expression: 115 steps
+simple slicing removed 9 assignments
+Generated 13 VCC(s), 9 remaining after simplification
+Runtime Postprocess Equation: 8.997e-06s
 Passing problem to propositional reduction
 converting SSA
-Runtime Convert SSA: 0.000993303s
+Runtime Convert SSA: 0.000290635s
 Running propositional reduction
 Post-processing
-Runtime Post-process: 3.436e-06s
+Runtime Post-process: 2.865e-06s
 Solving with MiniSAT 2.2.1 with simplifier
-2822 variables, 2429 clauses
+486 variables, 260 clauses
 SAT checker: instance is SATISFIABLE
-Runtime Solver: 0.00200341s
-Runtime decision procedure: 0.00307988s
+Runtime Solver: 0.000129433s
+Runtime decision procedure: 0.000489419s
 Building error trace
 
 ** Results:
-file2.c function printB
-[printB.assertion.1] line 11 assertion z + x <= 10: FAILURE
+test_2.c function increment
+[increment.assertion.1] line 12 assertion *value > 0: FAILURE
 
-file3.c function printC
-[printC.assertion.1] line 5 assertion a > 3: FAILURE
+test_2.c function increment_ptr
+[increment_ptr.assertion.1] line 18 assertion value != NULL: FAILURE
 
-Trace for printB.assertion.1:
+test_2.c function test_array
+[test_array.assertion.1] line 6 assertion size > 0: FAILURE
 
-State 15 file file1.c function printA line 4 thread 0
+test_2.c function zero_array
+[zero_array.assertion.1] line 25 assertion i<4: FAILURE
+
+Trace for increment.assertion.1:
+
+State 12 file test_2.c function main line 30 thread 0
 ----------------------------------------------------
-  format="This is function A.\n" (00000010 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
+  value=1 (00000000 00000000 00000000 00000001)
 
-State 19 file <builtin-library-printf> function printf line 17 thread 0
+State 15 file test_2.c function main line 31 thread 0
 ----------------------------------------------------
-  result=0 (00000000 00000000 00000000 00000000)
+  value=&value!0@1 (00000010 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
 
-State 20 file <builtin-library-printf> function printf line 18 thread 0
+State 16 file test_2.c function increment line 11 thread 0
 ----------------------------------------------------
-  list=((va_list)NULL) (00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
-
-State 22 file <builtin-library-printf> function printf line 19 thread 0
-----------------------------------------------------
-  list=va_args!0 (00000011 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
-This is function A.
-
-
-State 24 file <builtin-library-printf> function printf line 21 thread 0
-----------------------------------------------------
-  list=((va_list)NULL) (00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
-
-State 36 file <builtin-library-random> function random line 8 thread 0
-----------------------------------------------------
-  result=8388608l (00000000 00000000 00000000 00000000 00000000 10000000 00000000 00000000)
-
-Assumption:
-  file <builtin-library-random> line 9 function random
-  result >= (signed long int)0 && result <= (signed long int)2147483647
-
-State 41 file file2.c function printB line 5 thread 0
-----------------------------------------------------
-  x=8388608 (00000000 10000000 00000000 00000000)
-
-State 43 file file2.c function printB line 6 thread 0
-----------------------------------------------------
-  y=7 (00000000 00000000 00000000 00000111)
-
-State 51 file <builtin-library-random> function random line 8 thread 0
-----------------------------------------------------
-  result=268435456l (00000000 00000000 00000000 00000000 00010000 00000000 00000000 00000000)
-
-Assumption:
-  file <builtin-library-random> line 9 function random
-  result >= (signed long int)0 && result <= (signed long int)2147483647
-
-State 56 file file2.c function printB line 7 thread 0
-----------------------------------------------------
-  a=268435456 (00010000 00000000 00000000 00000000)
-
-State 64 file <builtin-library-random> function random line 8 thread 0
-----------------------------------------------------
-  result=0l (00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
-
-Assumption:
-  file <builtin-library-random> line 9 function random
-  result >= (signed long int)0 && result <= (signed long int)2147483647
-
-State 69 file file2.c function printB line 8 thread 0
-----------------------------------------------------
-  asdas=0 (00000000 00000000 00000000 00000000)
-
-State 76 file <builtin-library-random> function random line 8 thread 0
-----------------------------------------------------
-  result=570425340l (00000000 00000000 00000000 00000000 00100001 11111111 11111111 11111100)
-
-Assumption:
-  file <builtin-library-random> line 9 function random
-  result >= (signed long int)0 && result <= (signed long int)2147483647
-
-State 81 file file2.c function printB line 9 thread 0
-----------------------------------------------------
-  x=570425339 (00100001 11111111 11111111 11111011)
-
-State 83 file file2.c function printB line 10 thread 0
-----------------------------------------------------
-  z=570425346 (00100010 00000000 00000000 00000010)
+  value=0 (00000000 00000000 00000000 00000000)
 
 Violated property:
-  file file2.c function printB line 11 thread 0
-  assertion z + x <= 10
-  z + x <= 10
+  file test_2.c function increment line 12 thread 0
+  assertion *value > 0
+  *value > 0
 
 
 
-Trace for printC.assertion.1:
+Trace for increment_ptr.assertion.1:
 
-State 15 file file1.c function printA line 4 thread 0
+State 12 file test_2.c function main line 30 thread 0
 ----------------------------------------------------
-  format="This is function A.\n" (00000010 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
+  value=1 (00000000 00000000 00000000 00000001)
 
-State 19 file <builtin-library-printf> function printf line 17 thread 0
+State 15 file test_2.c function main line 31 thread 0
 ----------------------------------------------------
-  result=0 (00000000 00000000 00000000 00000000)
+  value=&value!0@1 (00000010 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
 
-State 20 file <builtin-library-printf> function printf line 18 thread 0
+State 16 file test_2.c function increment line 11 thread 0
 ----------------------------------------------------
-  list=((va_list)NULL) (00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
-
-State 22 file <builtin-library-printf> function printf line 19 thread 0
-----------------------------------------------------
-  list=va_args!0 (00000011 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
-This is function A.
-
-
-State 24 file <builtin-library-printf> function printf line 21 thread 0
-----------------------------------------------------
-  list=((va_list)NULL) (00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
-
-State 36 file <builtin-library-random> function random line 8 thread 0
-----------------------------------------------------
-  result=8388608l (00000000 00000000 00000000 00000000 00000000 10000000 00000000 00000000)
-
-Assumption:
-  file <builtin-library-random> line 9 function random
-  result >= (signed long int)0 && result <= (signed long int)2147483647
-
-State 41 file file2.c function printB line 5 thread 0
-----------------------------------------------------
-  x=8388608 (00000000 10000000 00000000 00000000)
-
-State 43 file file2.c function printB line 6 thread 0
-----------------------------------------------------
-  y=7 (00000000 00000000 00000000 00000111)
-
-State 51 file <builtin-library-random> function random line 8 thread 0
-----------------------------------------------------
-  result=268435456l (00000000 00000000 00000000 00000000 00010000 00000000 00000000 00000000)
-
-Assumption:
-  file <builtin-library-random> line 9 function random
-  result >= (signed long int)0 && result <= (signed long int)2147483647
-
-State 56 file file2.c function printB line 7 thread 0
-----------------------------------------------------
-  a=268435456 (00010000 00000000 00000000 00000000)
-
-State 64 file <builtin-library-random> function random line 8 thread 0
-----------------------------------------------------
-  result=0l (00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
-
-Assumption:
-  file <builtin-library-random> line 9 function random
-  result >= (signed long int)0 && result <= (signed long int)2147483647
-
-State 69 file file2.c function printB line 8 thread 0
-----------------------------------------------------
-  asdas=0 (00000000 00000000 00000000 00000000)
-
-State 76 file <builtin-library-random> function random line 8 thread 0
-----------------------------------------------------
-  result=570425340l (00000000 00000000 00000000 00000000 00100001 11111111 11111111 11111100)
-
-Assumption:
-  file <builtin-library-random> line 9 function random
-  result >= (signed long int)0 && result <= (signed long int)2147483647
-
-State 81 file file2.c function printB line 9 thread 0
-----------------------------------------------------
-  x=570425339 (00100001 11111111 11111111 11111011)
-
-State 83 file file2.c function printB line 10 thread 0
-----------------------------------------------------
-  z=570425346 (00100010 00000000 00000000 00000010)
+  value=0 (00000000 00000000 00000000 00000000)
 
 Violated property:
-  file file2.c function printB line 11 thread 0
-  assertion z + x <= 10
-  z + x <= 10
+  file test_2.c function increment line 12 thread 0
+  assertion *value > 0
+  *value > 0
 
 
-State 87 file file2.c function printB line 12 thread 0
+State 20 file test_2.c function main line 33 thread 0
 ----------------------------------------------------
-  format="This is function B.\n" (00000100 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
+  value_ptr=&value!0@1 (00000010 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
 
-State 91 file <builtin-library-printf> function printf line 17 thread 0
+State 23 file test_2.c function main line 34 thread 0
 ----------------------------------------------------
-  result=0 (00000000 00000000 00000000 00000000)
+  value=&value!0@1 (00000010 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
 
-State 92 file <builtin-library-printf> function printf line 18 thread 0
+State 24 file test_2.c function increment_ptr line 17 thread 0
 ----------------------------------------------------
-  list=((va_list)NULL) (00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
-
-State 94 file <builtin-library-printf> function printf line 19 thread 0
-----------------------------------------------------
-  list=va_args$0!0 (00000101 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
-This is function B.
-
-
-State 96 file <builtin-library-printf> function printf line 21 thread 0
-----------------------------------------------------
-  list=((va_list)NULL) (00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
-
-State 108 file <builtin-library-random> function random line 8 thread 0
-----------------------------------------------------
-  result=0l (00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
-
-Assumption:
-  file <builtin-library-random> line 9 function random
-  result >= (signed long int)0 && result <= (signed long int)2147483647
-
-State 113 file file3.c function printC line 4 thread 0
-----------------------------------------------------
-  a=0 (00000000 00000000 00000000 00000000)
+  value=((signed int *)NULL) (00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
 
 Violated property:
-  file file3.c function printC line 5 thread 0
-  assertion a > 3
-  a > 3
+  file test_2.c function increment_ptr line 18 thread 0
+  assertion value != NULL
+  value != ((signed int *)NULL)
 
 
 
-** 2 of 2 failed (2 iterations)
+Trace for test_array.assertion.1:
+
+State 12 file test_2.c function main line 30 thread 0
+----------------------------------------------------
+  value=1 (00000000 00000000 00000000 00000001)
+
+State 15 file test_2.c function main line 31 thread 0
+----------------------------------------------------
+  value=&value!0@1 (00000010 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
+
+State 16 file test_2.c function increment line 11 thread 0
+----------------------------------------------------
+  value=0 (00000000 00000000 00000000 00000000)
+
+Violated property:
+  file test_2.c function increment line 12 thread 0
+  assertion *value > 0
+  *value > 0
+
+
+State 20 file test_2.c function main line 33 thread 0
+----------------------------------------------------
+  value_ptr=&value!0@1 (00000010 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
+
+State 23 file test_2.c function main line 34 thread 0
+----------------------------------------------------
+  value=&value!0@1 (00000010 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
+
+State 24 file test_2.c function increment_ptr line 17 thread 0
+----------------------------------------------------
+  value=((signed int *)NULL) (00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
+
+Violated property:
+  file test_2.c function increment_ptr line 18 thread 0
+  assertion value != NULL
+  value != ((signed int *)NULL)
+
+
+State 28 file test_2.c function main line 36 thread 0
+----------------------------------------------------
+  size=0 (00000000 00000000 00000000 00000000)
+
+State 31 file test_2.c function main line 37 thread 0
+----------------------------------------------------
+  array={  } ( })
+
+State 34 file test_2.c function main line 38 thread 0
+----------------------------------------------------
+  array=array!0@1 (00000011 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
+
+State 35 file test_2.c function main line 38 thread 0
+----------------------------------------------------
+  size=0 (00000000 00000000 00000000 00000000)
+
+Violated property:
+  file test_2.c function test_array line 6 thread 0
+  assertion size > 0
+  size > 0
+
+
+
+Trace for zero_array.assertion.1:
+
+State 12 file test_2.c function main line 30 thread 0
+----------------------------------------------------
+  value=1 (00000000 00000000 00000000 00000001)
+
+State 15 file test_2.c function main line 31 thread 0
+----------------------------------------------------
+  value=&value!0@1 (00000010 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
+
+State 16 file test_2.c function increment line 11 thread 0
+----------------------------------------------------
+  value=0 (00000000 00000000 00000000 00000000)
+
+Violated property:
+  file test_2.c function increment line 12 thread 0
+  assertion *value > 0
+  *value > 0
+
+
+State 20 file test_2.c function main line 33 thread 0
+----------------------------------------------------
+  value_ptr=&value!0@1 (00000010 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
+
+State 23 file test_2.c function main line 34 thread 0
+----------------------------------------------------
+  value=&value!0@1 (00000010 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
+
+State 24 file test_2.c function increment_ptr line 17 thread 0
+----------------------------------------------------
+  value=((signed int *)NULL) (00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
+
+Violated property:
+  file test_2.c function increment_ptr line 18 thread 0
+  assertion value != NULL
+  value != ((signed int *)NULL)
+
+
+State 28 file test_2.c function main line 36 thread 0
+----------------------------------------------------
+  size=0 (00000000 00000000 00000000 00000000)
+
+State 31 file test_2.c function main line 37 thread 0
+----------------------------------------------------
+  array={  } ( })
+
+State 34 file test_2.c function main line 38 thread 0
+----------------------------------------------------
+  array=array!0@1 (00000011 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
+
+State 35 file test_2.c function main line 38 thread 0
+----------------------------------------------------
+  size=0 (00000000 00000000 00000000 00000000)
+
+Violated property:
+  file test_2.c function test_array line 6 thread 0
+  assertion size > 0
+  size > 0
+
+
+State 38 file test_2.c function main line 40 thread 0
+----------------------------------------------------
+  size=10 (00000000 00000000 00000000 00001010)
+
+State 41 file test_2.c function main line 41 thread 0
+----------------------------------------------------
+  array=array!0@1 (00000011 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
+
+State 42 file test_2.c function main line 41 thread 0
+----------------------------------------------------
+  size=10 (00000000 00000000 00000000 00001010)
+
+State 44 file test_2.c function zero_array line 23 thread 0
+----------------------------------------------------
+  i=0 (00000000 00000000 00000000 00000000)
+
+State 46 file test_2.c function zero_array line 24 thread 0
+----------------------------------------------------
+  array[0l]=1 (00000000 00000000 00000000 00000001)
+
+State 47 file test_2.c function zero_array line 23 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+State 50 file test_2.c function zero_array line 24 thread 0
+----------------------------------------------------
+  array[1l]=1 (00000000 00000000 00000000 00000001)
+
+State 51 file test_2.c function zero_array line 23 thread 0
+----------------------------------------------------
+  i=2 (00000000 00000000 00000000 00000010)
+
+State 54 file test_2.c function zero_array line 24 thread 0
+----------------------------------------------------
+  array[2l]=1 (00000000 00000000 00000000 00000001)
+
+State 55 file test_2.c function zero_array line 23 thread 0
+----------------------------------------------------
+  i=3 (00000000 00000000 00000000 00000011)
+
+State 58 file test_2.c function zero_array line 24 thread 0
+----------------------------------------------------
+  array[3l]=1 (00000000 00000000 00000000 00000001)
+
+State 59 file test_2.c function zero_array line 23 thread 0
+----------------------------------------------------
+  i=4 (00000000 00000000 00000000 00000100)
+
+State 62 file test_2.c function zero_array line 24 thread 0
+----------------------------------------------------
+  array[4l]=1 (00000000 00000000 00000000 00000001)
+
+Violated property:
+  file test_2.c function zero_array line 25 thread 0
+  assertion i<4
+  i < 4
+
+
+
+** 4 of 4 failed (2 iterations)
 VERIFICATION FAILED

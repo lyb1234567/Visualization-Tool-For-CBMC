@@ -8,7 +8,7 @@ import re
 import glob
 root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(root_folder)
-from UI.utils import extract_command,extract_file_name_without_extension,print_result,wait_for_file
+from UI.utils import extract_command,extract_file_name_without_extension,print_result,wait_for_file,extract_file_name
 from JsonViwer.MainJsonWindow import MainWindow as jsonWindow
 from ControlFlowGraph.ControlFlowGraphGenerator import ControlGraphGenerator,Source_Type
 from enum import Enum
@@ -50,6 +50,8 @@ class Terminal(QPlainTextEdit):
                 file_name=key
                 line_number=trace_info_dict[key]
                 res=res+" {0} tracepoint".format(i+1)+" at "+" {0}: line {1}".format(file_name,line_number)+"\n"
+        if not res:
+            return "There are no tracepoints set!!"
         return res
     def is_valid_file_path(self,path):
         if os.path.isfile(path):
@@ -128,10 +130,11 @@ class Terminal(QPlainTextEdit):
         index = last_line.rfind('>')
         if index != -1:
             # If found, replace everything after it with the new line
-            last_line = last_line[:index+1] + ' ' + new_line
+            last_line = last_line[:index+1] + ' ' + new_line.strip()
             # Replace the last line
             lines[-1] = last_line
             # Join the lines and set the new text
+            print(lines)
             self.setPlainText('\n'.join(lines))
             self.text_cursor.movePosition(self.textCursor().position())
             self.setTextCursor(self.text_cursor)
@@ -164,7 +167,7 @@ class Terminal(QPlainTextEdit):
                     possible_filename = current_input.split(' ', 1)[1]
                     possible_completions = glob.glob(possible_filename + '*')
                     common_prefix=self.commonprefix(possible_completions)
-                    new_line=previouscontent+" "+common_prefix
+                    new_line=previouscontent.strip()+" "+common_prefix.strip()
                     self.replace_last_line(new_line)
             # 当使用run 命令时，如果是多个文件，就提取参数最后一个座位
             elif current_input.startswith('run'):
@@ -179,7 +182,7 @@ class Terminal(QPlainTextEdit):
                 possible_filename = file_to_be_completed
                 possible_completions = glob.glob(possible_filename + '*')
                 common_prefix=self.commonprefix(possible_completions)
-                new_line=previouscontent+" "+common_prefix
+                new_line=previouscontent.strip()+" "+common_prefix.strip()
                 self.replace_last_line(new_line)
             
     # 返回可能补全的文件名的公共部分比如：在['test.c', 'test_1.c', 'test_2.c', 'test_3.c']，就应当返回test
@@ -258,12 +261,13 @@ class Terminal(QPlainTextEdit):
                     self.process.write(b'\n')
             elif last_command.strip().startswith('run'):
                 file_lst=last_command.split(' ')[1:]
+                print(file_lst)
                 file_lst=[file for file in file_lst if file != '']
                 if len(file_lst)==0:
                    QMessageBox.warning(self,"Warning", "Need a file to run!")
                    self.process.write(b'\n')
                 elif len(file_lst)==1:
-                    file_name=extract_file_name_without_extension(file_lst[0])
+                    file_name=extract_file_name(file_lst[0])
                     if os.path.exists(file_name):
                         command='cbmc {0} --trace --json-ui > {1}.json'.format(file_lst[0],file_name)
                         command_trace_file='cbmc {0} --trace > trace.txt'.format(file_lst[0],file_name)
@@ -307,30 +311,32 @@ class Terminal(QPlainTextEdit):
                         outputFile, ok = QInputDialog.getText(self, 'Output file', 'Enter output file name')
                         if outputFile and ok:
                             build_goto_file="goto-cc "+file_combined+"-o "+outputFile
-                        if build_goto_file:
-                            subprocess.run([build_goto_file], shell=True, capture_output=True, text=True)
-                            generate_json_file='cbmc {0} --trace --json-ui > {1}.json'.format(outputFile,outputFile)
-                            generate_trace_file = 'cbmc {0} --trace > trace.txt'.format(outputFile)
-                        result = subprocess.run([generate_json_file], shell=True, capture_output=True, text=True)
-                        subprocess.run([generate_trace_file], shell=True, capture_output=True, text=True)
-                        if result.stdout:
-                            self.appendPlainText(result.stdout)
-                            self.process.write(b'\n')
-                        elif result.stderr:
-                            self.appendPlainText(result.stderr)
-                            self.process.write(b'\n')
+                            if build_goto_file:
+                                subprocess.run([build_goto_file], shell=True, capture_output=True, text=True)
+                                generate_json_file='cbmc {0} --trace --json-ui > {1}.json'.format(outputFile,outputFile)
+                                generate_trace_file = 'cbmc {0} --trace > trace.txt'.format(outputFile)
+                            result = subprocess.run([generate_json_file], shell=True, capture_output=True, text=True)
+                            subprocess.run([generate_trace_file], shell=True, capture_output=True, text=True)
+                            if result.stdout:
+                                self.appendPlainText(result.stdout)
+                                self.process.write(b'\n')
+                            elif result.stderr:
+                                self.appendPlainText(result.stderr)
+                                self.process.write(b'\n')
+                            else:
+                                self.appendPlainText(generate_json_file)
+                                self.process.write(b'\n')
+                            jsonfile="{0}.json".format(outputFile)
+                            wait_for_file(jsonfile)
+                            self.cfg=ControlGraphGenerator(trace_file='trace.txt')
+                            self.editor_window.cfg=self.cfg
+                            if os.path.exists(jsonfile):
+                                if not self.jsonwindow or self.jsonFileChange:
+                                    self.jsonwindow=jsonWindow(jsonfile,editor_window=self.editor_window,cfg=self.cfg,run_by_editor=True)
+                                    self.jsonFileChange=True
+                                self.jsonwindow.show()
                         else:
-                            self.appendPlainText(generate_json_file)
                             self.process.write(b'\n')
-                        jsonfile="{0}.json".format(outputFile)
-                        wait_for_file(jsonfile)
-                        self.cfg=ControlGraphGenerator(trace_file='trace.txt')
-                        self.editor_window.cfg=self.cfg
-                        if os.path.exists(jsonfile):
-                            if not self.jsonwindow or self.jsonFileChange:
-                                self.jsonwindow=jsonWindow(jsonfile,editor_window=self.editor_window,cfg=self.cfg,run_by_editor=True)
-                                self.jsonFileChange=True
-                            self.jsonwindow.show()
                     else:
                         QMessageBox.warning(self,"Warning", "{0} not in the directory!!".format(file_not_exists))
                         self.process.write(b'\n')

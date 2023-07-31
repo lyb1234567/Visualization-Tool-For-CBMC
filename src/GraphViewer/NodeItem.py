@@ -8,7 +8,7 @@ sys.path.append(root_folder)
 from GraphViewer.ArrowItem import Arrow
 from ControlFlowGraph.ControlFlowGraphGenerator import Source_Type
 class Node(QGraphicsItem):
-    def __init__(self, text,tree_viewer=None,cfg=None,trace_num=None):
+    def __init__(self, text,tree_viewer=None,cfg=None,trace_num=None,set_back_ground_flag=None):
         super().__init__()
         self.text = text
         self.arrows = []
@@ -16,6 +16,7 @@ class Node(QGraphicsItem):
         self.tree_viewer=tree_viewer
         self.cfg=cfg
         self.trace_num=trace_num
+        self.set_back_ground_flag=set_back_ground_flag
         self.setAcceptHoverEvents(True)
     def contextMenuEvent(self, event):
         menu = QMenu()
@@ -50,8 +51,16 @@ class Node(QGraphicsItem):
         return QRectF(0, 0, 200, 50)
 
     def paint(self, painter, option, widget):
-        painter.drawRect(0, 0, 300, 50)
-        painter.drawText(0, 0, 300, 50, Qt.AlignCenter, self.text)
+        if not self.set_back_ground_flag:
+            painter.drawRect(0, 0, 300, 50)
+            painter.drawText(0, 0, 300, 50, Qt.AlignCenter, self.text)
+        else:
+            color = QColor(255, 0, 0)  # 创建红色
+            painter.setBrush(color)
+            painter.drawRect(0, 0, 300, 50)
+            painter.setBrush(QColor(0, 0, 0))  # 设置文字颜色为黑色
+            painter.drawText(0, 0, 300, 50, Qt.AlignCenter, self.text)
+
 
     def center_bottom(self):
         return QPointF(150, 50)
