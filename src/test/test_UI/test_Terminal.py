@@ -40,5 +40,30 @@ class TestTerminalMethods(unittest.TestCase):
         self.assertEqual(self.terminal.is_valid_file_path_with_line("/path/to/nonexistent_file, line 5"), False)
         self.assertEqual(self.terminal.is_valid_file_path_with_line("/path/to/nonexistent_file"), False)
 
+    def test_commonprefix(self):
+        # 测试案例1：都有相同的前缀
+        file_lst_1 = ['test.c', 'test_1.c', 'test_2.c', 'test_3.c']
+        self.assertEqual(self.terminal.commonprefix(file_lst_1), "test")
+
+        # 测试案例2：没有相同的前缀
+        file_lst_2 = ['test.c', 'demo_1.c', 'file_2.c', 'main_3.c']
+        self.assertEqual(self.terminal.commonprefix(file_lst_2), "")
+
+        # 测试案例3：部分有相同的前缀
+        file_lst_3 = ['test.c', 'test_1.c', 'demo_2.c', 'main_3.c']
+        self.assertEqual(self.terminal.commonprefix(file_lst_3), "")
+
+        # 测试案例4：只有一个文件
+        file_lst_4 = ['test.c']
+        self.assertEqual(self.terminal.commonprefix(file_lst_4), "test.c")
+
+        # 测试案例5：空的文件列表
+        file_lst_5 = []
+        self.assertEqual(self.terminal.commonprefix(file_lst_5), "")
+
+        # 测试案例6：所有文件名都完全相同
+        file_lst_6 = ['test.c', 'test.c', 'test.c', 'test.c']
+        self.assertEqual(self.terminal.commonprefix(file_lst_6), "test.c")
+
 if __name__ == "__main__":
     unittest.main()

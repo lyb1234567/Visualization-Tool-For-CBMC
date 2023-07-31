@@ -1,111 +1,249 @@
 CBMC version 5.85.0 (cbmc-5.85.0) 64-bit x86_64 linux
-Parsing squared_root.c
-Converting
-Type-checking squared_root
+Reading GOTO program from file myprogram
 Generating GOTO Program
 Adding CPROVER library (x86_64)
 Removal of function pointers and virtual functions
 Generic Property Instrumentation
 Running with 8 object bits, 56 offset bits (default)
 Starting Bounded Model Checking
-Unwinding loop sqrt.0 iteration 1 file squared_root.c line 9 function sqrt thread 0
-Unwinding loop sqrt.0 iteration 2 file squared_root.c line 9 function sqrt thread 0
-Unwinding loop sqrt.0 iteration 3 file squared_root.c line 9 function sqrt thread 0
-Unwinding loop sqrt.0 iteration 4 file squared_root.c line 9 function sqrt thread 0
-Runtime Symex: 0.00111837s
-size of program expression: 67 steps
-simple slicing removed 2 assignments
-Generated 1 VCC(s), 1 remaining after simplification
-Runtime Postprocess Equation: 9.107e-06s
+Runtime Symex: 0.00238752s
+size of program expression: 140 steps
+simple slicing removed 20 assignments
+Generated 2 VCC(s), 2 remaining after simplification
+Runtime Postprocess Equation: 1.2253e-05s
 Passing problem to propositional reduction
 converting SSA
-Runtime Convert SSA: 0.000162705s
+Runtime Convert SSA: 0.000993303s
 Running propositional reduction
 Post-processing
-Runtime Post-process: 3.056e-06s
+Runtime Post-process: 3.436e-06s
 Solving with MiniSAT 2.2.1 with simplifier
-320 variables, 0 clauses
+2822 variables, 2429 clauses
 SAT checker: instance is SATISFIABLE
-Runtime Solver: 6.0093e-05s
-Runtime decision procedure: 0.000285787s
+Runtime Solver: 0.00200341s
+Runtime decision procedure: 0.00307988s
 Building error trace
 
 ** Results:
-squared_root.c function main
-[main.assertion.1] line 29 assertion result*result == x: FAILURE
+file2.c function printB
+[printB.assertion.1] line 11 assertion z + x <= 10: FAILURE
 
-Trace for main.assertion.1:
+file3.c function printC
+[printC.assertion.1] line 5 assertion a > 3: FAILURE
 
-State 12 file squared_root.c function main line 27 thread 0
+Trace for printB.assertion.1:
+
+State 15 file file1.c function printA line 4 thread 0
 ----------------------------------------------------
-  x=10 (00000000 00000000 00000000 00001010)
+  format="This is function A.\n" (00000010 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
 
-State 17 file squared_root.c function main line 28 thread 0
+State 19 file <builtin-library-printf> function printf line 17 thread 0
 ----------------------------------------------------
-  x=10 (00000000 00000000 00000000 00001010)
+  result=0 (00000000 00000000 00000000 00000000)
 
-State 20 file squared_root.c function sqrt line 8 thread 0
+State 20 file <builtin-library-printf> function printf line 18 thread 0
 ----------------------------------------------------
-  start=1 (00000000 00000000 00000000 00000001)
+  list=((va_list)NULL) (00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
 
-State 22 file squared_root.c function sqrt line 8 thread 0
+State 22 file <builtin-library-printf> function printf line 19 thread 0
 ----------------------------------------------------
-  end=10 (00000000 00000000 00000000 00001010)
+  list=va_args!0 (00000011 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
+This is function A.
 
-State 23 file squared_root.c function sqrt line 8 thread 0
-----------------------------------------------------
-  ans=0 (00000000 00000000 00000000 00000000)
 
-State 26 file squared_root.c function sqrt line 10 thread 0
+State 24 file <builtin-library-printf> function printf line 21 thread 0
 ----------------------------------------------------
-  mid=5 (00000000 00000000 00000000 00000101)
+  list=((va_list)NULL) (00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
 
-State 29 file squared_root.c function sqrt line 20 thread 0
+State 36 file <builtin-library-random> function random line 8 thread 0
 ----------------------------------------------------
-  end=4 (00000000 00000000 00000000 00000100)
+  result=8388608l (00000000 00000000 00000000 00000000 00000000 10000000 00000000 00000000)
 
-State 33 file squared_root.c function sqrt line 10 thread 0
-----------------------------------------------------
-  mid=2 (00000000 00000000 00000000 00000010)
+Assumption:
+  file <builtin-library-random> line 9 function random
+  result >= (signed long int)0 && result <= (signed long int)2147483647
 
-State 36 file squared_root.c function sqrt line 17 thread 0
+State 41 file file2.c function printB line 5 thread 0
 ----------------------------------------------------
-  start=3 (00000000 00000000 00000000 00000011)
+  x=8388608 (00000000 10000000 00000000 00000000)
 
-State 37 file squared_root.c function sqrt line 18 thread 0
+State 43 file file2.c function printB line 6 thread 0
 ----------------------------------------------------
-  ans=2 (00000000 00000000 00000000 00000010)
+  y=7 (00000000 00000000 00000000 00000111)
 
-State 42 file squared_root.c function sqrt line 10 thread 0
+State 51 file <builtin-library-random> function random line 8 thread 0
 ----------------------------------------------------
-  mid=3 (00000000 00000000 00000000 00000011)
+  result=268435456l (00000000 00000000 00000000 00000000 00010000 00000000 00000000 00000000)
 
-State 45 file squared_root.c function sqrt line 17 thread 0
-----------------------------------------------------
-  start=4 (00000000 00000000 00000000 00000100)
+Assumption:
+  file <builtin-library-random> line 9 function random
+  result >= (signed long int)0 && result <= (signed long int)2147483647
 
-State 46 file squared_root.c function sqrt line 18 thread 0
+State 56 file file2.c function printB line 7 thread 0
 ----------------------------------------------------
-  ans=3 (00000000 00000000 00000000 00000011)
+  a=268435456 (00010000 00000000 00000000 00000000)
 
-State 51 file squared_root.c function sqrt line 10 thread 0
+State 64 file <builtin-library-random> function random line 8 thread 0
 ----------------------------------------------------
-  mid=4 (00000000 00000000 00000000 00000100)
+  result=0l (00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
 
-State 54 file squared_root.c function sqrt line 20 thread 0
-----------------------------------------------------
-  end=3 (00000000 00000000 00000000 00000011)
+Assumption:
+  file <builtin-library-random> line 9 function random
+  result >= (signed long int)0 && result <= (signed long int)2147483647
 
-State 60 file squared_root.c function main line 28 thread 0
+State 69 file file2.c function printB line 8 thread 0
 ----------------------------------------------------
-  result=3 (00000000 00000000 00000000 00000011)
+  asdas=0 (00000000 00000000 00000000 00000000)
+
+State 76 file <builtin-library-random> function random line 8 thread 0
+----------------------------------------------------
+  result=570425340l (00000000 00000000 00000000 00000000 00100001 11111111 11111111 11111100)
+
+Assumption:
+  file <builtin-library-random> line 9 function random
+  result >= (signed long int)0 && result <= (signed long int)2147483647
+
+State 81 file file2.c function printB line 9 thread 0
+----------------------------------------------------
+  x=570425339 (00100001 11111111 11111111 11111011)
+
+State 83 file file2.c function printB line 10 thread 0
+----------------------------------------------------
+  z=570425346 (00100010 00000000 00000000 00000010)
 
 Violated property:
-  file squared_root.c function main line 29 thread 0
-  assertion result*result == x
-  result * result == x
+  file file2.c function printB line 11 thread 0
+  assertion z + x <= 10
+  z + x <= 10
 
 
 
-** 1 of 1 failed (2 iterations)
+Trace for printC.assertion.1:
+
+State 15 file file1.c function printA line 4 thread 0
+----------------------------------------------------
+  format="This is function A.\n" (00000010 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
+
+State 19 file <builtin-library-printf> function printf line 17 thread 0
+----------------------------------------------------
+  result=0 (00000000 00000000 00000000 00000000)
+
+State 20 file <builtin-library-printf> function printf line 18 thread 0
+----------------------------------------------------
+  list=((va_list)NULL) (00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
+
+State 22 file <builtin-library-printf> function printf line 19 thread 0
+----------------------------------------------------
+  list=va_args!0 (00000011 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
+This is function A.
+
+
+State 24 file <builtin-library-printf> function printf line 21 thread 0
+----------------------------------------------------
+  list=((va_list)NULL) (00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
+
+State 36 file <builtin-library-random> function random line 8 thread 0
+----------------------------------------------------
+  result=8388608l (00000000 00000000 00000000 00000000 00000000 10000000 00000000 00000000)
+
+Assumption:
+  file <builtin-library-random> line 9 function random
+  result >= (signed long int)0 && result <= (signed long int)2147483647
+
+State 41 file file2.c function printB line 5 thread 0
+----------------------------------------------------
+  x=8388608 (00000000 10000000 00000000 00000000)
+
+State 43 file file2.c function printB line 6 thread 0
+----------------------------------------------------
+  y=7 (00000000 00000000 00000000 00000111)
+
+State 51 file <builtin-library-random> function random line 8 thread 0
+----------------------------------------------------
+  result=268435456l (00000000 00000000 00000000 00000000 00010000 00000000 00000000 00000000)
+
+Assumption:
+  file <builtin-library-random> line 9 function random
+  result >= (signed long int)0 && result <= (signed long int)2147483647
+
+State 56 file file2.c function printB line 7 thread 0
+----------------------------------------------------
+  a=268435456 (00010000 00000000 00000000 00000000)
+
+State 64 file <builtin-library-random> function random line 8 thread 0
+----------------------------------------------------
+  result=0l (00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
+
+Assumption:
+  file <builtin-library-random> line 9 function random
+  result >= (signed long int)0 && result <= (signed long int)2147483647
+
+State 69 file file2.c function printB line 8 thread 0
+----------------------------------------------------
+  asdas=0 (00000000 00000000 00000000 00000000)
+
+State 76 file <builtin-library-random> function random line 8 thread 0
+----------------------------------------------------
+  result=570425340l (00000000 00000000 00000000 00000000 00100001 11111111 11111111 11111100)
+
+Assumption:
+  file <builtin-library-random> line 9 function random
+  result >= (signed long int)0 && result <= (signed long int)2147483647
+
+State 81 file file2.c function printB line 9 thread 0
+----------------------------------------------------
+  x=570425339 (00100001 11111111 11111111 11111011)
+
+State 83 file file2.c function printB line 10 thread 0
+----------------------------------------------------
+  z=570425346 (00100010 00000000 00000000 00000010)
+
+Violated property:
+  file file2.c function printB line 11 thread 0
+  assertion z + x <= 10
+  z + x <= 10
+
+
+State 87 file file2.c function printB line 12 thread 0
+----------------------------------------------------
+  format="This is function B.\n" (00000100 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
+
+State 91 file <builtin-library-printf> function printf line 17 thread 0
+----------------------------------------------------
+  result=0 (00000000 00000000 00000000 00000000)
+
+State 92 file <builtin-library-printf> function printf line 18 thread 0
+----------------------------------------------------
+  list=((va_list)NULL) (00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
+
+State 94 file <builtin-library-printf> function printf line 19 thread 0
+----------------------------------------------------
+  list=va_args$0!0 (00000101 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
+This is function B.
+
+
+State 96 file <builtin-library-printf> function printf line 21 thread 0
+----------------------------------------------------
+  list=((va_list)NULL) (00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
+
+State 108 file <builtin-library-random> function random line 8 thread 0
+----------------------------------------------------
+  result=0l (00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
+
+Assumption:
+  file <builtin-library-random> line 9 function random
+  result >= (signed long int)0 && result <= (signed long int)2147483647
+
+State 113 file file3.c function printC line 4 thread 0
+----------------------------------------------------
+  a=0 (00000000 00000000 00000000 00000000)
+
+Violated property:
+  file file3.c function printC line 5 thread 0
+  assertion a > 3
+  a > 3
+
+
+
+** 2 of 2 failed (2 iterations)
 VERIFICATION FAILED

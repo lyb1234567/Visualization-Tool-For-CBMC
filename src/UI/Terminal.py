@@ -5,6 +5,7 @@ import subprocess
 import os
 import sys
 import re
+import glob
 root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(root_folder)
 from UI.utils import extract_command,extract_file_name_without_extension,print_result,wait_for_file
@@ -24,13 +25,20 @@ class Terminal(QPlainTextEdit):
         self.cfg=None
         self.process.readyRead.connect(self.dataReady)
         self.process.start('cmd.exe')
-        welcome_message = "Welcome to the terminal! You can now only use the following commands: xxx \n"
-        self.appendPlainText(welcome_message)
+        self.text_cursor=self.textCursor()
+        self.clear()
         self.trace_point_info=[]
         self.command_history=[]
         self.command_index=0
         self.cursorPositionChanged.connect(self.handle_cursor_position_changed)
         self.cur_assertion_statement=None
+        self.commands_info = {
+            'clear': 'Clear the terminal.',
+            'info tracepoint': 'Print all tracepoint information.',
+            'tracepoint': 'Usage: tracepoint <filename> <line_number>. Set a tracepoint at a specific line in a file.',
+            'run': 'Usage: run <file1> <file2> ... <fileN>. Run the given files.',
+            'help':'Usage: help <command name>. Show the useage of specific line'
+        }
     # 打印目前已有的tracepoint 信息
     def print_trace_point_info(self):
         num_trace_point=len(self.trace_point_info)
@@ -125,6 +133,66 @@ class Terminal(QPlainTextEdit):
             lines[-1] = last_line
             # Join the lines and set the new text
             self.setPlainText('\n'.join(lines))
+            self.text_cursor.movePosition(self.textCursor().position())
+            self.setTextCursor(self.text_cursor)
+    # 获取当前输入的命令或者内容
+    def get_current_input(self):
+        # Get all text
+        text = self.toPlainText()
+        # Split it into lines
+        lines = text.split('\n')
+        # Get the last line
+        last_line = lines[-1]
+        # Find the last occurrence of '>'
+        return last_line.split('>')[-1].strip()
+    def get_file_lst(self,input_str):
+        # The regular expression pattern for matching filenames and other strings
+        pattern = r"\b\w+\.\w+\b|\b\w+\b"
+
+    # Find all matches in the input string
+        matches = re.findall(pattern, input_str)
+
+        return matches
+    def on_tab_pressed(self):
+        current_input = self.get_current_input()
+        if current_input.startswith('run ') or current_input.startswith('tracepoint '):
+            if current_input.startswith('tracepoint'):
+                arguments=current_input.split(' ')
+                # 如果目前只输入了两个参数，那么就可以尝试补全，如果超过两个参数了，那么就不操作
+                if len(arguments)==2:
+                    previouscontent = current_input.split(' ', 1)[0]
+                    possible_filename = current_input.split(' ', 1)[1]
+                    possible_completions = glob.glob(possible_filename + '*')
+                    common_prefix=self.commonprefix(possible_completions)
+                    new_line=previouscontent+" "+common_prefix
+                    self.replace_last_line(new_line)
+            # 当使用run 命令时，如果是多个文件，就提取参数最后一个座位
+            elif current_input.startswith('run'):
+                arguments=self.get_file_lst(current_input)
+                arguments=[element for element in arguments if element!='']
+                print('arguments:',arguments)
+                file_to_be_completed=arguments[-1]
+                print('file to be completed:',file_to_be_completed)
+                previouscontent = ""
+                for i in range(len(arguments)-1):
+                    previouscontent=previouscontent+arguments[i]+" "
+                possible_filename = file_to_be_completed
+                possible_completions = glob.glob(possible_filename + '*')
+                common_prefix=self.commonprefix(possible_completions)
+                new_line=previouscontent+" "+common_prefix
+                self.replace_last_line(new_line)
+            
+    # 返回可能补全的文件名的公共部分比如：在['test.c', 'test_1.c', 'test_2.c', 'test_3.c']，就应当返回test
+    def commonprefix(self,possible_files_lst):
+        if not possible_files_lst: 
+            return ''
+        else:
+            s1 = min(possible_files_lst)
+            s2 = max(possible_files_lst)
+            for i, c in enumerate(s1):
+                if c != s2[i]:
+                    return s1[:i]
+            return s1
     def keyPressEvent(self, event):
         cursor = self.textCursor()
         blockNumber = cursor.blockNumber()
@@ -142,10 +210,18 @@ class Terminal(QPlainTextEdit):
             if self.command_index > 0:
                 self.command_index -= 1
                 self.replace_last_line(self.command_history[self.command_index])
+                self.text_cursor.movePosition(self.textCursor().position())
+                self.setTextCursor(self.text_cursor)
         elif event.key() == Qt.Key_Down:
             if self.command_index < len(self.command_history) - 1:
                 self.command_index += 1
                 self.replace_last_line(self.command_history[self.command_index])
+                self.text_cursor.movePosition(self.textCursor().position())
+                self.setTextCursor(self.text_cursor)
+        if event.key() == Qt.Key_Tab:
+            # 在这里处理 Tab 键的按下事件
+            self.on_tab_pressed()
+            event.accept()
         elif event.key() == Qt.Key_Return:
             command = self.toPlainText().split('\n')[-2]
             last_command=self.toPlainText().split('\n')[-1]
@@ -156,6 +232,17 @@ class Terminal(QPlainTextEdit):
                 self.process.write(command.encode('utf-8'))
                 self.process.write(b'\n')
                 self.clear()
+            elif last_command.strip()=='help':
+                beginning_message="These shell commands are defined internally.  Type `help' to see this list.\n Type `help name' to find out more about the function `name'.\n"
+                self.appendPlainText(beginning_message)
+                for command, info in self.commands_info.items():
+                    self.appendPlainText(f'{command}: {info}')
+                self.process.write(b'\n')
+            elif last_command.strip().startswith('help '):
+                command_to_help = last_command.split('help')[1].strip()
+                info = self.commands_info.get(command_to_help, f'No information available for command {command_to_help}.')
+                self.appendPlainText(f'{command_to_help}: {info}')
+                self.process.write(b'\n')
             elif last_command.strip() == 'info tracepoint':
                 trace_info=self.print_trace_point_info()
                 self.appendPlainText(trace_info)
@@ -171,6 +258,7 @@ class Terminal(QPlainTextEdit):
                     self.process.write(b'\n')
             elif last_command.strip().startswith('run'):
                 file_lst=last_command.split(' ')[1:]
+                file_lst=[file for file in file_lst if file != '']
                 if len(file_lst)==0:
                    QMessageBox.warning(self,"Warning", "Need a file to run!")
                    self.process.write(b'\n')
@@ -202,6 +290,7 @@ class Terminal(QPlainTextEdit):
                         QMessageBox.warning(self,"Warning", "{0} is not in the directory!!".format(file_name))
                         self.process.write(b'\n')
                 else:
+                    
                     file_combined=""
                     file_not_exists=""
                     all_exists=True
