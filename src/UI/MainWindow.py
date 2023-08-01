@@ -14,8 +14,17 @@ from UI.utils import extract_file_name_without_extension,wait_for_file
 from UI.Terminal import Terminal
 from UI.Fileselection import MultiFileDialog
 from UI.SearchDialog import SearchDialog
+from UI.Line_Number_Widget import LineNumberWidget
 from JsonViwer.MainJsonWindow import MainWindow as jsonWindow
 from ControlFlowGraph.ControlFlowGraphGenerator import ControlGraphGenerator
+class FileWidget(QWidget):
+    def __init__(self, fileName, parent=None,editor_widget=None,line_number_widget=None):
+        super(FileWidget, self).__init__(parent)
+        self.fileName = fileName
+        self.editor=editor_widget
+        self.line_number=line_number_widget
+    def get_fileName(self):
+        return self.fileName
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -23,6 +32,7 @@ class MainWindow(QMainWindow):
         self.mainWidget = QWidget(self)  # Create main widget
         self.setCentralWidget(self.mainWidget)
         self.editor=None
+        self.line_number_widget=None
         self.jsonwindow=None
         self.fileChange=False
         self.cfg=None
@@ -116,8 +126,9 @@ class MainWindow(QMainWindow):
     def on_tab_changed(self, index):
         # Get the currently selected TextEdit
         currentTextEdit = self.tabWidget.widget(index)
-        # Get the fileName property of the current TextEdit
         fileName = currentTextEdit.fileName if currentTextEdit else None
+        # Get the fileName property of the current TextEdit
+        # fileName = currentTextEdit.fileName if currentTextEdit else None
         # Now you can use fileName or currentTextEdit for whatever you want
         # For example, if you want to create a new editor for the selected file:
         # if fileName:
@@ -125,7 +136,7 @@ class MainWindow(QMainWindow):
     def handle_find(self):
         currentTextEdit = self.tabWidget.currentWidget()
         if currentTextEdit:
-            self.search_dialog.text_edit=currentTextEdit
+            self.search_dialog.fileWidget.editor_widget=currentTextEdit
             self.search_dialog.setVisible(not self.search_dialog.isVisible())
     def openExplorer(self):
         self.explorer=self.setupExplorer()
@@ -147,6 +158,10 @@ class MainWindow(QMainWindow):
         return dockWidget
 
 
+    def __line_widget_line_count_changed(self):
+        if self.line_number_widget:
+            n1 = int(self.editor.document().lineCount())
+            self.line_number_widget.changeLineCount(n1)
     def openFile(self, file_path=None,line_number=None,SOURCE_TYPE=None,cfg=None,assertion_statement=None):
         if not file_path:
             options = QFileDialog.Options()
@@ -155,10 +170,17 @@ class MainWindow(QMainWindow):
             if not file_path:
                 return
         self.editor=TextEdit(self,SOURCE_TYPE=SOURCE_TYPE,fileName=extract_file_name(file_path),cfg=cfg,assertion_statement=assertion_statement,line_number=line_number)
+        self.editor.textChanged.connect(self.__line_widget_line_count_changed)
+        self.line_number_widget=LineNumberWidget(widget=self.editor,fileName=extract_file_name(file_path))
+        new_file_widget=FileWidget(fileName=extract_file_name(file_path),editor_widget=self.editor,line_number_widget=self.line_number_widget)
+        new_layout=QHBoxLayout(new_file_widget)
+        new_layout.addWidget(self.line_number_widget)
+        new_layout.addWidget(self.editor)
+        self.search_dialog.fileWidget=new_file_widget
         try:
             with open(file_path, 'r') as f:
                 fileData = f.read()  
-                self.editor.setText(fileData)
+                self.editor.setPlainText(fileData)
                 if line_number:
                     tab_index=self.get_tabindex(file_path)
                     if tab_index !=None:
@@ -169,7 +191,7 @@ class MainWindow(QMainWindow):
                 temp=file_path
                 fileName = extract_file_name(file_path)
                 if fileName not in  self.check_tab_lst:
-                    self.tabWidget.addTab(self.editor, fileName)
+                    self.tabWidget.addTab(new_file_widget, fileName)
                     self.switchToFile(temp)
                     self.check_tab_lst.append(fileName)
         except UnicodeDecodeError:
@@ -186,6 +208,7 @@ class MainWindow(QMainWindow):
             if os.path.exists(fileName):
                 return
             textEdit = TextEdit(self)  # create TextEdit instance
+
             with open(fileName, 'w') as f:  # create an empty file
                 pass
             textEdit.fileName = fileName
@@ -219,6 +242,7 @@ class MainWindow(QMainWindow):
 
     def closeTab(self, index):
         tab = self.tabWidget.widget(index)
+        fileName=tab.get_fileName()
         self.tabWidget.removeTab(index)
         self.check_tab_lst.remove(extract_file_name(tab.fileName))
         try:
@@ -247,7 +271,7 @@ class MainWindow(QMainWindow):
     def switchToFile(self,file_path):
         for i in range(self.tabWidget.count()):
             tab = self.tabWidget.widget(i)
-            if tab.fileName == file_path:
+            if tab.fileName == extract_file_name(file_path):
                 self.tabWidget.setCurrentWidget(tab)
                 break
     def runfilesingle(self,index):

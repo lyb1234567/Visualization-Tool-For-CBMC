@@ -1,293 +1,64 @@
 CBMC version 5.85.0 (cbmc-5.85.0) 64-bit x86_64 linux
-Parsing test_2.c
+Parsing test.c
 Converting
-Type-checking test_2
+Type-checking test
 Generating GOTO Program
 Adding CPROVER library (x86_64)
 Removal of function pointers and virtual functions
 Generic Property Instrumentation
 Running with 8 object bits, 56 offset bits (default)
 Starting Bounded Model Checking
-Unwinding loop zero_array.0 iteration 1 file test_2.c line 23 function zero_array thread 0
-Unwinding loop zero_array.0 iteration 2 file test_2.c line 23 function zero_array thread 0
-Unwinding loop zero_array.0 iteration 3 file test_2.c line 23 function zero_array thread 0
-Unwinding loop zero_array.0 iteration 4 file test_2.c line 23 function zero_array thread 0
-Unwinding loop zero_array.0 iteration 5 file test_2.c line 23 function zero_array thread 0
-Unwinding loop zero_array.0 iteration 6 file test_2.c line 23 function zero_array thread 0
-Unwinding loop zero_array.0 iteration 7 file test_2.c line 23 function zero_array thread 0
-Unwinding loop zero_array.0 iteration 8 file test_2.c line 23 function zero_array thread 0
-Unwinding loop zero_array.0 iteration 9 file test_2.c line 23 function zero_array thread 0
-Unwinding loop zero_array.0 iteration 10 file test_2.c line 23 function zero_array thread 0
-Runtime Symex: 0.00189097s
-size of program expression: 115 steps
-simple slicing removed 9 assignments
-Generated 13 VCC(s), 9 remaining after simplification
-Runtime Postprocess Equation: 8.997e-06s
+Runtime Symex: 0.00092241s
+size of program expression: 42 steps
+simple slicing removed 5 assignments
+Generated 2 VCC(s), 1 remaining after simplification
+Runtime Postprocess Equation: 1.0249e-05s
 Passing problem to propositional reduction
 converting SSA
-Runtime Convert SSA: 0.000290635s
+Runtime Convert SSA: 0.000177944s
 Running propositional reduction
 Post-processing
-Runtime Post-process: 2.865e-06s
+Runtime Post-process: 6.352e-06s
 Solving with MiniSAT 2.2.1 with simplifier
-486 variables, 260 clauses
+240 variables, 0 clauses
 SAT checker: instance is SATISFIABLE
-Runtime Solver: 0.000129433s
-Runtime decision procedure: 0.000489419s
+Runtime Solver: 9.8294e-05s
+Runtime decision procedure: 0.000369522s
 Building error trace
 
 ** Results:
-test_2.c function increment
-[increment.assertion.1] line 12 assertion *value > 0: FAILURE
+test.c function main
+[main.assertion.1] line 15 assertion isEven(10): SUCCESS
+[main.assertion.2] line 16 assertion isEven(num2): FAILURE
 
-test_2.c function increment_ptr
-[increment_ptr.assertion.1] line 18 assertion value != NULL: FAILURE
+Trace for main.assertion.2:
 
-test_2.c function test_array
-[test_array.assertion.1] line 6 assertion size > 0: FAILURE
-
-test_2.c function zero_array
-[zero_array.assertion.1] line 25 assertion i<4: FAILURE
-
-Trace for increment.assertion.1:
-
-State 12 file test_2.c function main line 30 thread 0
+State 12 file test.c function main line 12 thread 0
 ----------------------------------------------------
-  value=1 (00000000 00000000 00000000 00000001)
+  num1=11 (00000000 00000000 00000000 00001011)
 
-State 15 file test_2.c function main line 31 thread 0
+State 14 file test.c function main line 13 thread 0
 ----------------------------------------------------
-  value=&value!0@1 (00000010 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
+  num2=9 (00000000 00000000 00000000 00001001)
 
-State 16 file test_2.c function increment line 11 thread 0
+State 15 file test.c function main line 14 thread 0
 ----------------------------------------------------
-  value=0 (00000000 00000000 00000000 00000000)
+  array={ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ({ 00000000, 00000000, 00000000, 00000000, 00000000, 00000000, 00000000, 00000000, 00000000, 00000000 })
+
+State 19 file test.c function main line 15 thread 0
+----------------------------------------------------
+  num=10 (00000000 00000000 00000000 00001010)
+
+State 28 file test.c function main line 16 thread 0
+----------------------------------------------------
+  num=9 (00000000 00000000 00000000 00001001)
 
 Violated property:
-  file test_2.c function increment line 12 thread 0
-  assertion *value > 0
-  *value > 0
+  file test.c function main line 16 thread 0
+  assertion isEven(num2)
+  return_value_isEven$0 != FALSE
 
 
 
-Trace for increment_ptr.assertion.1:
-
-State 12 file test_2.c function main line 30 thread 0
-----------------------------------------------------
-  value=1 (00000000 00000000 00000000 00000001)
-
-State 15 file test_2.c function main line 31 thread 0
-----------------------------------------------------
-  value=&value!0@1 (00000010 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
-
-State 16 file test_2.c function increment line 11 thread 0
-----------------------------------------------------
-  value=0 (00000000 00000000 00000000 00000000)
-
-Violated property:
-  file test_2.c function increment line 12 thread 0
-  assertion *value > 0
-  *value > 0
-
-
-State 20 file test_2.c function main line 33 thread 0
-----------------------------------------------------
-  value_ptr=&value!0@1 (00000010 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
-
-State 23 file test_2.c function main line 34 thread 0
-----------------------------------------------------
-  value=&value!0@1 (00000010 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
-
-State 24 file test_2.c function increment_ptr line 17 thread 0
-----------------------------------------------------
-  value=((signed int *)NULL) (00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
-
-Violated property:
-  file test_2.c function increment_ptr line 18 thread 0
-  assertion value != NULL
-  value != ((signed int *)NULL)
-
-
-
-Trace for test_array.assertion.1:
-
-State 12 file test_2.c function main line 30 thread 0
-----------------------------------------------------
-  value=1 (00000000 00000000 00000000 00000001)
-
-State 15 file test_2.c function main line 31 thread 0
-----------------------------------------------------
-  value=&value!0@1 (00000010 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
-
-State 16 file test_2.c function increment line 11 thread 0
-----------------------------------------------------
-  value=0 (00000000 00000000 00000000 00000000)
-
-Violated property:
-  file test_2.c function increment line 12 thread 0
-  assertion *value > 0
-  *value > 0
-
-
-State 20 file test_2.c function main line 33 thread 0
-----------------------------------------------------
-  value_ptr=&value!0@1 (00000010 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
-
-State 23 file test_2.c function main line 34 thread 0
-----------------------------------------------------
-  value=&value!0@1 (00000010 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
-
-State 24 file test_2.c function increment_ptr line 17 thread 0
-----------------------------------------------------
-  value=((signed int *)NULL) (00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
-
-Violated property:
-  file test_2.c function increment_ptr line 18 thread 0
-  assertion value != NULL
-  value != ((signed int *)NULL)
-
-
-State 28 file test_2.c function main line 36 thread 0
-----------------------------------------------------
-  size=0 (00000000 00000000 00000000 00000000)
-
-State 31 file test_2.c function main line 37 thread 0
-----------------------------------------------------
-  array={  } ( })
-
-State 34 file test_2.c function main line 38 thread 0
-----------------------------------------------------
-  array=array!0@1 (00000011 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
-
-State 35 file test_2.c function main line 38 thread 0
-----------------------------------------------------
-  size=0 (00000000 00000000 00000000 00000000)
-
-Violated property:
-  file test_2.c function test_array line 6 thread 0
-  assertion size > 0
-  size > 0
-
-
-
-Trace for zero_array.assertion.1:
-
-State 12 file test_2.c function main line 30 thread 0
-----------------------------------------------------
-  value=1 (00000000 00000000 00000000 00000001)
-
-State 15 file test_2.c function main line 31 thread 0
-----------------------------------------------------
-  value=&value!0@1 (00000010 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
-
-State 16 file test_2.c function increment line 11 thread 0
-----------------------------------------------------
-  value=0 (00000000 00000000 00000000 00000000)
-
-Violated property:
-  file test_2.c function increment line 12 thread 0
-  assertion *value > 0
-  *value > 0
-
-
-State 20 file test_2.c function main line 33 thread 0
-----------------------------------------------------
-  value_ptr=&value!0@1 (00000010 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
-
-State 23 file test_2.c function main line 34 thread 0
-----------------------------------------------------
-  value=&value!0@1 (00000010 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
-
-State 24 file test_2.c function increment_ptr line 17 thread 0
-----------------------------------------------------
-  value=((signed int *)NULL) (00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
-
-Violated property:
-  file test_2.c function increment_ptr line 18 thread 0
-  assertion value != NULL
-  value != ((signed int *)NULL)
-
-
-State 28 file test_2.c function main line 36 thread 0
-----------------------------------------------------
-  size=0 (00000000 00000000 00000000 00000000)
-
-State 31 file test_2.c function main line 37 thread 0
-----------------------------------------------------
-  array={  } ( })
-
-State 34 file test_2.c function main line 38 thread 0
-----------------------------------------------------
-  array=array!0@1 (00000011 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
-
-State 35 file test_2.c function main line 38 thread 0
-----------------------------------------------------
-  size=0 (00000000 00000000 00000000 00000000)
-
-Violated property:
-  file test_2.c function test_array line 6 thread 0
-  assertion size > 0
-  size > 0
-
-
-State 38 file test_2.c function main line 40 thread 0
-----------------------------------------------------
-  size=10 (00000000 00000000 00000000 00001010)
-
-State 41 file test_2.c function main line 41 thread 0
-----------------------------------------------------
-  array=array!0@1 (00000011 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
-
-State 42 file test_2.c function main line 41 thread 0
-----------------------------------------------------
-  size=10 (00000000 00000000 00000000 00001010)
-
-State 44 file test_2.c function zero_array line 23 thread 0
-----------------------------------------------------
-  i=0 (00000000 00000000 00000000 00000000)
-
-State 46 file test_2.c function zero_array line 24 thread 0
-----------------------------------------------------
-  array[0l]=1 (00000000 00000000 00000000 00000001)
-
-State 47 file test_2.c function zero_array line 23 thread 0
-----------------------------------------------------
-  i=1 (00000000 00000000 00000000 00000001)
-
-State 50 file test_2.c function zero_array line 24 thread 0
-----------------------------------------------------
-  array[1l]=1 (00000000 00000000 00000000 00000001)
-
-State 51 file test_2.c function zero_array line 23 thread 0
-----------------------------------------------------
-  i=2 (00000000 00000000 00000000 00000010)
-
-State 54 file test_2.c function zero_array line 24 thread 0
-----------------------------------------------------
-  array[2l]=1 (00000000 00000000 00000000 00000001)
-
-State 55 file test_2.c function zero_array line 23 thread 0
-----------------------------------------------------
-  i=3 (00000000 00000000 00000000 00000011)
-
-State 58 file test_2.c function zero_array line 24 thread 0
-----------------------------------------------------
-  array[3l]=1 (00000000 00000000 00000000 00000001)
-
-State 59 file test_2.c function zero_array line 23 thread 0
-----------------------------------------------------
-  i=4 (00000000 00000000 00000000 00000100)
-
-State 62 file test_2.c function zero_array line 24 thread 0
-----------------------------------------------------
-  array[4l]=1 (00000000 00000000 00000000 00000001)
-
-Violated property:
-  file test_2.c function zero_array line 25 thread 0
-  assertion i<4
-  i < 4
-
-
-
-** 4 of 4 failed (2 iterations)
+** 1 of 2 failed (2 iterations)
 VERIFICATION FAILED

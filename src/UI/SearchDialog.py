@@ -5,7 +5,7 @@ class SearchDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setWindowTitle('Search')
-        self.text_edit = parent.tabWidget.currentWidget()
+        self.fileWidget = parent.tabWidget.currentWidget()
 
         self.search_box = QLineEdit(self)
         self.search_box.textChanged.connect(self.perform_search)  # change here
@@ -33,10 +33,10 @@ class SearchDialog(QDialog):
     def perform_search(self):
         self.matches.clear()
         self.current_match = -1
-        self.text_edit.moveCursor(QTextCursor.Start)
+        self.fileWidget.editor.moveCursor(QTextCursor.Start)
         search_term = self.search_box.text()
-        while self.text_edit.find(search_term):
-            cursor = self.text_edit.textCursor()
+        while self.fileWidget.editor.find(search_term):
+            cursor = self.fileWidget.editor.textCursor()
             self.matches.append((cursor.position() - len(search_term), cursor.position()))
         if self.matches:
             self.current_match = 0
@@ -59,10 +59,10 @@ class SearchDialog(QDialog):
 
     def highlight_match(self):
         start, end = self.matches[self.current_match]
-        cursor = self.text_edit.textCursor()
+        cursor = self.fileWidget.editor.textCursor()
         cursor.setPosition(start)
         cursor.movePosition(QTextCursor.Right, QTextCursor.KeepAnchor, end - start)
-        self.text_edit.setTextCursor(cursor)
+        self.fileWidget.editor.setTextCursor(cursor)
 
     def update_match_label(self):
         if not self.matches:
