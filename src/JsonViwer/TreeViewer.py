@@ -24,6 +24,16 @@ class MyGraphicsView(QGraphicsView):
         self.editor_window.terminal.clear_tracepoint()
         # 在这里做你想做的事
         event.accept()  # 确认关闭事件
+    # 定位某个item
+    def scroll_to_item(self, item):
+        self.centerOn(item)
+class Graph(QGraphicsScene):
+    #...原有的代码...
+    def find_first_colored(self):
+        for item in self.items():
+            if isinstance(item, Node) and item.is_colored():
+                return item
+        return None
 class TreeViewer(QTreeWidget):
     def __init__(self,editor_window=None,json_window=None,filePath=None,cfg=None,trace_num=None,run_by_editor=False):
         super().__init__()
@@ -133,10 +143,9 @@ class TreeViewer(QTreeWidget):
         self.editor_window.terminal.appendPlainText(self.get_trace_point_info(assertion_statement))
         self.editor_window.terminal.process.write(b'\n')
         assertion_trace=self.cfg.assertion_trace_total[assertion_statement]
-        print(tracepoint_info)
         y = 0
         prev_node = None
-        scene = QGraphicsScene()
+        scene = Graph()
         for statement in assertion_trace:
             if isinstance(statement,dict):
                 for key in statement.keys():
@@ -166,6 +175,10 @@ class TreeViewer(QTreeWidget):
                     scene.addItem(arrow)
                 prev_node = node
         self.graphicView = MyGraphicsView(scene,editor_window=self.editor_window)
+        colored_item=scene.find_first_colored()
+        if colored_item !=None:
+            self.graphicView.scroll_to_item(colored_item)
+        self.graphicView.setWindowTitle('Trace graph')
         self.graphicView.resize(800, 600)
         self.graphicView.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.graphicView.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)

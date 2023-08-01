@@ -187,6 +187,7 @@ class Terminal(QPlainTextEdit):
             
     # 返回可能补全的文件名的公共部分比如：在['test.c', 'test_1.c', 'test_2.c', 'test_3.c']，就应当返回test
     def commonprefix(self,possible_files_lst):
+        possible_files_lst = [file for file in possible_files_lst if file.endswith('.c')]
         if not possible_files_lst: 
             return ''
         else:

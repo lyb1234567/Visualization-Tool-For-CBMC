@@ -17,6 +17,7 @@ from UI.SearchDialog import SearchDialog
 from UI.Line_Number_Widget import LineNumberWidget
 from JsonViwer.MainJsonWindow import MainWindow as jsonWindow
 from ControlFlowGraph.ControlFlowGraphGenerator import ControlGraphGenerator
+# 一个新的FileWidget
 class FileWidget(QWidget):
     def __init__(self, fileName, parent=None,editor_widget=None,line_number_widget=None):
         super(FileWidget, self).__init__(parent)
@@ -221,24 +222,24 @@ class MainWindow(QMainWindow):
             pass
 
     def saveFile(self):
-        textEdit = self.tabWidget.currentWidget()
-        if textEdit and textEdit.fileName:
-            with open(textEdit.fileName, 'w') as f:
-                f.write(textEdit.toPlainText())
+        cur_file_widget= self.tabWidget.currentWidget()
+        if cur_file_widget and cur_file_widget.fileName:
+            with open(cur_file_widget.fileName, 'w') as f:
+                f.write(cur_file_widget.editor.toPlainText())
             currentIndex = self.tabWidget.currentIndex()
             currentTitle = self.tabWidget.tabText(currentIndex)
             if currentTitle.endswith('*'):
                 self.tabWidget.setTabText(currentIndex, currentTitle[0:len(currentTitle)-1])
-        elif textEdit:
+        elif cur_file_widget:
             options = QFileDialog.Options()
             options |= QFileDialog.DontUseNativeDialog
             fileName, _ = QFileDialog.getSaveFileName(self, 'Save File', '', 'C Files (*.c);;JSON Files (*.json)', options=options)
             if fileName:
                 with open(fileName, 'w') as f:
-                    f.write(textEdit.toPlainText())
+                    f.write(cur_file_widget.toPlainText())
                 currentIndex = self.tabWidget.currentIndex()
                 self.tabWidget.setTabText(currentIndex, fileName)
-                textEdit.fileName = fileName
+                cur_file_widget.fileName = fileName
 
     def closeTab(self, index):
         tab = self.tabWidget.widget(index)

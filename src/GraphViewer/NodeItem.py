@@ -46,7 +46,8 @@ class Node(QGraphicsItem):
         arrow = Arrow(self, child)
         self.arrows.append(arrow)
         return arrow
-
+    def is_colored(self):
+        return self.set_back_ground_flag
     def boundingRect(self):
         return QRectF(0, 0, 200, 50)
 

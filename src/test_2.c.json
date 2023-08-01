@@ -83,7 +83,7 @@
     "messageType": "STATUS-MESSAGE"
   },
   {
-    "messageText": "Runtime Symex: 0.00261336s",
+    "messageText": "Runtime Symex: 0.00288888s",
     "messageType": "STATUS-MESSAGE"
   },
   {
@@ -99,7 +99,7 @@
     "messageType": "STATUS-MESSAGE"
   },
   {
-    "messageText": "Runtime Postprocess Equation: 4.1768e-05s",
+    "messageText": "Runtime Postprocess Equation: 3.0798e-05s",
     "messageType": "STATUS-MESSAGE"
   },
   {
@@ -111,7 +111,7 @@
     "messageType": "STATUS-MESSAGE"
   },
   {
-    "messageText": "Runtime Convert SSA: 0.000699232s",
+    "messageText": "Runtime Convert SSA: 0.000659026s",
     "messageType": "STATUS-MESSAGE"
   },
   {
@@ -123,7 +123,7 @@
     "messageType": "STATUS-MESSAGE"
   },
   {
-    "messageText": "Runtime Post-process: 1.2303e-05s",
+    "messageText": "Runtime Post-process: 1.4838e-05s",
     "messageType": "STATUS-MESSAGE"
   },
   {
@@ -139,11 +139,11 @@
     "messageType": "STATUS-MESSAGE"
   },
   {
-    "messageText": "Runtime Solver: 0.000210675s",
+    "messageText": "Runtime Solver: 0.000238728s",
     "messageType": "STATUS-MESSAGE"
   },
   {
-    "messageText": "Runtime decision procedure: 0.00113273s",
+    "messageText": "Runtime decision procedure: 0.00107009s",
     "messageType": "STATUS-MESSAGE"
   },
   {
