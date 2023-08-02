@@ -17,16 +17,31 @@ from ControlFlowGraph.ControlFlowGraphGenerator import Source_Type
 from GraphViewer.NodeItem import Node
 from GraphViewer.ArrowItem import Arrow
 class MyGraphicsView(QGraphicsView):
-    def __init__(self, scene,editor_window=None):
+    def __init__(self, scene, editor_window=None):
         self.editor_window=editor_window
         super().__init__(scene)
+        self.node_items_name,self.node_items_id=self.scene().create_NoteItems()
+    def contextMenuEvent(self, event):
+        itemClick=self.itemAt(event.pos())
+        if isinstance(itemClick,Node):
+            itemClick.contextMenuEvent(event)
+        else:
+            self.menu = QMenu(self)
+            for item_id,item_text in self.node_items_name.items():
+                item_action = QAction(item_text, self)
+                item=self.node_items_id[item_id]
+                item_action.triggered.connect(lambda checked, item=item: self.scroll_to_item(item))
+                self.menu.addAction(item_action)
+            self.menu.popup(event.globalPos())
+
     def closeEvent(self, event):
         self.editor_window.terminal.clear_tracepoint()
-        # 在这里做你想做的事
-        event.accept()  # 确认关闭事件
-    # 定位某个item
+        event.accept()
+
     def scroll_to_item(self, item):
-        self.centerOn(item)
+        if isinstance(item,Node):
+            item.colorNode()
+            self.centerOn(item)
 class Graph(QGraphicsScene):
     #...原有的代码...
     def find_first_colored(self):
@@ -34,6 +49,14 @@ class Graph(QGraphicsScene):
             if isinstance(item, Node) and item.is_colored():
                 return item
         return None
+    def create_NoteItems(self):
+        nodeItem_text={}
+        nodeItem_id={}
+        for item in self.items():
+            if isinstance(item, Node):
+                nodeItem_text.update({id(item):item.text})
+                nodeItem_id.update({id(item):item})
+        return (nodeItem_text,nodeItem_id)
 class TreeViewer(QTreeWidget):
     def __init__(self,editor_window=None,json_window=None,filePath=None,cfg=None,trace_num=None,run_by_editor=False):
         super().__init__()

@@ -1,5 +1,6 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QGraphicsView, QGraphicsScene, QGraphicsItem, QMenu, QMessageBox, QStyle,QGraphicsLineItem,QToolTip
+from PyQt5.QtWidgets import QApplication, QGraphicsView, QGraphicsScene, QGraphicsItem, QMenu, QMessageBox, QStyle,QGraphicsLineItem,QToolTip,QGraphicsSceneContextMenuEvent
+
 from PyQt5.QtGui import QPainter, QPen, QColor, QPolygonF
 from PyQt5.QtCore import Qt, QRectF, QPointF, QLineF
 import os 
@@ -22,7 +23,10 @@ class Node(QGraphicsItem):
         menu = QMenu()
         action = menu.addAction("View Source File")
         action.triggered.connect(self.viewSourceFile)
-        menu.exec_(event.screenPos())
+        if isinstance(event, QGraphicsSceneContextMenuEvent):
+            menu.exec_(event.screenPos())
+        else:  # If it's a QContextMenuEvent
+            menu.exec_(event.globalPos())
 
     def info(self):
         result=""
@@ -31,7 +35,13 @@ class Node(QGraphicsItem):
                 if key!='assertion_statement':
                     temp="{0}:{1}".format(key,self.node_info[key])+'\n'
                     result=result+temp 
-        return result 
+        return result
+    def colorNode(self):
+        self.set_back_ground_flag = True  # Set the flag to color the node
+        self.update()  # Update the node to reflect the color change
+    def clearNode(self):
+        self.set_back_ground_flag = False  # Set the flag to color the node
+        self.update()  # Update the node to reflect the color change
     def hoverEnterEvent(self, event):
         info=self.info()
         QToolTip.showText(event.screenPos(),info)

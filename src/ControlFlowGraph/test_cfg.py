@@ -1,80 +1,56 @@
-from PyQt5.QtWidgets import QPlainTextEdit, QWidget, QVBoxLayout, QApplication
-from PyQt5.QtCore import Qt, QRect
-from PyQt5.QtGui import QPainter, QColor, QTextFormat
-from PyQt5.QtCore import QSize
+from PyQt5.QtWidgets import QApplication, QGraphicsView, QGraphicsScene, QGraphicsItem, QMenu, QAction
+from PyQt5.QtGui import QCloseEvent
+from PyQt5.QtCore import QPointF,QRectF
 
-class LineNumberArea(QWidget):
-    def __init__(self, editor):
-        super().__init__(editor)
-        self.myeditor = editor
+class MyGraphicsItem(QGraphicsItem):
+    def __init__(self, name, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.name = name
 
-    def sizeHint(self):
-        return QSize(self.editor.lineNumberAreaWidth(), 0)
+    # Dummy implementations of required methods
+    def boundingRect(self):
+        return QRectF()
 
-    def paintEvent(self, event):
-        self.myeditor.lineNumberAreaPaintEvent(event)
+    def paint(self, painter, option, widget):
+        pass
 
-class CodeEditor(QPlainTextEdit):
-    def __init__(self):
-        super().__init__()
-        self.lineNumberArea = LineNumberArea(self)
 
-    def lineNumberAreaWidth(self):
-        digits = 1
-        max_value = max(1, self.blockCount())
-        while max_value >= 10:
-            max_value /= 10
-            digits += 1
-        space = 3 + self.fontMetrics().horizontalAdvance('9') * digits
-        return space
+class MyGraphicsView(QGraphicsView):
+    def __init__(self, scene, editor_window=None):
+        self.editor_window=editor_window
+        super().__init__(scene)
 
-    def updateLineNumberAreaWidth(self, _):
-        self.setViewportMargins(self.lineNumberAreaWidth(), 0, 0, 0)
+    def contextMenuEvent(self, event):
+        self.menu = QMenu(self)
 
-    def updateLineNumberArea(self, rect, dy):
-        if dy:
-            self.lineNumberArea.scroll(0, dy)
-        else:
-            self.lineNumberArea.update(0, rect.y(), self.lineNumberArea.width(), rect.height())
-        if rect.contains(self.viewport().rect()):
-            self.updateLineNumberAreaWidth(0)
+        for item in self.scene().items():
+            item_action = QAction(item.name, self)
+            item_action.triggered.connect(lambda checked, item=item: self.scroll_to_item(item))
+            self.menu.addAction(item_action)
 
-    def resizeEvent(self, event):
-        super().resizeEvent(event)
-        cr = self.contentsRect();
-        self.lineNumberArea.setGeometry(QRect(cr.left(), cr.top(), self.lineNumberAreaWidth(), cr.height()))
+        self.menu.popup(event.globalPos())
 
-    def lineNumberAreaPaintEvent(self, event):
-        mypainter = QPainter(self.lineNumberArea)
-        mypainter.fillRect(event.rect(), QColor(230, 220, 220))
+    def closeEvent(self, event):
+        self.editor_window.terminal.clear_tracepoint()
+        event.accept()
 
-        block = self.firstVisibleBlock()
-        blockNumber = block.blockNumber()
-        top = self.blockBoundingGeometry(block).translated(self.contentOffset()).top()
-        bottom = top + self.blockBoundingRect(block).height()
+    def scroll_to_item(self, item):
+        self.centerOn(item)
 
-        height = self.fontMetrics().height()
-        while block.isValid() and (top <= event.rect().bottom()):
-            if block.isVisible() and (bottom >= event.rect().top()):
-                number = str(blockNumber + 1)
-                mypainter.setPen(QColor(100, 100, 100))
-                mypainter.drawText(0, int(top), self.lineNumberArea.width(), height, Qt.AlignRight, number)
 
-            block = block.next()
-            top = bottom
-            bottom = top + self.blockBoundingRect(block).height()
-            blockNumber += 1
+# Demo usage
+app = QApplication([])
 
-class Main(QWidget):
-    def __init__(self):
-        super().__init__()
+scene = QGraphicsScene()
 
-        self.editor = CodeEditor()
-        layout = QVBoxLayout(self)
-        layout.addWidget(self.editor)
+# Add some named items to the scene
+for i in range(10):
+    item = MyGraphicsItem(f"Item {i}")
+    scene.addItem(item)
+    item.setPos(QPointF(i * 10, i * 10))  # Position items for visibility
 
-if __name__ == "__main__":
-    app = QApplication([])
-    main = Main()
-    main.show()
-    app.exec_()
+editor_window = None  # Replace with your editor window
+view = MyGraphicsView(scene, editor_window)
+view.show()
+
+app.exec_()
