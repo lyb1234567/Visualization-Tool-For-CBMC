@@ -128,22 +128,22 @@ Unwinding loop is_Univalence.2 iteration 3 file ATE.c line 155 function is_Univa
 Unwinding loop is_Univalence.3 iteration 1 file ATE.c line 164 function is_Univalence thread 0
 Unwinding loop is_Univalence.3 iteration 2 file ATE.c line 164 function is_Univalence thread 0
 Unwinding loop is_Univalence.3 iteration 3 file ATE.c line 164 function is_Univalence thread 0
-Runtime Symex: 0.0604393s
+Runtime Symex: 0.0643828s
 size of program expression: 1744 steps
 simple slicing removed 5 assignments
 Generated 1 VCC(s), 1 remaining after simplification
-Runtime Postprocess Equation: 0.000164619s
+Runtime Postprocess Equation: 0.000269796s
 Passing problem to propositional reduction
 converting SSA
-Runtime Convert SSA: 0.0103331s
+Runtime Convert SSA: 0.011623s
 Running propositional reduction
 Post-processing
-Runtime Post-process: 3.206e-06s
+Runtime Post-process: 5.35e-06s
 Solving with MiniSAT 2.2.1 with simplifier
 10937 variables, 27511 clauses
 SAT checker: instance is SATISFIABLE
-Runtime Solver: 0.0191284s
-Runtime decision procedure: 0.0296402s
+Runtime Solver: 0.0221299s
+Runtime decision procedure: 0.0340365s
 Building error trace
 
 ** Results:
@@ -1866,7 +1866,7 @@ State 1025 file ATE.c function is_Singular line 172 thread 0
 
 State 1036 file ATE.c function main line 213 thread 0
 ----------------------------------------------------
-  v=2147483647 (01111111 11111111 11111111 11111111)
+  v1=2147483647 (01111111 11111111 11111111 11111111)
 
 State 1037 file ATE.c function is_Univalence line 150 thread 0
 ----------------------------------------------------

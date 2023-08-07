@@ -146,7 +146,7 @@ int assume_Univalence(int v){
         __CPROVER_assume(sortedX[i]==v || i>E);
     }
 }
-int is_Univalence(int v){
+int is_Univalence(int v1){
     int tmpX;
     for(int i=0;i<N;i++){
         sortedX[i]=process[i].x;
@@ -154,7 +154,7 @@ int is_Univalence(int v){
     }
     for(int i=0;i<N;i++){
         for(int j=0;j<N-1;j++){
-            if(sortedX[j+1]==v){
+            if(sortedX[j+1]==v1){
                 tmpX=sortedX[j];
                 sortedX[j]=sortedX[j+1];
                 sortedX[j+1]=tmpX;
@@ -162,7 +162,7 @@ int is_Univalence(int v){
         }
     }
     for(int i=0;i<N;i++){
-        if(!(sortedX[i]==v || i>E))
+        if(!(sortedX[i]==v1 || i>E))
             return 0;
     }
     return 1;

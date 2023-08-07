@@ -4,25 +4,6 @@ from PyQt5.QtGui import QColor, QTextCursor, QTextCharFormat, QSyntaxHighlighter
 from PyQt5.QtWidgets import QTextEdit,QToolTip
 from PyQt5.QtCore import QEvent
 from ControlFlowGraph.ControlFlowGraphGenerator import Source_Type
-class SearchHighlighter(QSyntaxHighlighter):
-    def __init__(self, parent=None):
-        super(SearchHighlighter, self).__init__(parent)
-        self.text_to_highlight = ""
-        self.highlight_format = QTextCharFormat()
-        self.highlight_format.setBackground(QColor("yellow"))  # Set the highlight background to yellow
-
-    def set_highlight_text(self, text):
-        
-        self.text_to_highlight = text
-        self.rehighlight()
-
-    def highlightBlock(self, text):
-        if self.text_to_highlight:
-            index = text.lower().find(self.text_to_highlight.lower())
-            while index >= 0:
-                length = len(self.text_to_highlight)
-                self.setFormat(index, length, self.highlight_format)
-                index = text.lower().find(self.text_to_highlight.lower(), index + length)
 class MyHighlighter(QSyntaxHighlighter):
     def __init__(self, parent=None,SOURCE_TYPE=None):
         super(MyHighlighter, self).__init__(parent)
