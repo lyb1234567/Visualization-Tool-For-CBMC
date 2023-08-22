@@ -1,0 +1,16 @@
+2023-08-13 22:49:13.631 | INFO     | log_decorator:wrapper:10 - setUp completed successfully.
+2023-08-13 22:49:13.632 | INFO     | log_decorator:wrapper:10 - test_perform_search completed successfully.
+2023-08-14 22:05:00.846 | INFO     | log_decorator:wrapper:10 - setUp completed successfully.
+2023-08-14 22:05:00.846 | INFO     | log_decorator:wrapper:10 - test_perform_search completed successfully.
+2023-08-14 22:05:29.676 | INFO     | log_decorator:wrapper:10 - setUp completed successfully.
+2023-08-14 22:05:29.677 | INFO     | log_decorator:wrapper:10 - test_perform_search completed successfully.
+2023-08-14 22:12:39.522 | INFO     | log_decorator:wrapper:10 - setUp completed successfully.
+2023-08-14 22:12:39.524 | INFO     | log_decorator:wrapper:10 - test_perform_search completed successfully.
+2023-08-14 22:16:07.005 | INFO     | log_decorator:wrapper:10 - setUp completed successfully.
+2023-08-14 22:16:07.006 | INFO     | log_decorator:wrapper:10 - test_perform_search completed successfully.
+2023-08-14 22:18:51.576 | INFO     | log_decorator:wrapper:10 - setUp completed successfully.
+2023-08-14 22:18:51.577 | INFO     | log_decorator:wrapper:10 - test_perform_search completed successfully.
+2023-08-14 22:27:52.831 | INFO     | log_decorator:wrapper:10 - setUp completed successfully.
+2023-08-14 22:27:52.832 | INFO     | log_decorator:wrapper:10 - test_perform_search completed successfully.
+2023-08-14 22:28:56.933 | INFO     | log_decorator:wrapper:10 - setUp completed successfully.
+2023-08-14 22:28:56.934 | INFO     | log_decorator:wrapper:10 - test_perform_search completed successfully.

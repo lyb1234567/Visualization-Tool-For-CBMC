@@ -1,0 +1,42 @@
+
+State 12 file test_2.c function main line 24 thread 0
+----------------------------------------------------
+  value=1 (00000000 00000000 00000000 00000001)
+
+State 15 file test_2.c function main line 25 thread 0
+----------------------------------------------------
+  value=&value!0@1 (00000010 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
+
+State 16 file test_2.c function increment line 11 thread 0
+----------------------------------------------------
+  value=0 (00000000 00000000 00000000 00000000)
+
+Violated property:
+  file test_2.c function increment line 12 thread 0
+  assertion *value > 0
+  *value > 0
+
+
+State 20 file test_2.c function main line 27 thread 0
+----------------------------------------------------
+  size=0 (00000000 00000000 00000000 00000000)
+
+State 23 file test_2.c function main line 28 thread 0
+----------------------------------------------------
+  array={  } ( })
+
+State 26 file test_2.c function main line 29 thread 0
+----------------------------------------------------
+  array=array!0@1 (00000011 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
+
+State 27 file test_2.c function main line 29 thread 0
+----------------------------------------------------
+  size=0 (00000000 00000000 00000000 00000000)
+
+Violated property:
+  file test_2.c function test_array line 6 thread 0
+  assertion size > 0
+  size > 0
+
+
+

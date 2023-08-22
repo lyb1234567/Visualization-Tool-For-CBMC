@@ -17,19 +17,29 @@ import os
 import sys
 root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 sys.path.append(root_folder)
-from UI.TextEdit import SearchHighlighter, MyHighlighter, TextEdit  # 请替换为你的模块名
-from UI.MainWindow import MainWindow
+from UI.TextEdit import MyHighlighter, TextEdit  # 请替换为你的模块名
+from UI.MainWindow import MainWindow,FileWidget
 from UI.SearchDialog import SearchDialog
 from PyQt5.QtWidgets import QApplication
+from loguru import logger
+log_path = "/home/mirage/Visualization-Tool-For-CBMC/src/test/log_UI/log_test_search_dialog.log"
+logger.add(log_path, rotation="500 MB")  # 每当日志大小超过500MB时，就会创建一个新的日志文件
+from log_decorator import log_on_success,count_function
+import log_decorator
 class TestSearchDialog_1(unittest.TestCase):
+    @log_on_success
+    @count_function
     def setUp(self):
         self.app = QApplication(sys.argv)
         self.main_win = MainWindow()
         self.main_win.editor = TextEdit(editor_window=self.main_win)
+        self.file_widget=FileWidget(fileName="test.c",editor_widget=self.main_win.editor)
         self.main_win.editor.setText('This is a sample text for testing. Testing is important.')
         self.main_win.tabWidget.addTab(self.main_win.editor, "test")
         self.dialog = SearchDialog(self.main_win)
-
+        self.dialog.fileWidget=self.file_widget
+    @log_on_success
+    @count_function
     def test_perform_search(self):
         self.dialog.search_box.setText('is')
         self.dialog.perform_search()
@@ -49,37 +59,13 @@ class TestSearchDialog_1(unittest.TestCase):
         self.assertEqual(self.dialog.current_match, 0)
 
         self.dialog.perform_search_next()
-        self.assertEqual(self.dialog.current_match, 1)
-
-    
-class TestSearchDialog_2(unittest.TestCase):
-    def setUp(self):
-        self.app = QApplication(sys.argv)
-        self.main_win = MainWindow()
-        self.main_win.editor = TextEdit(editor_window=self.main_win)
-        self.main_win.editor.setText('Hello\n Hello\n Hello\n')
-        self.main_win.tabWidget.addTab(self.main_win.editor, "test")
-        self.dialog = SearchDialog(self.main_win)
-    def test_perform_search(self):
-        self.dialog.search_box.setText('He')
-        self.dialog.perform_search()
-        self.assertEqual(len(self.dialog.matches), 3)  # "is" appears twice
-        self.assertEqual(self.dialog.current_match, 0)  # current match is the first one
-        self.assertEqual(self.dialog.match_label.text(), '1 of 3')  # label text is correct
-        self.dialog.perform_search_next()
-        self.assertEqual(self.dialog.current_match, 1)
-
-        self.dialog.perform_search_previous()
-        self.assertEqual(self.dialog.current_match, 0)
-
-        self.dialog.perform_search_previous()
-        self.assertEqual(self.dialog.current_match, 2)
-        
-        self.dialog.perform_search_next()
-        self.assertEqual(self.dialog.current_match, 0)
-
-        self.dialog.perform_search_next()
-        self.assertEqual(self.dialog.current_match, 1)
-
+        self.assertEqual(self.dialog.current_match, 1)    
 if __name__ == "__main__":
-    unittest.main()
+    suite = unittest.TestLoader().loadTestsFromModule(sys.modules[__name__])
+        
+        # 使用TextTestRunner来执行测试
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+    current_file_path = os.path.abspath(__file__)
+    with open('/home/mirage/Visualization-Tool-For-CBMC/src/test/test_UI/test_results.txt', 'a') as file:
+                file.write(f'{log_decorator.module_test_count}\n')

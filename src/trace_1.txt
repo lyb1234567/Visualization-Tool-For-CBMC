@@ -1,0 +1,1860 @@
+
+State 12 file ATE.c function __CPROVER_initialize line 29 thread 0
+----------------------------------------------------
+  cntX[0l]=0 (00000000 00000000 00000000 00000000)
+
+State 13 file ATE.c function __CPROVER_initialize line 29 thread 0
+----------------------------------------------------
+  cntX[1l]=0 (00000000 00000000 00000000 00000000)
+
+State 14 file ATE.c function __CPROVER_initialize line 29 thread 0
+----------------------------------------------------
+  cntX[2l]=0 (00000000 00000000 00000000 00000000)
+
+State 16 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[0l]={ .id=0, .x=0, .rcv={ { .x=0, .valid=0, .safe=0, .$pad3=0 }, { .x=0, .valid=0, .safe=0, .$pad3=0 }, { .x=0, .valid=0, .safe=0, .$pad3=0 } }, .decide=0 } ({ 00000000 00000000 00000000 00000000, 00000000 00000000 00000000 00000000, { { 00000000 00000000 00000000 00000000, 00000000, 00000000, 00000000 00000000 }, { 00000000 00000000 00000000 00000000, 00000000, 00000000, 00000000 00000000 }, { 00000000 00000000 00000000 00000000, 00000000, 00000000, 00000000 00000000 } }, 00000000 00000000 00000000 00000000 })
+
+State 17 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[0l].id=0 (00000000 00000000 00000000 00000000)
+
+State 18 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[0l].x=0 (00000000 00000000 00000000 00000000)
+
+State 19 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[0l].rcv={ { .x=0, .valid=0, .safe=0, .$pad3=0 }, { .x=0, .valid=0, .safe=0, .$pad3=0 }, { .x=0, .valid=0, .safe=0, .$pad3=0 } } ({ { 00000000 00000000 00000000 00000000, 00000000, 00000000, 00000000 00000000 }, { 00000000 00000000 00000000 00000000, 00000000, 00000000, 00000000 00000000 }, { 00000000 00000000 00000000 00000000, 00000000, 00000000, 00000000 00000000 } })
+
+State 20 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[0l].rcv[0l]={ .x=0, .valid=0, .safe=0, .$pad3=0 } ({ 00000000 00000000 00000000 00000000, 00000000, 00000000, 00000000 00000000 })
+
+State 21 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[0l].rcv[0l].x=0 (00000000 00000000 00000000 00000000)
+
+State 22 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[0l].rcv[0l].valid=0 (00000000)
+
+State 23 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[0l].rcv[0l].safe=0 (00000000)
+
+State 24 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[0l].rcv[0l].$pad3=0 (00000000 00000000)
+
+State 25 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[0l].rcv[1l]={ .x=0, .valid=0, .safe=0, .$pad3=0 } ({ 00000000 00000000 00000000 00000000, 00000000, 00000000, 00000000 00000000 })
+
+State 26 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[0l].rcv[1l].x=0 (00000000 00000000 00000000 00000000)
+
+State 27 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[0l].rcv[1l].valid=0 (00000000)
+
+State 28 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[0l].rcv[1l].safe=0 (00000000)
+
+State 29 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[0l].rcv[1l].$pad3=0 (00000000 00000000)
+
+State 30 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[0l].rcv[2l]={ .x=0, .valid=0, .safe=0, .$pad3=0 } ({ 00000000 00000000 00000000 00000000, 00000000, 00000000, 00000000 00000000 })
+
+State 31 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[0l].rcv[2l].x=0 (00000000 00000000 00000000 00000000)
+
+State 32 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[0l].rcv[2l].valid=0 (00000000)
+
+State 33 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[0l].rcv[2l].safe=0 (00000000)
+
+State 34 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[0l].rcv[2l].$pad3=0 (00000000 00000000)
+
+State 35 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[0l].decide=0 (00000000 00000000 00000000 00000000)
+
+State 36 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[1l]={ .id=0, .x=0, .rcv={ { .x=0, .valid=0, .safe=0, .$pad3=0 }, { .x=0, .valid=0, .safe=0, .$pad3=0 }, { .x=0, .valid=0, .safe=0, .$pad3=0 } }, .decide=0 } ({ 00000000 00000000 00000000 00000000, 00000000 00000000 00000000 00000000, { { 00000000 00000000 00000000 00000000, 00000000, 00000000, 00000000 00000000 }, { 00000000 00000000 00000000 00000000, 00000000, 00000000, 00000000 00000000 }, { 00000000 00000000 00000000 00000000, 00000000, 00000000, 00000000 00000000 } }, 00000000 00000000 00000000 00000000 })
+
+State 37 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[1l].id=0 (00000000 00000000 00000000 00000000)
+
+State 38 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[1l].x=0 (00000000 00000000 00000000 00000000)
+
+State 39 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[1l].rcv={ { .x=0, .valid=0, .safe=0, .$pad3=0 }, { .x=0, .valid=0, .safe=0, .$pad3=0 }, { .x=0, .valid=0, .safe=0, .$pad3=0 } } ({ { 00000000 00000000 00000000 00000000, 00000000, 00000000, 00000000 00000000 }, { 00000000 00000000 00000000 00000000, 00000000, 00000000, 00000000 00000000 }, { 00000000 00000000 00000000 00000000, 00000000, 00000000, 00000000 00000000 } })
+
+State 40 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[1l].rcv[0l]={ .x=0, .valid=0, .safe=0, .$pad3=0 } ({ 00000000 00000000 00000000 00000000, 00000000, 00000000, 00000000 00000000 })
+
+State 41 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[1l].rcv[0l].x=0 (00000000 00000000 00000000 00000000)
+
+State 42 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[1l].rcv[0l].valid=0 (00000000)
+
+State 43 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[1l].rcv[0l].safe=0 (00000000)
+
+State 44 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[1l].rcv[0l].$pad3=0 (00000000 00000000)
+
+State 45 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[1l].rcv[1l]={ .x=0, .valid=0, .safe=0, .$pad3=0 } ({ 00000000 00000000 00000000 00000000, 00000000, 00000000, 00000000 00000000 })
+
+State 46 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[1l].rcv[1l].x=0 (00000000 00000000 00000000 00000000)
+
+State 47 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[1l].rcv[1l].valid=0 (00000000)
+
+State 48 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[1l].rcv[1l].safe=0 (00000000)
+
+State 49 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[1l].rcv[1l].$pad3=0 (00000000 00000000)
+
+State 50 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[1l].rcv[2l]={ .x=0, .valid=0, .safe=0, .$pad3=0 } ({ 00000000 00000000 00000000 00000000, 00000000, 00000000, 00000000 00000000 })
+
+State 51 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[1l].rcv[2l].x=0 (00000000 00000000 00000000 00000000)
+
+State 52 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[1l].rcv[2l].valid=0 (00000000)
+
+State 53 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[1l].rcv[2l].safe=0 (00000000)
+
+State 54 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[1l].rcv[2l].$pad3=0 (00000000 00000000)
+
+State 55 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[1l].decide=0 (00000000 00000000 00000000 00000000)
+
+State 56 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[2l]={ .id=0, .x=0, .rcv={ { .x=0, .valid=0, .safe=0, .$pad3=0 }, { .x=0, .valid=0, .safe=0, .$pad3=0 }, { .x=0, .valid=0, .safe=0, .$pad3=0 } }, .decide=0 } ({ 00000000 00000000 00000000 00000000, 00000000 00000000 00000000 00000000, { { 00000000 00000000 00000000 00000000, 00000000, 00000000, 00000000 00000000 }, { 00000000 00000000 00000000 00000000, 00000000, 00000000, 00000000 00000000 }, { 00000000 00000000 00000000 00000000, 00000000, 00000000, 00000000 00000000 } }, 00000000 00000000 00000000 00000000 })
+
+State 57 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[2l].id=0 (00000000 00000000 00000000 00000000)
+
+State 58 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[2l].x=0 (00000000 00000000 00000000 00000000)
+
+State 59 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[2l].rcv={ { .x=0, .valid=0, .safe=0, .$pad3=0 }, { .x=0, .valid=0, .safe=0, .$pad3=0 }, { .x=0, .valid=0, .safe=0, .$pad3=0 } } ({ { 00000000 00000000 00000000 00000000, 00000000, 00000000, 00000000 00000000 }, { 00000000 00000000 00000000 00000000, 00000000, 00000000, 00000000 00000000 }, { 00000000 00000000 00000000 00000000, 00000000, 00000000, 00000000 00000000 } })
+
+State 60 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[2l].rcv[0l]={ .x=0, .valid=0, .safe=0, .$pad3=0 } ({ 00000000 00000000 00000000 00000000, 00000000, 00000000, 00000000 00000000 })
+
+State 61 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[2l].rcv[0l].x=0 (00000000 00000000 00000000 00000000)
+
+State 62 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[2l].rcv[0l].valid=0 (00000000)
+
+State 63 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[2l].rcv[0l].safe=0 (00000000)
+
+State 64 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[2l].rcv[0l].$pad3=0 (00000000 00000000)
+
+State 65 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[2l].rcv[1l]={ .x=0, .valid=0, .safe=0, .$pad3=0 } ({ 00000000 00000000 00000000 00000000, 00000000, 00000000, 00000000 00000000 })
+
+State 66 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[2l].rcv[1l].x=0 (00000000 00000000 00000000 00000000)
+
+State 67 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[2l].rcv[1l].valid=0 (00000000)
+
+State 68 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[2l].rcv[1l].safe=0 (00000000)
+
+State 69 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[2l].rcv[1l].$pad3=0 (00000000 00000000)
+
+State 70 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[2l].rcv[2l]={ .x=0, .valid=0, .safe=0, .$pad3=0 } ({ 00000000 00000000 00000000 00000000, 00000000, 00000000, 00000000 00000000 })
+
+State 71 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[2l].rcv[2l].x=0 (00000000 00000000 00000000 00000000)
+
+State 72 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[2l].rcv[2l].valid=0 (00000000)
+
+State 73 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[2l].rcv[2l].safe=0 (00000000)
+
+State 74 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[2l].rcv[2l].$pad3=0 (00000000 00000000)
+
+State 75 file ATE.c function __CPROVER_initialize line 27 thread 0
+----------------------------------------------------
+  process[2l].decide=0 (00000000 00000000 00000000 00000000)
+
+State 77 file ATE.c function __CPROVER_initialize line 28 thread 0
+----------------------------------------------------
+  sortedX[0l]=0 (00000000 00000000 00000000 00000000)
+
+State 78 file ATE.c function __CPROVER_initialize line 28 thread 0
+----------------------------------------------------
+  sortedX[1l]=0 (00000000 00000000 00000000 00000000)
+
+State 79 file ATE.c function __CPROVER_initialize line 28 thread 0
+----------------------------------------------------
+  sortedX[2l]=0 (00000000 00000000 00000000 00000000)
+
+State 83 file ATE.c function main line 187 thread 0
+----------------------------------------------------
+  a=0 (00000000 00000000 00000000 00000000)
+
+State 84 file ATE.c function main line 188 thread 0
+----------------------------------------------------
+  T=2 (00000000 00000000 00000000 00000010)
+
+State 85 file ATE.c function main line 189 thread 0
+----------------------------------------------------
+  E=2 (00000000 00000000 00000000 00000010)
+
+Assumption:
+  file ATE.c line 190 function main
+  a >= 0 && a <= 3
+
+Assumption:
+  file ATE.c line 191 function main
+  E >= 0 && E < 3
+
+Assumption:
+  file ATE.c line 192 function main
+  T >= 2 * ((3 + 2 * a) - E) && T < 3
+
+State 92 file ATE.c function main line 194 thread 0
+----------------------------------------------------
+  value=2147483647 (01111111 11111111 11111111 11111111)
+
+Assumption:
+  file ATE.c line 195 function main
+  value >= 0
+
+State 95 file ATE.c function main line 197 thread 0
+----------------------------------------------------
+  i=0 (00000000 00000000 00000000 00000000)
+
+State 99 file ATE.c function main line 198 thread 0
+----------------------------------------------------
+  id=0 (00000000 00000000 00000000 00000000)
+
+State 100 file ATE.c function main line 198 thread 0
+----------------------------------------------------
+  value=10 (00000000 00000000 00000000 00001010)
+
+State 101 file ATE.c function init_process line 75 thread 0
+----------------------------------------------------
+  process[0l].id=0 (00000000 00000000 00000000 00000000)
+
+State 104 file ATE.c function init_process line 76 thread 0
+----------------------------------------------------
+  process[0l].x=2147483647 (01111111 11111111 11111111 11111111)
+
+State 105 file ATE.c function init_process line 77 thread 0
+----------------------------------------------------
+  process[0l].decide=-1 (11111111 11111111 11111111 11111111)
+
+Assumption:
+  file ATE.c line 79 function init_process
+  process[(signed long int)id].x >= -1
+
+State 108 file ATE.c function main line 197 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+State 113 file ATE.c function main line 198 thread 0
+----------------------------------------------------
+  id=1 (00000000 00000000 00000000 00000001)
+
+State 114 file ATE.c function main line 198 thread 0
+----------------------------------------------------
+  value=20 (00000000 00000000 00000000 00010100)
+
+State 115 file ATE.c function init_process line 75 thread 0
+----------------------------------------------------
+  process[1l].id=1 (00000000 00000000 00000000 00000001)
+
+State 118 file ATE.c function init_process line 76 thread 0
+----------------------------------------------------
+  process[1l].x=2147483647 (01111111 11111111 11111111 11111111)
+
+State 119 file ATE.c function init_process line 77 thread 0
+----------------------------------------------------
+  process[1l].decide=-1 (11111111 11111111 11111111 11111111)
+
+Assumption:
+  file ATE.c line 79 function init_process
+  process[(signed long int)id].x >= -1
+
+State 122 file ATE.c function main line 197 thread 0
+----------------------------------------------------
+  i=2 (00000000 00000000 00000000 00000010)
+
+State 127 file ATE.c function main line 198 thread 0
+----------------------------------------------------
+  id=2 (00000000 00000000 00000000 00000010)
+
+State 128 file ATE.c function main line 198 thread 0
+----------------------------------------------------
+  value=30 (00000000 00000000 00000000 00011110)
+
+State 129 file ATE.c function init_process line 75 thread 0
+----------------------------------------------------
+  process[2l].id=2 (00000000 00000000 00000000 00000010)
+
+State 132 file ATE.c function init_process line 76 thread 0
+----------------------------------------------------
+  process[2l].x=2147483647 (01111111 11111111 11111111 11111111)
+
+State 133 file ATE.c function init_process line 77 thread 0
+----------------------------------------------------
+  process[2l].decide=-1 (11111111 11111111 11111111 11111111)
+
+Assumption:
+  file ATE.c line 79 function init_process
+  process[(signed long int)id].x >= -1
+
+State 136 file ATE.c function main line 197 thread 0
+----------------------------------------------------
+  i=3 (00000000 00000000 00000000 00000011)
+
+State 140 file ATE.c function main line 203 thread 0
+----------------------------------------------------
+  phase=1 (00000000 00000000 00000000 00000001)
+
+State 142 file ATE.c function main line 204 thread 0
+----------------------------------------------------
+  i=0 (00000000 00000000 00000000 00000000)
+
+State 146 file ATE.c function main line 205 thread 0
+----------------------------------------------------
+  id=0 (00000000 00000000 00000000 00000000)
+
+State 147 file ATE.c function main line 205 thread 0
+----------------------------------------------------
+  phase=1 (00000000 00000000 00000000 00000001)
+
+State 149 file ATE.c function send_1 line 83 thread 0
+----------------------------------------------------
+  i=0 (00000000 00000000 00000000 00000000)
+
+State 153 file ATE.c function send_1 line 84 thread 0
+----------------------------------------------------
+  from_id=0 (00000000 00000000 00000000 00000000)
+
+State 154 file ATE.c function send_1 line 84 thread 0
+----------------------------------------------------
+  to_id=0 (00000000 00000000 00000000 00000000)
+
+State 157 file ATE.c function send_message line 32 thread 0
+----------------------------------------------------
+  process[0l].rcv[0l].valid=1 (00000001)
+
+Assumption:
+  file ATE.c line 33 function send_message
+  (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].valid == 0 || (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].valid == 1
+
+State 161 file ATE.c function send_message line 35 thread 0
+----------------------------------------------------
+  process[0l].rcv[0l].safe=1 (00000001)
+
+Assumption:
+  file ATE.c line 36 function send_message
+  (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].safe == 0 || (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].safe == 1
+
+State 164 file ATE.c function send_message line 39 thread 0
+----------------------------------------------------
+  process[0l].rcv[0l].x=2147483647 (01111111 11111111 11111111 11111111)
+
+State 167 file ATE.c function send_1 line 83 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+State 172 file ATE.c function send_1 line 84 thread 0
+----------------------------------------------------
+  from_id=0 (00000000 00000000 00000000 00000000)
+
+State 173 file ATE.c function send_1 line 84 thread 0
+----------------------------------------------------
+  to_id=1 (00000000 00000000 00000000 00000001)
+
+State 176 file ATE.c function send_message line 32 thread 0
+----------------------------------------------------
+  process[1l].rcv[0l].valid=1 (00000001)
+
+Assumption:
+  file ATE.c line 33 function send_message
+  (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].valid == 0 || (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].valid == 1
+
+State 180 file ATE.c function send_message line 35 thread 0
+----------------------------------------------------
+  process[1l].rcv[0l].safe=1 (00000001)
+
+Assumption:
+  file ATE.c line 36 function send_message
+  (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].safe == 0 || (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].safe == 1
+
+State 183 file ATE.c function send_message line 39 thread 0
+----------------------------------------------------
+  process[1l].rcv[0l].x=2147483647 (01111111 11111111 11111111 11111111)
+
+State 186 file ATE.c function send_1 line 83 thread 0
+----------------------------------------------------
+  i=2 (00000000 00000000 00000000 00000010)
+
+State 191 file ATE.c function send_1 line 84 thread 0
+----------------------------------------------------
+  from_id=0 (00000000 00000000 00000000 00000000)
+
+State 192 file ATE.c function send_1 line 84 thread 0
+----------------------------------------------------
+  to_id=2 (00000000 00000000 00000000 00000010)
+
+State 195 file ATE.c function send_message line 32 thread 0
+----------------------------------------------------
+  process[2l].rcv[0l].valid=1 (00000001)
+
+Assumption:
+  file ATE.c line 33 function send_message
+  (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].valid == 0 || (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].valid == 1
+
+State 199 file ATE.c function send_message line 35 thread 0
+----------------------------------------------------
+  process[2l].rcv[0l].safe=1 (00000001)
+
+Assumption:
+  file ATE.c line 36 function send_message
+  (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].safe == 0 || (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].safe == 1
+
+State 202 file ATE.c function send_message line 39 thread 0
+----------------------------------------------------
+  process[2l].rcv[0l].x=2147483647 (01111111 11111111 11111111 11111111)
+
+State 205 file ATE.c function send_1 line 83 thread 0
+----------------------------------------------------
+  i=3 (00000000 00000000 00000000 00000011)
+
+State 209 file ATE.c function main line 204 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+State 214 file ATE.c function main line 205 thread 0
+----------------------------------------------------
+  id=1 (00000000 00000000 00000000 00000001)
+
+State 215 file ATE.c function main line 205 thread 0
+----------------------------------------------------
+  phase=1 (00000000 00000000 00000000 00000001)
+
+State 217 file ATE.c function send_1 line 83 thread 0
+----------------------------------------------------
+  i=0 (00000000 00000000 00000000 00000000)
+
+State 221 file ATE.c function send_1 line 84 thread 0
+----------------------------------------------------
+  from_id=1 (00000000 00000000 00000000 00000001)
+
+State 222 file ATE.c function send_1 line 84 thread 0
+----------------------------------------------------
+  to_id=0 (00000000 00000000 00000000 00000000)
+
+State 225 file ATE.c function send_message line 32 thread 0
+----------------------------------------------------
+  process[0l].rcv[1l].valid=1 (00000001)
+
+Assumption:
+  file ATE.c line 33 function send_message
+  (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].valid == 0 || (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].valid == 1
+
+State 229 file ATE.c function send_message line 35 thread 0
+----------------------------------------------------
+  process[0l].rcv[1l].safe=1 (00000001)
+
+Assumption:
+  file ATE.c line 36 function send_message
+  (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].safe == 0 || (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].safe == 1
+
+State 232 file ATE.c function send_message line 39 thread 0
+----------------------------------------------------
+  process[0l].rcv[1l].x=2147483647 (01111111 11111111 11111111 11111111)
+
+State 235 file ATE.c function send_1 line 83 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+State 240 file ATE.c function send_1 line 84 thread 0
+----------------------------------------------------
+  from_id=1 (00000000 00000000 00000000 00000001)
+
+State 241 file ATE.c function send_1 line 84 thread 0
+----------------------------------------------------
+  to_id=1 (00000000 00000000 00000000 00000001)
+
+State 244 file ATE.c function send_message line 32 thread 0
+----------------------------------------------------
+  process[1l].rcv[1l].valid=1 (00000001)
+
+Assumption:
+  file ATE.c line 33 function send_message
+  (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].valid == 0 || (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].valid == 1
+
+State 248 file ATE.c function send_message line 35 thread 0
+----------------------------------------------------
+  process[1l].rcv[1l].safe=1 (00000001)
+
+Assumption:
+  file ATE.c line 36 function send_message
+  (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].safe == 0 || (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].safe == 1
+
+State 251 file ATE.c function send_message line 39 thread 0
+----------------------------------------------------
+  process[1l].rcv[1l].x=2147483647 (01111111 11111111 11111111 11111111)
+
+State 254 file ATE.c function send_1 line 83 thread 0
+----------------------------------------------------
+  i=2 (00000000 00000000 00000000 00000010)
+
+State 259 file ATE.c function send_1 line 84 thread 0
+----------------------------------------------------
+  from_id=1 (00000000 00000000 00000000 00000001)
+
+State 260 file ATE.c function send_1 line 84 thread 0
+----------------------------------------------------
+  to_id=2 (00000000 00000000 00000000 00000010)
+
+State 263 file ATE.c function send_message line 32 thread 0
+----------------------------------------------------
+  process[2l].rcv[1l].valid=1 (00000001)
+
+Assumption:
+  file ATE.c line 33 function send_message
+  (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].valid == 0 || (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].valid == 1
+
+State 267 file ATE.c function send_message line 35 thread 0
+----------------------------------------------------
+  process[2l].rcv[1l].safe=1 (00000001)
+
+Assumption:
+  file ATE.c line 36 function send_message
+  (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].safe == 0 || (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].safe == 1
+
+State 270 file ATE.c function send_message line 39 thread 0
+----------------------------------------------------
+  process[2l].rcv[1l].x=2147483647 (01111111 11111111 11111111 11111111)
+
+State 273 file ATE.c function send_1 line 83 thread 0
+----------------------------------------------------
+  i=3 (00000000 00000000 00000000 00000011)
+
+State 277 file ATE.c function main line 204 thread 0
+----------------------------------------------------
+  i=2 (00000000 00000000 00000000 00000010)
+
+State 282 file ATE.c function main line 205 thread 0
+----------------------------------------------------
+  id=2 (00000000 00000000 00000000 00000010)
+
+State 283 file ATE.c function main line 205 thread 0
+----------------------------------------------------
+  phase=1 (00000000 00000000 00000000 00000001)
+
+State 285 file ATE.c function send_1 line 83 thread 0
+----------------------------------------------------
+  i=0 (00000000 00000000 00000000 00000000)
+
+State 289 file ATE.c function send_1 line 84 thread 0
+----------------------------------------------------
+  from_id=2 (00000000 00000000 00000000 00000010)
+
+State 290 file ATE.c function send_1 line 84 thread 0
+----------------------------------------------------
+  to_id=0 (00000000 00000000 00000000 00000000)
+
+State 293 file ATE.c function send_message line 32 thread 0
+----------------------------------------------------
+  process[0l].rcv[2l].valid=0 (00000000)
+
+Assumption:
+  file ATE.c line 33 function send_message
+  (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].valid == 0 || (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].valid == 1
+
+State 297 file ATE.c function send_message line 35 thread 0
+----------------------------------------------------
+  process[0l].rcv[2l].safe=0 (00000000)
+
+Assumption:
+  file ATE.c line 36 function send_message
+  (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].safe == 0 || (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].safe == 1
+
+State 302 file ATE.c function send_message line 41 thread 0
+----------------------------------------------------
+  process[0l].rcv[2l].x=268385632 (00001111 11111111 00111101 01100000)
+
+Assumption:
+  file ATE.c line 42 function send_message
+  process[(signed long int)to_id].rcv[(signed long int)from_id].x >= -1
+
+State 305 file ATE.c function send_1 line 83 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+State 310 file ATE.c function send_1 line 84 thread 0
+----------------------------------------------------
+  from_id=2 (00000000 00000000 00000000 00000010)
+
+State 311 file ATE.c function send_1 line 84 thread 0
+----------------------------------------------------
+  to_id=1 (00000000 00000000 00000000 00000001)
+
+State 314 file ATE.c function send_message line 32 thread 0
+----------------------------------------------------
+  process[1l].rcv[2l].valid=1 (00000001)
+
+Assumption:
+  file ATE.c line 33 function send_message
+  (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].valid == 0 || (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].valid == 1
+
+State 318 file ATE.c function send_message line 35 thread 0
+----------------------------------------------------
+  process[1l].rcv[2l].safe=1 (00000001)
+
+Assumption:
+  file ATE.c line 36 function send_message
+  (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].safe == 0 || (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].safe == 1
+
+State 321 file ATE.c function send_message line 39 thread 0
+----------------------------------------------------
+  process[1l].rcv[2l].x=2147483647 (01111111 11111111 11111111 11111111)
+
+State 324 file ATE.c function send_1 line 83 thread 0
+----------------------------------------------------
+  i=2 (00000000 00000000 00000000 00000010)
+
+State 329 file ATE.c function send_1 line 84 thread 0
+----------------------------------------------------
+  from_id=2 (00000000 00000000 00000000 00000010)
+
+State 330 file ATE.c function send_1 line 84 thread 0
+----------------------------------------------------
+  to_id=2 (00000000 00000000 00000000 00000010)
+
+State 333 file ATE.c function send_message line 32 thread 0
+----------------------------------------------------
+  process[2l].rcv[2l].valid=0 (00000000)
+
+Assumption:
+  file ATE.c line 33 function send_message
+  (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].valid == 0 || (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].valid == 1
+
+State 337 file ATE.c function send_message line 35 thread 0
+----------------------------------------------------
+  process[2l].rcv[2l].safe=1 (00000001)
+
+Assumption:
+  file ATE.c line 36 function send_message
+  (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].safe == 0 || (signed int)process[(signed long int)to_id].rcv[(signed long int)from_id].safe == 1
+
+State 340 file ATE.c function send_message line 39 thread 0
+----------------------------------------------------
+  process[2l].rcv[2l].x=2147483647 (01111111 11111111 11111111 11111111)
+
+State 343 file ATE.c function send_1 line 83 thread 0
+----------------------------------------------------
+  i=3 (00000000 00000000 00000000 00000011)
+
+State 347 file ATE.c function main line 204 thread 0
+----------------------------------------------------
+  i=3 (00000000 00000000 00000000 00000011)
+
+State 351 file ATE.c function main line 206 thread 0
+----------------------------------------------------
+  i=0 (00000000 00000000 00000000 00000000)
+
+State 356 file ATE.c function main line 207 thread 0
+----------------------------------------------------
+  id=0 (00000000 00000000 00000000 00000000)
+
+State 360 file ATE.c function size_of_a line 71 thread 0
+----------------------------------------------------
+  id=0 (00000000 00000000 00000000 00000000)
+
+State 362 file ATE.c function size_of_rcv line 53 thread 0
+----------------------------------------------------
+  cnt=0 (00000000 00000000 00000000 00000000)
+
+State 364 file ATE.c function size_of_rcv line 54 thread 0
+----------------------------------------------------
+  i=0 (00000000 00000000 00000000 00000000)
+
+State 367 file ATE.c function size_of_rcv line 56 thread 0
+----------------------------------------------------
+  cnt=1 (00000000 00000000 00000000 00000001)
+
+State 368 file ATE.c function size_of_rcv line 54 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+State 372 file ATE.c function size_of_rcv line 56 thread 0
+----------------------------------------------------
+  cnt=2 (00000000 00000000 00000000 00000010)
+
+State 373 file ATE.c function size_of_rcv line 54 thread 0
+----------------------------------------------------
+  i=2 (00000000 00000000 00000000 00000010)
+
+State 377 file ATE.c function size_of_rcv line 54 thread 0
+----------------------------------------------------
+  i=3 (00000000 00000000 00000000 00000011)
+
+State 386 file ATE.c function size_of_a line 71 thread 0
+----------------------------------------------------
+  id=0 (00000000 00000000 00000000 00000000)
+
+State 388 file ATE.c function size_of_safe line 62 thread 0
+----------------------------------------------------
+  cnt=0 (00000000 00000000 00000000 00000000)
+
+State 390 file ATE.c function size_of_safe line 63 thread 0
+----------------------------------------------------
+  i=0 (00000000 00000000 00000000 00000000)
+
+State 393 file ATE.c function size_of_safe line 65 thread 0
+----------------------------------------------------
+  cnt=1 (00000000 00000000 00000000 00000001)
+
+State 394 file ATE.c function size_of_safe line 63 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+State 398 file ATE.c function size_of_safe line 65 thread 0
+----------------------------------------------------
+  cnt=2 (00000000 00000000 00000000 00000010)
+
+State 399 file ATE.c function size_of_safe line 63 thread 0
+----------------------------------------------------
+  i=2 (00000000 00000000 00000000 00000010)
+
+State 403 file ATE.c function size_of_safe line 63 thread 0
+----------------------------------------------------
+  i=3 (00000000 00000000 00000000 00000011)
+
+Assumption:
+  file ATE.c line 207 function main
+  return_value_size_of_a <= a
+
+State 413 file ATE.c function main line 206 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+State 419 file ATE.c function main line 207 thread 0
+----------------------------------------------------
+  id=1 (00000000 00000000 00000000 00000001)
+
+State 423 file ATE.c function size_of_a line 71 thread 0
+----------------------------------------------------
+  id=1 (00000000 00000000 00000000 00000001)
+
+State 425 file ATE.c function size_of_rcv line 53 thread 0
+----------------------------------------------------
+  cnt=0 (00000000 00000000 00000000 00000000)
+
+State 427 file ATE.c function size_of_rcv line 54 thread 0
+----------------------------------------------------
+  i=0 (00000000 00000000 00000000 00000000)
+
+State 430 file ATE.c function size_of_rcv line 56 thread 0
+----------------------------------------------------
+  cnt=1 (00000000 00000000 00000000 00000001)
+
+State 431 file ATE.c function size_of_rcv line 54 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+State 435 file ATE.c function size_of_rcv line 56 thread 0
+----------------------------------------------------
+  cnt=2 (00000000 00000000 00000000 00000010)
+
+State 436 file ATE.c function size_of_rcv line 54 thread 0
+----------------------------------------------------
+  i=2 (00000000 00000000 00000000 00000010)
+
+State 440 file ATE.c function size_of_rcv line 56 thread 0
+----------------------------------------------------
+  cnt=3 (00000000 00000000 00000000 00000011)
+
+State 441 file ATE.c function size_of_rcv line 54 thread 0
+----------------------------------------------------
+  i=3 (00000000 00000000 00000000 00000011)
+
+State 450 file ATE.c function size_of_a line 71 thread 0
+----------------------------------------------------
+  id=1 (00000000 00000000 00000000 00000001)
+
+State 452 file ATE.c function size_of_safe line 62 thread 0
+----------------------------------------------------
+  cnt=0 (00000000 00000000 00000000 00000000)
+
+State 454 file ATE.c function size_of_safe line 63 thread 0
+----------------------------------------------------
+  i=0 (00000000 00000000 00000000 00000000)
+
+State 457 file ATE.c function size_of_safe line 65 thread 0
+----------------------------------------------------
+  cnt=1 (00000000 00000000 00000000 00000001)
+
+State 458 file ATE.c function size_of_safe line 63 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+State 462 file ATE.c function size_of_safe line 65 thread 0
+----------------------------------------------------
+  cnt=2 (00000000 00000000 00000000 00000010)
+
+State 463 file ATE.c function size_of_safe line 63 thread 0
+----------------------------------------------------
+  i=2 (00000000 00000000 00000000 00000010)
+
+State 467 file ATE.c function size_of_safe line 65 thread 0
+----------------------------------------------------
+  cnt=3 (00000000 00000000 00000000 00000011)
+
+State 468 file ATE.c function size_of_safe line 63 thread 0
+----------------------------------------------------
+  i=3 (00000000 00000000 00000000 00000011)
+
+Assumption:
+  file ATE.c line 207 function main
+  return_value_size_of_a <= a
+
+State 478 file ATE.c function main line 206 thread 0
+----------------------------------------------------
+  i=2 (00000000 00000000 00000000 00000010)
+
+State 484 file ATE.c function main line 207 thread 0
+----------------------------------------------------
+  id=2 (00000000 00000000 00000000 00000010)
+
+State 488 file ATE.c function size_of_a line 71 thread 0
+----------------------------------------------------
+  id=2 (00000000 00000000 00000000 00000010)
+
+State 490 file ATE.c function size_of_rcv line 53 thread 0
+----------------------------------------------------
+  cnt=0 (00000000 00000000 00000000 00000000)
+
+State 492 file ATE.c function size_of_rcv line 54 thread 0
+----------------------------------------------------
+  i=0 (00000000 00000000 00000000 00000000)
+
+State 495 file ATE.c function size_of_rcv line 56 thread 0
+----------------------------------------------------
+  cnt=1 (00000000 00000000 00000000 00000001)
+
+State 496 file ATE.c function size_of_rcv line 54 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+State 500 file ATE.c function size_of_rcv line 56 thread 0
+----------------------------------------------------
+  cnt=2 (00000000 00000000 00000000 00000010)
+
+State 501 file ATE.c function size_of_rcv line 54 thread 0
+----------------------------------------------------
+  i=2 (00000000 00000000 00000000 00000010)
+
+State 505 file ATE.c function size_of_rcv line 54 thread 0
+----------------------------------------------------
+  i=3 (00000000 00000000 00000000 00000011)
+
+State 514 file ATE.c function size_of_a line 71 thread 0
+----------------------------------------------------
+  id=2 (00000000 00000000 00000000 00000010)
+
+State 516 file ATE.c function size_of_safe line 62 thread 0
+----------------------------------------------------
+  cnt=0 (00000000 00000000 00000000 00000000)
+
+State 518 file ATE.c function size_of_safe line 63 thread 0
+----------------------------------------------------
+  i=0 (00000000 00000000 00000000 00000000)
+
+State 521 file ATE.c function size_of_safe line 65 thread 0
+----------------------------------------------------
+  cnt=1 (00000000 00000000 00000000 00000001)
+
+State 522 file ATE.c function size_of_safe line 63 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+State 526 file ATE.c function size_of_safe line 65 thread 0
+----------------------------------------------------
+  cnt=2 (00000000 00000000 00000000 00000010)
+
+State 527 file ATE.c function size_of_safe line 63 thread 0
+----------------------------------------------------
+  i=2 (00000000 00000000 00000000 00000010)
+
+State 531 file ATE.c function size_of_safe line 63 thread 0
+----------------------------------------------------
+  i=3 (00000000 00000000 00000000 00000011)
+
+Assumption:
+  file ATE.c line 207 function main
+  return_value_size_of_a <= a
+
+State 541 file ATE.c function main line 206 thread 0
+----------------------------------------------------
+  i=3 (00000000 00000000 00000000 00000011)
+
+State 545 file ATE.c function main line 208 thread 0
+----------------------------------------------------
+  i=0 (00000000 00000000 00000000 00000000)
+
+State 549 file ATE.c function main line 209 thread 0
+----------------------------------------------------
+  id=0 (00000000 00000000 00000000 00000000)
+
+State 550 file ATE.c function main line 209 thread 0
+----------------------------------------------------
+  phase=1 (00000000 00000000 00000000 00000001)
+
+State 551 file ATE.c function transition_1 line 90 thread 0
+----------------------------------------------------
+  tmpX=0 (00000000 00000000 00000000 00000000)
+
+State 552 file ATE.c function transition_1 line 90 thread 0
+----------------------------------------------------
+  maxcnt=0 (00000000 00000000 00000000 00000000)
+
+State 554 file ATE.c function transition_1 line 92 thread 0
+----------------------------------------------------
+  i=0 (00000000 00000000 00000000 00000000)
+
+State 557 file ATE.c function transition_1 line 94 thread 0
+----------------------------------------------------
+  sortedX[0l]=2147483647 (01111111 11111111 11111111 11111111)
+
+State 559 file ATE.c function transition_1 line 97 thread 0
+----------------------------------------------------
+  cntX[0l]=1 (00000000 00000000 00000000 00000001)
+
+State 560 file ATE.c function transition_1 line 92 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+State 564 file ATE.c function transition_1 line 94 thread 0
+----------------------------------------------------
+  sortedX[1l]=2147483647 (01111111 11111111 11111111 11111111)
+
+State 566 file ATE.c function transition_1 line 97 thread 0
+----------------------------------------------------
+  cntX[1l]=1 (00000000 00000000 00000000 00000001)
+
+State 567 file ATE.c function transition_1 line 92 thread 0
+----------------------------------------------------
+  i=2 (00000000 00000000 00000000 00000010)
+
+State 571 file ATE.c function transition_1 line 96 thread 0
+----------------------------------------------------
+  sortedX[2l]=-1 (11111111 11111111 11111111 11111111)
+
+State 572 file ATE.c function transition_1 line 97 thread 0
+----------------------------------------------------
+  cntX[2l]=1 (00000000 00000000 00000000 00000001)
+
+State 573 file ATE.c function transition_1 line 92 thread 0
+----------------------------------------------------
+  i=3 (00000000 00000000 00000000 00000011)
+
+State 577 file ATE.c function transition_1 line 99 thread 0
+----------------------------------------------------
+  i=0 (00000000 00000000 00000000 00000000)
+
+State 580 file ATE.c function transition_1 line 100 thread 0
+----------------------------------------------------
+  j=0 (00000000 00000000 00000000 00000000)
+
+State 583 file ATE.c function transition_1 line 100 thread 0
+----------------------------------------------------
+  j=1 (00000000 00000000 00000000 00000001)
+
+State 587 file ATE.c function transition_1 line 100 thread 0
+----------------------------------------------------
+  j=2 (00000000 00000000 00000000 00000010)
+
+State 590 file ATE.c function transition_1 line 99 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+State 594 file ATE.c function transition_1 line 100 thread 0
+----------------------------------------------------
+  j=0 (00000000 00000000 00000000 00000000)
+
+State 597 file ATE.c function transition_1 line 100 thread 0
+----------------------------------------------------
+  j=1 (00000000 00000000 00000000 00000001)
+
+State 601 file ATE.c function transition_1 line 100 thread 0
+----------------------------------------------------
+  j=2 (00000000 00000000 00000000 00000010)
+
+State 604 file ATE.c function transition_1 line 99 thread 0
+----------------------------------------------------
+  i=2 (00000000 00000000 00000000 00000010)
+
+State 608 file ATE.c function transition_1 line 100 thread 0
+----------------------------------------------------
+  j=0 (00000000 00000000 00000000 00000000)
+
+State 611 file ATE.c function transition_1 line 100 thread 0
+----------------------------------------------------
+  j=1 (00000000 00000000 00000000 00000001)
+
+State 615 file ATE.c function transition_1 line 100 thread 0
+----------------------------------------------------
+  j=2 (00000000 00000000 00000000 00000010)
+
+State 618 file ATE.c function transition_1 line 99 thread 0
+----------------------------------------------------
+  i=3 (00000000 00000000 00000000 00000011)
+
+State 621 file ATE.c function transition_1 line 108 thread 0
+----------------------------------------------------
+  tmpX=2147483647 (01111111 11111111 11111111 11111111)
+
+State 622 file ATE.c function transition_1 line 109 thread 0
+----------------------------------------------------
+  maxcnt=1 (00000000 00000000 00000000 00000001)
+
+State 624 file ATE.c function transition_1 line 110 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+State 627 file ATE.c function transition_1 line 112 thread 0
+----------------------------------------------------
+  cntX[1l]=2 (00000000 00000000 00000000 00000010)
+
+State 629 file ATE.c function transition_1 line 114 thread 0
+----------------------------------------------------
+  maxcnt=2 (00000000 00000000 00000000 00000010)
+
+State 630 file ATE.c function transition_1 line 115 thread 0
+----------------------------------------------------
+  tmpX=2147483647 (01111111 11111111 11111111 11111111)
+
+State 631 file ATE.c function transition_1 line 110 thread 0
+----------------------------------------------------
+  i=2 (00000000 00000000 00000000 00000010)
+
+State 635 file ATE.c function transition_1 line 110 thread 0
+----------------------------------------------------
+  i=3 (00000000 00000000 00000000 00000011)
+
+State 641 file ATE.c function transition_1 line 120 thread 0
+----------------------------------------------------
+  id=0 (00000000 00000000 00000000 00000000)
+
+State 643 file ATE.c function size_of_rcv line 53 thread 0
+----------------------------------------------------
+  cnt=0 (00000000 00000000 00000000 00000000)
+
+State 645 file ATE.c function size_of_rcv line 54 thread 0
+----------------------------------------------------
+  i=0 (00000000 00000000 00000000 00000000)
+
+State 648 file ATE.c function size_of_rcv line 56 thread 0
+----------------------------------------------------
+  cnt=1 (00000000 00000000 00000000 00000001)
+
+State 649 file ATE.c function size_of_rcv line 54 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+State 653 file ATE.c function size_of_rcv line 56 thread 0
+----------------------------------------------------
+  cnt=2 (00000000 00000000 00000000 00000010)
+
+State 654 file ATE.c function size_of_rcv line 54 thread 0
+----------------------------------------------------
+  i=2 (00000000 00000000 00000000 00000010)
+
+State 658 file ATE.c function size_of_rcv line 54 thread 0
+----------------------------------------------------
+  i=3 (00000000 00000000 00000000 00000011)
+
+State 668 file ATE.c function transition_1 line 126 thread 0
+----------------------------------------------------
+  id=0 (00000000 00000000 00000000 00000000)
+
+State 670 file ATE.c function clear_message line 47 thread 0
+----------------------------------------------------
+  i=0 (00000000 00000000 00000000 00000000)
+
+State 672 file ATE.c function clear_message line 48 thread 0
+----------------------------------------------------
+  process[0l].rcv[0l].valid=0 (00000000)
+
+State 673 file ATE.c function clear_message line 47 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+State 676 file ATE.c function clear_message line 48 thread 0
+----------------------------------------------------
+  process[0l].rcv[1l].valid=0 (00000000)
+
+State 677 file ATE.c function clear_message line 47 thread 0
+----------------------------------------------------
+  i=2 (00000000 00000000 00000000 00000010)
+
+State 680 file ATE.c function clear_message line 48 thread 0
+----------------------------------------------------
+  process[0l].rcv[2l].valid=0 (00000000)
+
+State 681 file ATE.c function clear_message line 47 thread 0
+----------------------------------------------------
+  i=3 (00000000 00000000 00000000 00000011)
+
+State 686 file ATE.c function main line 208 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+State 691 file ATE.c function main line 209 thread 0
+----------------------------------------------------
+  id=1 (00000000 00000000 00000000 00000001)
+
+State 692 file ATE.c function main line 209 thread 0
+----------------------------------------------------
+  phase=1 (00000000 00000000 00000000 00000001)
+
+State 693 file ATE.c function transition_1 line 90 thread 0
+----------------------------------------------------
+  tmpX=0 (00000000 00000000 00000000 00000000)
+
+State 694 file ATE.c function transition_1 line 90 thread 0
+----------------------------------------------------
+  maxcnt=0 (00000000 00000000 00000000 00000000)
+
+State 696 file ATE.c function transition_1 line 92 thread 0
+----------------------------------------------------
+  i=0 (00000000 00000000 00000000 00000000)
+
+State 699 file ATE.c function transition_1 line 94 thread 0
+----------------------------------------------------
+  sortedX[0l]=2147483647 (01111111 11111111 11111111 11111111)
+
+State 701 file ATE.c function transition_1 line 97 thread 0
+----------------------------------------------------
+  cntX[0l]=1 (00000000 00000000 00000000 00000001)
+
+State 702 file ATE.c function transition_1 line 92 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+State 706 file ATE.c function transition_1 line 94 thread 0
+----------------------------------------------------
+  sortedX[1l]=2147483647 (01111111 11111111 11111111 11111111)
+
+State 708 file ATE.c function transition_1 line 97 thread 0
+----------------------------------------------------
+  cntX[1l]=1 (00000000 00000000 00000000 00000001)
+
+State 709 file ATE.c function transition_1 line 92 thread 0
+----------------------------------------------------
+  i=2 (00000000 00000000 00000000 00000010)
+
+State 713 file ATE.c function transition_1 line 94 thread 0
+----------------------------------------------------
+  sortedX[2l]=2147483647 (01111111 11111111 11111111 11111111)
+
+State 715 file ATE.c function transition_1 line 97 thread 0
+----------------------------------------------------
+  cntX[2l]=1 (00000000 00000000 00000000 00000001)
+
+State 716 file ATE.c function transition_1 line 92 thread 0
+----------------------------------------------------
+  i=3 (00000000 00000000 00000000 00000011)
+
+State 720 file ATE.c function transition_1 line 99 thread 0
+----------------------------------------------------
+  i=0 (00000000 00000000 00000000 00000000)
+
+State 723 file ATE.c function transition_1 line 100 thread 0
+----------------------------------------------------
+  j=0 (00000000 00000000 00000000 00000000)
+
+State 726 file ATE.c function transition_1 line 100 thread 0
+----------------------------------------------------
+  j=1 (00000000 00000000 00000000 00000001)
+
+State 730 file ATE.c function transition_1 line 100 thread 0
+----------------------------------------------------
+  j=2 (00000000 00000000 00000000 00000010)
+
+State 733 file ATE.c function transition_1 line 99 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+State 737 file ATE.c function transition_1 line 100 thread 0
+----------------------------------------------------
+  j=0 (00000000 00000000 00000000 00000000)
+
+State 740 file ATE.c function transition_1 line 100 thread 0
+----------------------------------------------------
+  j=1 (00000000 00000000 00000000 00000001)
+
+State 744 file ATE.c function transition_1 line 100 thread 0
+----------------------------------------------------
+  j=2 (00000000 00000000 00000000 00000010)
+
+State 747 file ATE.c function transition_1 line 99 thread 0
+----------------------------------------------------
+  i=2 (00000000 00000000 00000000 00000010)
+
+State 751 file ATE.c function transition_1 line 100 thread 0
+----------------------------------------------------
+  j=0 (00000000 00000000 00000000 00000000)
+
+State 754 file ATE.c function transition_1 line 100 thread 0
+----------------------------------------------------
+  j=1 (00000000 00000000 00000000 00000001)
+
+State 758 file ATE.c function transition_1 line 100 thread 0
+----------------------------------------------------
+  j=2 (00000000 00000000 00000000 00000010)
+
+State 761 file ATE.c function transition_1 line 99 thread 0
+----------------------------------------------------
+  i=3 (00000000 00000000 00000000 00000011)
+
+State 764 file ATE.c function transition_1 line 108 thread 0
+----------------------------------------------------
+  tmpX=2147483647 (01111111 11111111 11111111 11111111)
+
+State 765 file ATE.c function transition_1 line 109 thread 0
+----------------------------------------------------
+  maxcnt=1 (00000000 00000000 00000000 00000001)
+
+State 767 file ATE.c function transition_1 line 110 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+State 770 file ATE.c function transition_1 line 112 thread 0
+----------------------------------------------------
+  cntX[1l]=2 (00000000 00000000 00000000 00000010)
+
+State 772 file ATE.c function transition_1 line 114 thread 0
+----------------------------------------------------
+  maxcnt=2 (00000000 00000000 00000000 00000010)
+
+State 773 file ATE.c function transition_1 line 115 thread 0
+----------------------------------------------------
+  tmpX=2147483647 (01111111 11111111 11111111 11111111)
+
+State 774 file ATE.c function transition_1 line 110 thread 0
+----------------------------------------------------
+  i=2 (00000000 00000000 00000000 00000010)
+
+State 778 file ATE.c function transition_1 line 112 thread 0
+----------------------------------------------------
+  cntX[2l]=3 (00000000 00000000 00000000 00000011)
+
+State 780 file ATE.c function transition_1 line 114 thread 0
+----------------------------------------------------
+  maxcnt=3 (00000000 00000000 00000000 00000011)
+
+State 781 file ATE.c function transition_1 line 115 thread 0
+----------------------------------------------------
+  tmpX=2147483647 (01111111 11111111 11111111 11111111)
+
+State 782 file ATE.c function transition_1 line 110 thread 0
+----------------------------------------------------
+  i=3 (00000000 00000000 00000000 00000011)
+
+State 788 file ATE.c function transition_1 line 120 thread 0
+----------------------------------------------------
+  id=1 (00000000 00000000 00000000 00000001)
+
+State 790 file ATE.c function size_of_rcv line 53 thread 0
+----------------------------------------------------
+  cnt=0 (00000000 00000000 00000000 00000000)
+
+State 792 file ATE.c function size_of_rcv line 54 thread 0
+----------------------------------------------------
+  i=0 (00000000 00000000 00000000 00000000)
+
+State 795 file ATE.c function size_of_rcv line 56 thread 0
+----------------------------------------------------
+  cnt=1 (00000000 00000000 00000000 00000001)
+
+State 796 file ATE.c function size_of_rcv line 54 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+State 800 file ATE.c function size_of_rcv line 56 thread 0
+----------------------------------------------------
+  cnt=2 (00000000 00000000 00000000 00000010)
+
+State 801 file ATE.c function size_of_rcv line 54 thread 0
+----------------------------------------------------
+  i=2 (00000000 00000000 00000000 00000010)
+
+State 805 file ATE.c function size_of_rcv line 56 thread 0
+----------------------------------------------------
+  cnt=3 (00000000 00000000 00000000 00000011)
+
+State 806 file ATE.c function size_of_rcv line 54 thread 0
+----------------------------------------------------
+  i=3 (00000000 00000000 00000000 00000011)
+
+State 813 file ATE.c function transition_1 line 121 thread 0
+----------------------------------------------------
+  process[1l].x=2147483647 (01111111 11111111 11111111 11111111)
+
+State 815 file ATE.c function transition_1 line 124 thread 0
+----------------------------------------------------
+  process[1l].decide=2147483647 (01111111 11111111 11111111 11111111)
+
+State 818 file ATE.c function transition_1 line 126 thread 0
+----------------------------------------------------
+  id=1 (00000000 00000000 00000000 00000001)
+
+State 820 file ATE.c function clear_message line 47 thread 0
+----------------------------------------------------
+  i=0 (00000000 00000000 00000000 00000000)
+
+State 822 file ATE.c function clear_message line 48 thread 0
+----------------------------------------------------
+  process[1l].rcv[0l].valid=0 (00000000)
+
+State 823 file ATE.c function clear_message line 47 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+State 826 file ATE.c function clear_message line 48 thread 0
+----------------------------------------------------
+  process[1l].rcv[1l].valid=0 (00000000)
+
+State 827 file ATE.c function clear_message line 47 thread 0
+----------------------------------------------------
+  i=2 (00000000 00000000 00000000 00000010)
+
+State 830 file ATE.c function clear_message line 48 thread 0
+----------------------------------------------------
+  process[1l].rcv[2l].valid=0 (00000000)
+
+State 831 file ATE.c function clear_message line 47 thread 0
+----------------------------------------------------
+  i=3 (00000000 00000000 00000000 00000011)
+
+State 836 file ATE.c function main line 208 thread 0
+----------------------------------------------------
+  i=2 (00000000 00000000 00000000 00000010)
+
+State 841 file ATE.c function main line 209 thread 0
+----------------------------------------------------
+  id=2 (00000000 00000000 00000000 00000010)
+
+State 842 file ATE.c function main line 209 thread 0
+----------------------------------------------------
+  phase=1 (00000000 00000000 00000000 00000001)
+
+State 843 file ATE.c function transition_1 line 90 thread 0
+----------------------------------------------------
+  tmpX=0 (00000000 00000000 00000000 00000000)
+
+State 844 file ATE.c function transition_1 line 90 thread 0
+----------------------------------------------------
+  maxcnt=0 (00000000 00000000 00000000 00000000)
+
+State 846 file ATE.c function transition_1 line 92 thread 0
+----------------------------------------------------
+  i=0 (00000000 00000000 00000000 00000000)
+
+State 849 file ATE.c function transition_1 line 94 thread 0
+----------------------------------------------------
+  sortedX[0l]=2147483647 (01111111 11111111 11111111 11111111)
+
+State 851 file ATE.c function transition_1 line 97 thread 0
+----------------------------------------------------
+  cntX[0l]=1 (00000000 00000000 00000000 00000001)
+
+State 852 file ATE.c function transition_1 line 92 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+State 856 file ATE.c function transition_1 line 94 thread 0
+----------------------------------------------------
+  sortedX[1l]=2147483647 (01111111 11111111 11111111 11111111)
+
+State 858 file ATE.c function transition_1 line 97 thread 0
+----------------------------------------------------
+  cntX[1l]=1 (00000000 00000000 00000000 00000001)
+
+State 859 file ATE.c function transition_1 line 92 thread 0
+----------------------------------------------------
+  i=2 (00000000 00000000 00000000 00000010)
+
+State 863 file ATE.c function transition_1 line 96 thread 0
+----------------------------------------------------
+  sortedX[2l]=-1 (11111111 11111111 11111111 11111111)
+
+State 864 file ATE.c function transition_1 line 97 thread 0
+----------------------------------------------------
+  cntX[2l]=1 (00000000 00000000 00000000 00000001)
+
+State 865 file ATE.c function transition_1 line 92 thread 0
+----------------------------------------------------
+  i=3 (00000000 00000000 00000000 00000011)
+
+State 869 file ATE.c function transition_1 line 99 thread 0
+----------------------------------------------------
+  i=0 (00000000 00000000 00000000 00000000)
+
+State 872 file ATE.c function transition_1 line 100 thread 0
+----------------------------------------------------
+  j=0 (00000000 00000000 00000000 00000000)
+
+State 875 file ATE.c function transition_1 line 100 thread 0
+----------------------------------------------------
+  j=1 (00000000 00000000 00000000 00000001)
+
+State 879 file ATE.c function transition_1 line 100 thread 0
+----------------------------------------------------
+  j=2 (00000000 00000000 00000000 00000010)
+
+State 882 file ATE.c function transition_1 line 99 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+State 886 file ATE.c function transition_1 line 100 thread 0
+----------------------------------------------------
+  j=0 (00000000 00000000 00000000 00000000)
+
+State 889 file ATE.c function transition_1 line 100 thread 0
+----------------------------------------------------
+  j=1 (00000000 00000000 00000000 00000001)
+
+State 893 file ATE.c function transition_1 line 100 thread 0
+----------------------------------------------------
+  j=2 (00000000 00000000 00000000 00000010)
+
+State 896 file ATE.c function transition_1 line 99 thread 0
+----------------------------------------------------
+  i=2 (00000000 00000000 00000000 00000010)
+
+State 900 file ATE.c function transition_1 line 100 thread 0
+----------------------------------------------------
+  j=0 (00000000 00000000 00000000 00000000)
+
+State 903 file ATE.c function transition_1 line 100 thread 0
+----------------------------------------------------
+  j=1 (00000000 00000000 00000000 00000001)
+
+State 907 file ATE.c function transition_1 line 100 thread 0
+----------------------------------------------------
+  j=2 (00000000 00000000 00000000 00000010)
+
+State 910 file ATE.c function transition_1 line 99 thread 0
+----------------------------------------------------
+  i=3 (00000000 00000000 00000000 00000011)
+
+State 913 file ATE.c function transition_1 line 108 thread 0
+----------------------------------------------------
+  tmpX=2147483647 (01111111 11111111 11111111 11111111)
+
+State 914 file ATE.c function transition_1 line 109 thread 0
+----------------------------------------------------
+  maxcnt=1 (00000000 00000000 00000000 00000001)
+
+State 916 file ATE.c function transition_1 line 110 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+State 919 file ATE.c function transition_1 line 112 thread 0
+----------------------------------------------------
+  cntX[1l]=2 (00000000 00000000 00000000 00000010)
+
+State 921 file ATE.c function transition_1 line 114 thread 0
+----------------------------------------------------
+  maxcnt=2 (00000000 00000000 00000000 00000010)
+
+State 922 file ATE.c function transition_1 line 115 thread 0
+----------------------------------------------------
+  tmpX=2147483647 (01111111 11111111 11111111 11111111)
+
+State 923 file ATE.c function transition_1 line 110 thread 0
+----------------------------------------------------
+  i=2 (00000000 00000000 00000000 00000010)
+
+State 927 file ATE.c function transition_1 line 110 thread 0
+----------------------------------------------------
+  i=3 (00000000 00000000 00000000 00000011)
+
+State 933 file ATE.c function transition_1 line 120 thread 0
+----------------------------------------------------
+  id=2 (00000000 00000000 00000000 00000010)
+
+State 935 file ATE.c function size_of_rcv line 53 thread 0
+----------------------------------------------------
+  cnt=0 (00000000 00000000 00000000 00000000)
+
+State 937 file ATE.c function size_of_rcv line 54 thread 0
+----------------------------------------------------
+  i=0 (00000000 00000000 00000000 00000000)
+
+State 940 file ATE.c function size_of_rcv line 56 thread 0
+----------------------------------------------------
+  cnt=1 (00000000 00000000 00000000 00000001)
+
+State 941 file ATE.c function size_of_rcv line 54 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+State 945 file ATE.c function size_of_rcv line 56 thread 0
+----------------------------------------------------
+  cnt=2 (00000000 00000000 00000000 00000010)
+
+State 946 file ATE.c function size_of_rcv line 54 thread 0
+----------------------------------------------------
+  i=2 (00000000 00000000 00000000 00000010)
+
+State 950 file ATE.c function size_of_rcv line 54 thread 0
+----------------------------------------------------
+  i=3 (00000000 00000000 00000000 00000011)
+
+State 960 file ATE.c function transition_1 line 126 thread 0
+----------------------------------------------------
+  id=2 (00000000 00000000 00000000 00000010)
+
+State 962 file ATE.c function clear_message line 47 thread 0
+----------------------------------------------------
+  i=0 (00000000 00000000 00000000 00000000)
+
+State 964 file ATE.c function clear_message line 48 thread 0
+----------------------------------------------------
+  process[2l].rcv[0l].valid=0 (00000000)
+
+State 965 file ATE.c function clear_message line 47 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+State 968 file ATE.c function clear_message line 48 thread 0
+----------------------------------------------------
+  process[2l].rcv[1l].valid=0 (00000000)
+
+State 969 file ATE.c function clear_message line 47 thread 0
+----------------------------------------------------
+  i=2 (00000000 00000000 00000000 00000010)
+
+State 972 file ATE.c function clear_message line 48 thread 0
+----------------------------------------------------
+  process[2l].rcv[2l].valid=0 (00000000)
+
+State 973 file ATE.c function clear_message line 47 thread 0
+----------------------------------------------------
+  i=3 (00000000 00000000 00000000 00000011)
+
+State 978 file ATE.c function main line 208 thread 0
+----------------------------------------------------
+  i=3 (00000000 00000000 00000000 00000011)
+
+State 981 file ATE.c function main line 210 thread 0
+----------------------------------------------------
+  phase=2 (00000000 00000000 00000000 00000010)
+
+State 985 file ATE.c function main line 212 thread 0
+----------------------------------------------------
+  v=2147483647 (01111111 11111111 11111111 11111111)
+
+State 987 file ATE.c function is_Decide line 179 thread 0
+----------------------------------------------------
+  i=0 (00000000 00000000 00000000 00000000)
+
+State 990 file ATE.c function is_Decide line 179 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+Assumption:
+  file ATE.c line 212 function main
+  return_value_is_Decide != 0
+
+State 1002 file ATE.c function main line 213 thread 0
+----------------------------------------------------
+  v=2147483647 (01111111 11111111 11111111 11111111)
+
+State 1004 file ATE.c function is_Singular line 172 thread 0
+----------------------------------------------------
+  i=0 (00000000 00000000 00000000 00000000)
+
+State 1007 file ATE.c function is_Singular line 172 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+State 1011 file ATE.c function is_Singular line 172 thread 0
+----------------------------------------------------
+  i=2 (00000000 00000000 00000000 00000010)
+
+State 1015 file ATE.c function is_Singular line 172 thread 0
+----------------------------------------------------
+  i=3 (00000000 00000000 00000000 00000011)
+
+State 1026 file ATE.c function main line 213 thread 0
+----------------------------------------------------
+  v1=2147483647 (01111111 11111111 11111111 11111111)
+
+State 1027 file ATE.c function is_Univalence line 150 thread 0
+----------------------------------------------------
+  tmpX=0 (00000000 00000000 00000000 00000000)
+
+State 1029 file ATE.c function is_Univalence line 151 thread 0
+----------------------------------------------------
+  i=0 (00000000 00000000 00000000 00000000)
+
+State 1031 file ATE.c function is_Univalence line 152 thread 0
+----------------------------------------------------
+  sortedX[0l]=2147483647 (01111111 11111111 11111111 11111111)
+
+State 1032 file ATE.c function is_Univalence line 153 thread 0
+----------------------------------------------------
+  cntX[0l]=1 (00000000 00000000 00000000 00000001)
+
+State 1033 file ATE.c function is_Univalence line 151 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+State 1036 file ATE.c function is_Univalence line 152 thread 0
+----------------------------------------------------
+  sortedX[1l]=2147483647 (01111111 11111111 11111111 11111111)
+
+State 1037 file ATE.c function is_Univalence line 153 thread 0
+----------------------------------------------------
+  cntX[1l]=1 (00000000 00000000 00000000 00000001)
+
+State 1038 file ATE.c function is_Univalence line 151 thread 0
+----------------------------------------------------
+  i=2 (00000000 00000000 00000000 00000010)
+
+State 1041 file ATE.c function is_Univalence line 152 thread 0
+----------------------------------------------------
+  sortedX[2l]=2147483647 (01111111 11111111 11111111 11111111)
+
+State 1042 file ATE.c function is_Univalence line 153 thread 0
+----------------------------------------------------
+  cntX[2l]=1 (00000000 00000000 00000000 00000001)
+
+State 1043 file ATE.c function is_Univalence line 151 thread 0
+----------------------------------------------------
+  i=3 (00000000 00000000 00000000 00000011)
+
+State 1047 file ATE.c function is_Univalence line 155 thread 0
+----------------------------------------------------
+  i=0 (00000000 00000000 00000000 00000000)
+
+State 1050 file ATE.c function is_Univalence line 156 thread 0
+----------------------------------------------------
+  j=0 (00000000 00000000 00000000 00000000)
+
+State 1053 file ATE.c function is_Univalence line 158 thread 0
+----------------------------------------------------
+  tmpX=2147483647 (01111111 11111111 11111111 11111111)
+
+State 1054 file ATE.c function is_Univalence line 159 thread 0
+----------------------------------------------------
+  sortedX[0l]=2147483647 (01111111 11111111 11111111 11111111)
+
+State 1055 file ATE.c function is_Univalence line 160 thread 0
+----------------------------------------------------
+  sortedX[1l]=2147483647 (01111111 11111111 11111111 11111111)
+
+State 1056 file ATE.c function is_Univalence line 156 thread 0
+----------------------------------------------------
+  j=1 (00000000 00000000 00000000 00000001)
+
+State 1060 file ATE.c function is_Univalence line 158 thread 0
+----------------------------------------------------
+  tmpX=2147483647 (01111111 11111111 11111111 11111111)
+
+State 1061 file ATE.c function is_Univalence line 159 thread 0
+----------------------------------------------------
+  sortedX[1l]=2147483647 (01111111 11111111 11111111 11111111)
+
+State 1062 file ATE.c function is_Univalence line 160 thread 0
+----------------------------------------------------
+  sortedX[2l]=2147483647 (01111111 11111111 11111111 11111111)
+
+State 1063 file ATE.c function is_Univalence line 156 thread 0
+----------------------------------------------------
+  j=2 (00000000 00000000 00000000 00000010)
+
+State 1066 file ATE.c function is_Univalence line 155 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+State 1070 file ATE.c function is_Univalence line 156 thread 0
+----------------------------------------------------
+  j=0 (00000000 00000000 00000000 00000000)
+
+State 1073 file ATE.c function is_Univalence line 158 thread 0
+----------------------------------------------------
+  tmpX=2147483647 (01111111 11111111 11111111 11111111)
+
+State 1074 file ATE.c function is_Univalence line 159 thread 0
+----------------------------------------------------
+  sortedX[0l]=2147483647 (01111111 11111111 11111111 11111111)
+
+State 1075 file ATE.c function is_Univalence line 160 thread 0
+----------------------------------------------------
+  sortedX[1l]=2147483647 (01111111 11111111 11111111 11111111)
+
+State 1076 file ATE.c function is_Univalence line 156 thread 0
+----------------------------------------------------
+  j=1 (00000000 00000000 00000000 00000001)
+
+State 1080 file ATE.c function is_Univalence line 158 thread 0
+----------------------------------------------------
+  tmpX=2147483647 (01111111 11111111 11111111 11111111)
+
+State 1081 file ATE.c function is_Univalence line 159 thread 0
+----------------------------------------------------
+  sortedX[1l]=2147483647 (01111111 11111111 11111111 11111111)
+
+State 1082 file ATE.c function is_Univalence line 160 thread 0
+----------------------------------------------------
+  sortedX[2l]=2147483647 (01111111 11111111 11111111 11111111)
+
+State 1083 file ATE.c function is_Univalence line 156 thread 0
+----------------------------------------------------
+  j=2 (00000000 00000000 00000000 00000010)
+
+State 1086 file ATE.c function is_Univalence line 155 thread 0
+----------------------------------------------------
+  i=2 (00000000 00000000 00000000 00000010)
+
+State 1090 file ATE.c function is_Univalence line 156 thread 0
+----------------------------------------------------
+  j=0 (00000000 00000000 00000000 00000000)
+
+State 1093 file ATE.c function is_Univalence line 158 thread 0
+----------------------------------------------------
+  tmpX=2147483647 (01111111 11111111 11111111 11111111)
+
+State 1094 file ATE.c function is_Univalence line 159 thread 0
+----------------------------------------------------
+  sortedX[0l]=2147483647 (01111111 11111111 11111111 11111111)
+
+State 1095 file ATE.c function is_Univalence line 160 thread 0
+----------------------------------------------------
+  sortedX[1l]=2147483647 (01111111 11111111 11111111 11111111)
+
+State 1096 file ATE.c function is_Univalence line 156 thread 0
+----------------------------------------------------
+  j=1 (00000000 00000000 00000000 00000001)
+
+State 1100 file ATE.c function is_Univalence line 158 thread 0
+----------------------------------------------------
+  tmpX=2147483647 (01111111 11111111 11111111 11111111)
+
+State 1101 file ATE.c function is_Univalence line 159 thread 0
+----------------------------------------------------
+  sortedX[1l]=2147483647 (01111111 11111111 11111111 11111111)
+
+State 1102 file ATE.c function is_Univalence line 160 thread 0
+----------------------------------------------------
+  sortedX[2l]=2147483647 (01111111 11111111 11111111 11111111)
+
+State 1103 file ATE.c function is_Univalence line 156 thread 0
+----------------------------------------------------
+  j=2 (00000000 00000000 00000000 00000010)
+
+State 1106 file ATE.c function is_Univalence line 155 thread 0
+----------------------------------------------------
+  i=3 (00000000 00000000 00000000 00000011)
+
+State 1110 file ATE.c function is_Univalence line 164 thread 0
+----------------------------------------------------
+  i=0 (00000000 00000000 00000000 00000000)
+
+State 1113 file ATE.c function is_Univalence line 164 thread 0
+----------------------------------------------------
+  i=1 (00000000 00000000 00000000 00000001)
+
+State 1117 file ATE.c function is_Univalence line 164 thread 0
+----------------------------------------------------
+  i=2 (00000000 00000000 00000000 00000010)
+
+State 1121 file ATE.c function is_Univalence line 164 thread 0
+----------------------------------------------------
+  i=3 (00000000 00000000 00000000 00000011)
+
+Violated property:
+  file ATE.c function main line 213 thread 0
+  assertion is_Singular(value) && !is_Univalence(value)
+  tmp_if_expr
+
+
+

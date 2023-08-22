@@ -17,29 +17,31 @@ sys.path.append(root_folder)
 from PyQt5.QtGui import QColor, QTextCursor, QTextCharFormat
 from ControlFlowGraph.ControlFlowGraphGenerator import Source_Type
 from PyQt5.QtWidgets import QApplication
-from UI.TextEdit import SearchHighlighter, MyHighlighter, TextEdit  # 请替换为你的模块名
+from UI.TextEdit import MyHighlighter, TextEdit  # 请替换为你的模块名
 from UI.MainWindow import MainWindow
 app = QApplication([])
 window = MainWindow()
-class TestSearchHighlighter(unittest.TestCase):
-    def test_highlight_text(self):
-        sh = SearchHighlighter()
-        sh.set_highlight_text('test')
-        self.assertEqual(sh.text_to_highlight, 'test')
-
+from loguru import logger
+log_path = "/home/mirage/Visualization-Tool-For-CBMC/src/test/log_UI/log_test_TextEdit.log"
+logger.add(log_path, rotation="500 MB")  # 每当日志大小超过500MB时，就会创建一个新的日志文件
+from log_decorator import log_on_success,count_function
+import log_decorator
 class TestMyHighlighter(unittest.TestCase):
+    @log_on_success
+    @count_function
     def test_highlight_type(self):
         mh = MyHighlighter(SOURCE_TYPE=Source_Type.FAILURE_SOURCE)
         self.assertEqual(mh.highlight_format.underlineStyle(), QTextCharFormat.WaveUnderline)
         self.assertEqual(mh.highlight_format.underlineColor(), QColor("red"))
-
 class TestTextEdit(unittest.TestCase):
-
+    @log_on_success
+    @count_function
     def test_get_line_text(self):
         te = TextEdit(editor_window=window)
         te.setPlainText('Line 1\nLine 2\nLine 3')
         self.assertEqual(te.get_line_text(2), 'Line 2')
-    
+    @log_on_success
+    @count_function
     def test_highlight_line(self):
         text = 'This is a line of text.\nThis is another line of text.'
         te = TextEdit(editor_window=window)
@@ -48,8 +50,15 @@ class TestTextEdit(unittest.TestCase):
         self.assertEqual(te.highlighter.highlight_line_number, 0)
 
         te.highlight_line(2)
-        self.assertEqual(te.highlighter.highlight_line_number, 1)
+        self.assertEqual(te.highlighter.highlight_line_number, 1) 
 
 
 if __name__ == '__main__':
-    unittest.main()
+    suite = unittest.TestLoader().loadTestsFromModule(sys.modules[__name__])
+        
+        # 使用TextTestRunner来执行测试
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+    current_file_path = os.path.abspath(__file__)
+    with open('/home/mirage/Visualization-Tool-For-CBMC/src/test/test_UI/test_results.txt', 'a') as file:
+                file.write(f'{log_decorator.module_test_count}\n')

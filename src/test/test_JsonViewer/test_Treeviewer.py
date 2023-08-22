@@ -7,79 +7,96 @@ from JsonViwer.TreeViewer import TreeViewer
 import json 
 import unittest
 from loguru import logger
+from log_decorator import log_on_success,count_function
+import log_decorator
 app = QApplication([])
-tree=TreeViewer()
+log_path = "/home/mirage/Visualization-Tool-For-CBMC/src/test/log_JsonViewer/log_test_Treeviewer.log"
+logger.add(log_path, rotation="500 MB")  # 每当日志大小超过500MB时，就会创建一个新的日志文件
 class TestTreeViewer(unittest.TestCase):
-    with open("/home/mirage/Visualization-Tool-For-CBMC/src/test/testjson.json") as f:
-        data = json.load(f)
-    
-    @logger.catch
-    def test_initOuterKeyDict(self):
-        test_list_1 = ['apple', 'banana', 'cherry', 'banana', 'apple', 'cherry', 'apple', 'banana']
-        test_list_2 = ['orange', 'orange', 'orange', 'orange', 'orange']
-        test_list_3 = ['apple', 'banana', 'cherry']
-        test_list_4 = ['apple', 'banana', 'apple', 'cherry', 'apple', 'cherry', 'banana']
-        test_list_5 = [1, 2, 2, 3, 3, 3, 4, 4, 4, 4]
-
-
-        ans_1={"apple":[1,2,3],"banana":[1,2,3],"cherry":[1,2]}
-        ans_2 = {'orange': [1,2,3,4,5]}
-        ans_3 = {'apple': [1], 'banana': [1], 'cherry': [1]}
-        ans_4 = {'apple': [1,2,3], 'banana': [1,2], 'cherry': [1,2]}
-        ans_5= {1: [1], 2: [1,2], 3: [1,2,3], 4: [1,2,3,4]}
-
-
-        # 1
-        tree.insertOuterKeys=test_list_1
-        tree.initOuterKeyDict()
-        self.assertEqual(ans_1,tree.OutKeyDict)
-       
-        # 2
-        tree.insertOuterKeys=test_list_2
-        tree.initOuterKeyDict()
-        self.assertEqual(ans_2,tree.OutKeyDict)
-
-        # 3
-        tree.insertOuterKeys=test_list_3
-        tree.initOuterKeyDict()
-        self.assertEqual(ans_3,tree.OutKeyDict)
-
-        # 4
-        tree.insertOuterKeys=test_list_4
-        tree.initOuterKeyDict()
-        self.assertEqual(ans_4,tree.OutKeyDict)
-
-        # 5
-        tree.insertOuterKeys=test_list_5
-        tree.initOuterKeyDict()
-        self.assertEqual(ans_5,tree.OutKeyDict)
-    @logger.catch
-    def test_search(self):
+    @log_on_success
+    def setUp(self):
+        # Setup function that's called before each test
         self.tree_viewer = TreeViewer()
+        with open("/home/mirage/Visualization-Tool-For-CBMC/src/test/test_files/test_json.json") as f:
+            self.data = json.load(f)
         self.tree_viewer.display(self.data)
+    @log_on_success
+    @count_function
+    def test_FailureDict(self):
+        cnt=1
+        for id in self.tree_viewer.FailureDict.keys():
+            failure_order=self.tree_viewer.FailureDict[id]
+            self.assertEqual(cnt,int(failure_order))
+            cnt=cnt+1
+    @log_on_success
+    @count_function
+    def test_viewSourceFile(self):
+        # 判断所有Failure Item是否都被存进去了
+        self.tree_viewer.search('status',False)
+        for item in self.tree_viewer.foundItems:
+            if item.child(0).child(0).text(1)=="FAILURE":
+                self.assertEqual(id(item.child(0).child(0)) in self.tree_viewer.FailureDict,True)
+    @log_on_success
+    @count_function
+    def test_setFilePath(self):
+        test_path = "test_path"
+        self.tree_viewer.setFilePath(test_path)
+        self.assertEqual(self.tree_viewer.filePath, test_path)
+    @log_on_success
+    @count_function
+    def test_search(self):
         self.tree_viewer.search('name',False)
         self.assertEqual(self.tree_viewer.foundItems[0].text(0), 'name')
-        self.assertEqual(self.tree_viewer.foundItems[0].child(0).text(1), 'John')
-        self.assertEqual(self.tree_viewer.foundItems[1].text(0), 'name')
-        self.assertEqual(self.tree_viewer.foundItems[1].child(0).text(1), 'Mike')
+        self.assertEqual(self.tree_viewer.foundItems[0].child(0).text(0),'first')
+        self.assertEqual(self.tree_viewer.foundItems[0].child(0).child(0).text(1), 'John')
+
+
 
         self.tree_viewer.search('age',False)
         self.assertEqual(self.tree_viewer.foundItems[0].text(0), 'age')
-        self.assertEqual(self.tree_viewer.foundItems[0].child(0).text(1),'30')
-        self.assertEqual(self.tree_viewer.foundItems[1].text(0), 'age')
-        self.assertEqual(self.tree_viewer.foundItems[1].child(0).text(1),'40')
+        self.assertEqual(self.tree_viewer.foundItems[0].child(0).text(0),'value')
+        self.assertEqual(self.tree_viewer.foundItems[0].child(0).child(0).text(1), '30')
 
         self.tree_viewer.search('status',False)
         self.assertEqual(self.tree_viewer.foundItems[0].text(0), 'status')
-        self.assertEqual(self.tree_viewer.foundItems[0].child(0).text(1),'FAILURE')
+        self.assertEqual(self.tree_viewer.foundItems[0].child(0).text(0),'value')
+        self.assertEqual(self.tree_viewer.foundItems[0].child(0).child(0).text(1), 'FAILURE')
+
+        self.tree_viewer.search('name',False)
+        self.assertEqual(self.tree_viewer.foundItems[1].text(0), 'name')
+        self.assertEqual(self.tree_viewer.foundItems[1].child(0).text(0),'first')
+        self.assertEqual(self.tree_viewer.foundItems[1].child(0).child(0).text(1), 'Mike')
+
+        self.tree_viewer.search('age',False)
+        self.assertEqual(self.tree_viewer.foundItems[1].text(0), 'age')
+        self.assertEqual(self.tree_viewer.foundItems[1].child(0).text(0),'value')
+        self.assertEqual(self.tree_viewer.foundItems[1].child(0).child(0).text(1), '40')
+
+        self.tree_viewer.search('status',False)
         self.assertEqual(self.tree_viewer.foundItems[1].text(0), 'status')
-        self.assertEqual(self.tree_viewer.foundItems[1].child(0).text(1),'SUCCESS')
+        self.assertEqual(self.tree_viewer.foundItems[1].child(0).text(0),'value')
+        self.assertEqual(self.tree_viewer.foundItems[1].child(0).child(0).text(1), 'SUCCESS')
+    
+    @log_on_success
+    @count_function
+    def test_clear(self):
+        # Modify some attributes of treeViewer
+        self.tree_viewer.foundItems = ["item1", "item2"]
+        self.tree_viewer.FailureDict = {"key": "value"}
 
-        
-           
+        self.tree_viewer.clear()
 
-logger.add("/home/mirage/Visualization-Tool-For-CBMC/src/test/log/Test_JsonTreeViwer.log")
+        # Check that the attributes have been reset
+        self.assertEqual(self.tree_viewer.foundItems, [])
+        self.assertEqual(self.tree_viewer.FailureDict, {})
 if __name__ == '__main__':
-    unittest.main()
+    suite = unittest.TestLoader().loadTestsFromModule(sys.modules[__name__])
+        
+        # 使用TextTestRunner来执行测试
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+    current_file_path = os.path.abspath(__file__)
+    with open('/home/mirage/Visualization-Tool-For-CBMC/src/test/test_JsonViewer/test_results.txt', 'a') as file:
+                file.write(f'{log_decorator.module_test_count}\n')
         
         

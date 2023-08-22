@@ -9,7 +9,7 @@ import glob
 root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(root_folder)
 from UI.utils import extract_command,extract_file_name_without_extension,print_result,wait_for_file,extract_file_name
-from JsonViwer.MainJsonWindow import MainWindow as jsonWindow
+from JsonViwer.MainJsonWindow import JsonWindow as jsonWindow
 from ControlFlowGraph.ControlFlowGraphGenerator import ControlGraphGenerator,Source_Type
 from enum import Enum
 class TextType(Enum):
@@ -67,7 +67,6 @@ class Terminal(QPlainTextEdit):
         if match:
             # Extract file path and line number
             file_path, line_number = match.groups()
-            
             # Check if the file path is valid and line number is a positive integer
             if os.path.isfile(file_path) and int(line_number) > 0:
                 return (True, file_path, int(line_number))
@@ -134,7 +133,6 @@ class Terminal(QPlainTextEdit):
             # Replace the last line
             lines[-1] = last_line
             # Join the lines and set the new text
-            print(lines)
             self.setPlainText('\n'.join(lines))
             self.text_cursor.movePosition(self.textCursor().position())
             self.setTextCursor(self.text_cursor)
@@ -173,9 +171,7 @@ class Terminal(QPlainTextEdit):
             elif current_input.startswith('run'):
                 arguments=self.get_file_lst(current_input)
                 arguments=[element for element in arguments if element!='']
-                print('arguments:',arguments)
                 file_to_be_completed=arguments[-1]
-                print('file to be completed:',file_to_be_completed)
                 previouscontent = ""
                 for i in range(len(arguments)-1):
                     previouscontent=previouscontent+arguments[i]+" "
@@ -213,13 +209,13 @@ class Terminal(QPlainTextEdit):
         if event.key() == Qt.Key_Up:
             if self.command_index > 0:
                 self.command_index -= 1
-                self.replace_last_line(self.command_history[self.command_index])
+                self.replace_last_line(self.command_history[self.command_index-1])
                 self.text_cursor.movePosition(self.textCursor().position())
                 self.setTextCursor(self.text_cursor)
         elif event.key() == Qt.Key_Down:
-            if self.command_index < len(self.command_history) - 1:
+            if self.command_index <= len(self.command_history) - 1:
                 self.command_index += 1
-                self.replace_last_line(self.command_history[self.command_index])
+                self.replace_last_line(self.command_history[self.command_index-1])
                 self.text_cursor.movePosition(self.textCursor().position())
                 self.setTextCursor(self.text_cursor)
         if event.key() == Qt.Key_Tab:
@@ -262,7 +258,6 @@ class Terminal(QPlainTextEdit):
                     self.process.write(b'\n')
             elif last_command.strip().startswith('run'):
                 file_lst=last_command.split(' ')[1:]
-                print(file_lst)
                 file_lst=[file for file in file_lst if file != '']
                 if len(file_lst)==0:
                    QMessageBox.warning(self,"Warning", "Need a file to run!")

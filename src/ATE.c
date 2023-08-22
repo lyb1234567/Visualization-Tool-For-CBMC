@@ -1,5 +1,5 @@
 #include<assert.h>
-
+#include<stdio.h>
 #define N 3
 #define UNDECIDED -1
 

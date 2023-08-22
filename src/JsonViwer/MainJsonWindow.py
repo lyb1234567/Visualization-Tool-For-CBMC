@@ -14,7 +14,7 @@ from JsonViwer.TextViewer import TextViewer
 from JsonViwer.KeysDialog import KeyListDialog
 from UI.utils import is_trace_file
 from ControlFlowGraph.ControlFlowGraphGenerator import ControlGraphGenerator
-class MainWindow(QMainWindow):
+class JsonWindow(QMainWindow):
     def __init__(self,filePath=None,editor_window=None,cfg=None,trace_num=None,run_by_editor=False):
         super().__init__()
         self.filePath=filePath
@@ -130,8 +130,11 @@ class MainWindow(QMainWindow):
                 # 清洗生成的trace file
                 if self.treeViewer.trace_files:
                     for trace_file in self.treeViewer.trace_files:
-                        cfg=ControlGraphGenerator(trace_json_file=trace_file)
-                        cfg.reduce_trace_json()
+                        self.editor_cfg.trace_json_file=trace_file
+                        self.editor_cfg.reduce_trace_json()
+                        self.editor_cfg.clean_trace_json_file()
+                        self.editor_cfg.update_assertion_statement_total()
+                    print(self.editor_cfg.assertion_trace_total_test)
                 self.textViewer.display(json_content)
                 self.filePath=None
                 if not self.treeViewer.FailureList :

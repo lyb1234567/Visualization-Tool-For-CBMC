@@ -3,6 +3,12 @@ import os
 import glob
 from enum import Enum
 import re
+import os
+import sys
+import json
+root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.append(root_folder)
+from UI.utils import extract_file_name_without_extension
 class Assertion_Type(Enum):
     FUNCTION_CALL = 1
     VARIABLE = 2
@@ -16,15 +22,14 @@ class ControlGraphGenerator():
         self.trace_file=trace_file
         self.json_data=None
         self.trace_data=None
-        self.reduce_trace=[]
         self.state_info={}
         # assertion_trace的数据结构应该是{'assertion_statement':[trace1,trace2,trace3]}
         self.assertion_trace_total={}
+        self.assertion_trace_total_test={}
         self.assertion_variables=assertion_variables
         if self.trace_file!=None:
             self.load_trace_data()
             self.clean_tarce_file()
-            self.update_assertion_statement_total()
     # 导入trace.ext文件
     def load_trace_data(self):
         if self.trace_file:
@@ -46,14 +51,53 @@ class ControlGraphGenerator():
             cur_state_info[trace_name]=temp_state
             self.assertion_trace_total.update(assertion_trace)
             self.state_info.update(cur_state_info)
-        self.remove_trace_files()
-
+    def clean_trace_json_file(self):
+        if self.trace_json_file !=None:
+            assertion_trace_sub={}
+            with open(self.trace_json_file,'r') as f:
+                traces=[]
+                json_data=json.load(f)
+            for json_obj in json_data:
+                if json_obj.get('sourceLocation')!=None and not json_obj['hidden'] and json_obj.get('assignmentType')!=None and json_obj.get('lhs')!=None and json_obj['stepType']!="failure" and json_obj.get('reason')==None:
+                   temp_assignment_info={}
+                   file=json_obj['sourceLocation']['file']
+                   line=json_obj['sourceLocation']['line']
+                   value=json_obj['value']
+                   lhs=json_obj['lhs']
+                   assignment=None
+                   if value.get("data")!=None:
+                    assignment=lhs+"="+str(value['data'])
+                   elif value.get("elements")!=None:
+                    assignment=lhs+"="+str(value['elements'])
+                   temp_assignment_info[assignment]={}
+                   temp_assignment_info[assignment]['file']=file
+                   temp_assignment_info[assignment]['line']=line
+                   if (value.get('binary')!=None):
+                       temp_assignment_info[assignment]['binary_format']=value['binary']
+                   temp_assignment_info[assignment]['variable']=lhs
+                   traces.append(temp_assignment_info)
+                elif json_obj.get('reason')!=None and json_obj['stepType']=="failure":
+                    temp_assignment_info={}
+                    assertion=json_obj['reason']
+                    if json_obj.get('sourceLocation')!=None and not json_obj['hidden']:
+                        file=json_obj['sourceLocation']['file']
+                        line=json_obj['sourceLocation']['line']
+                        temp_assignment_info[assertion]={}
+                        temp_assignment_info[assertion]['file']=file
+                        temp_assignment_info[assertion]['line']=line
+                    traces.append(temp_assignment_info)
+            temp=traces[-1]
+            assertion_key=None
+            for key in temp.keys():
+                assertion_key=key
+            assertion_trace_sub[assertion_key]=traces
+            self.assertion_trace_total_test.update(assertion_trace_sub)
     def update_assertion_statement_total(self):
-        for assertion_statement in self.assertion_trace_total.keys():
-            self.assertion_trace_total[assertion_statement]=self.add_iteration_to_statements(assertion_statement)
+        for assertion_statement in self.assertion_trace_total_test.keys():
+            self.assertion_trace_total_test[assertion_statement]=self.add_iteration_to_statements(assertion_statement)
     # 给定某个trace 的 state,然后遍历所有的文件，都更新一遍iteration
     def add_iteration_to_statements(self,assertion_statement):
-        trace_lst=self.assertion_trace_total[assertion_statement]
+        trace_lst=self.assertion_trace_total_test[assertion_statement]
         matching_statements = {}
         # 和之前一样，我们先找出满足条件的语句
         for trace_dict in trace_lst:
@@ -161,7 +205,11 @@ class ControlGraphGenerator():
         return False
     # 判断是否是state information
     def is_state(self,statement):
-        return "State" in statement
+        check_file="file" in statement
+        check_line="line" in statement
+        check_thread="thread" in statement
+        check_function="function" in statement
+        return statement.strip().startswith("State") and check_file and check_line and check_function and check_thread
     # 获取当前statement中的line number 
     def extract_line_number(self,statement):
         pattern = r'line (\d+)'
@@ -181,7 +229,7 @@ class ControlGraphGenerator():
         else:
             return None
     def get_assertion_info(self,fileName,line_number,assertion_statement):
-        assertion_traces=self.assertion_trace_total[assertion_statement]
+        assertion_traces=self.assertion_trace_total_test[assertion_statement]
         res=""
         for trace_dict in assertion_traces:
             for statement in trace_dict.keys():
@@ -202,6 +250,7 @@ class ControlGraphGenerator():
     # 清洗trace json file的结构，将不需要的key去掉
     def reduce_trace_json(self):
         if self.trace_json_file !=None:
+            reduce_trace=[]
             with open(self.trace_json_file,'r') as f:
                 json_data=json.load(f)
             for json_obj in json_data:
@@ -210,10 +259,10 @@ class ControlGraphGenerator():
                         fileName=self.find_file_in_sourceLocation(json_obj)
                         if fileName!=False:
                             if os.path.exists(fileName) or fileName.startswith('<builtin'):
-                                 self.reduce_trace.append(json_obj)
+                                 reduce_trace.append(json_obj)
             with open(self.trace_json_file, 'w') as f:
-                json.dump(self.reduce_trace, f)
-            return self.reduce_trace
+                json.dump(reduce_trace, f)
+            return reduce_trace
     # 获取赋值statement 值的名字
     def extract_assignment_variable(self,assignment):
         pattern = r"([\w\[\]]+)[ ]*=[ ]*.+"

@@ -3,7 +3,6 @@ TODO
 1. Visualization of trace trees
 2. user should be able to see the counterexamples by hovering around the highlighted code
 '''
-from graphviz import Digraph
 import os
 import sys
 import json
@@ -65,13 +64,8 @@ class TreeViewer(QTreeWidget):
         self.filePath=filePath
         self.foundItems = []  # List to keep track of found items
         self.currentIndex = 0  # Index to keep track of current selected item
-        self.insertOuterKeys=[]
         self.FailureList=[]
-        self.SuccessList=[]
         self.FailureSourceList=[]
-        self.FailureReasonDict={}
-        self.FailureReasonList=[]
-        self.variableDict={}
         self.FailureDict={}
         self.assertion_lst=[]
         self.editor_window=editor_window
@@ -81,7 +75,6 @@ class TreeViewer(QTreeWidget):
         self.graphicView=None
         self.run_by_editor=run_by_editor
         # 这个变量是用来传递trace name的，在用户想要看trace的时候
-        self.trace_view_num=trace_num
         self.counterNum=0
         self.counterexamplesSourceDict={}
         self.trace_files=[]
@@ -92,16 +85,12 @@ class TreeViewer(QTreeWidget):
         self.foundItems.clear()  # Clear foundItems list
         self.FailureDict.clear()
         self.FailureSourceList.clear()
-        self.variableDict.clear()
         self.FailureList.clear()
-        self.insertOuterKeys.clear()
-        self.SuccessList.clear()
         self.trace_num=0
-        self.FailureReasonDict.clear()
-        self.FailureReasonList.clear()
         self.counterexamplesSourceDict.clear()
         self.counterNum=0
         self.trace_files.clear()
+        
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
             # You can get the item under the cursor with the itemAt method
@@ -165,7 +154,7 @@ class TreeViewer(QTreeWidget):
         tracepoint_info=self.editor_window.terminal.trace_point_info
         self.editor_window.terminal.appendPlainText(self.get_trace_point_info(assertion_statement))
         self.editor_window.terminal.process.write(b'\n')
-        assertion_trace=self.cfg.assertion_trace_total[assertion_statement]
+        assertion_trace=self.cfg.assertion_trace_total_test[assertion_statement]
         y = 0
         prev_node = None
         scene = Graph()
@@ -278,11 +267,6 @@ class TreeViewer(QTreeWidget):
     def display(self, json_obj, root_item=None):
         if root_item is None:
             if isinstance(json_obj, list):
-                for element in json_obj:
-                    if isinstance(element, dict):
-                       for key in element.keys():
-                           self.insertOuterKeys.append(key)
-                self.initOuterKeyDict()
                 root_item = QTreeWidgetItem(self)
                 root_item.setText(0, f'Array[{len(json_obj)}]')
             else:
@@ -304,14 +288,6 @@ class TreeViewer(QTreeWidget):
                             self.counterNum=self.counterNum+1
                             assertion_statement=json_obj[key]
                             self.assertion_lst.append(assertion_statement)
-                if key=="reason":
-                    if not self.FailureReasonList:
-                        self.FailureReasonList.append(1)
-                        self.FailureReasonDict[id(child)]=1
-                    else:
-                        temp=self.FailureReasonList[-1]+1
-                        self.FailureReasonDict[id(child)]=temp
-                        self.FailureReasonList.append(temp)
                 self.display(json_obj[key], child)
         elif isinstance(json_obj, list):
             for i, value in enumerate(json_obj):
@@ -332,18 +308,6 @@ class TreeViewer(QTreeWidget):
                         self.FailureDict[id(child)]=temp
                         self.FailureList.append(temp)
     #  set order for each key in the outer key lists
-
-    def initOuterKeyDict(self):
-        self.OutKeyDict={}
-        if self.insertOuterKeys:
-            for key in self.insertOuterKeys:
-                self.OutKeyDict[key]=[]
-            for key in self.insertOuterKeys:
-                if not self.OutKeyDict[key]:
-                    self.OutKeyDict[key].append(1)
-                else:
-                    temp=self.OutKeyDict[key][-1]+1
-                    self.OutKeyDict[key].append(temp)
     def ExpandAllFailure(self):
         self.search("status",True)
         

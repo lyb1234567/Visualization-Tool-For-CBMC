@@ -1,0 +1,35 @@
+[
+    {
+        "name": {
+            "first": "John"
+        },
+        "age": {
+            "value": "30"
+        },
+        "status": {
+            "value": "FAILURE"
+        }
+    },
+    {
+        "name": {
+            "first": "Mike"
+        },
+        "age": {
+            "value": "40"
+        },
+        "status": {
+            "value": "SUCCESS"
+        }
+    },
+    {
+        "name": {
+            "first": "John"
+        },
+        "age": {
+            "value": "30"
+        },
+        "status": {
+            "value": "FAILURE"
+        }
+    }
+]

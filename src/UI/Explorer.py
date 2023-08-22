@@ -7,14 +7,14 @@ sys.path.append(root_folder)
 from UI.utils import extract_file_name
 from UI.TextEdit import TextEdit
 from UI.utils import extract_file_name_without_extension,extract_file_name
-from JsonViwer.MainJsonWindow import MainWindow as jsonWindow
+from JsonViwer.MainJsonWindow import JsonWindow as jsonWindow
 
 class MyFileSystemModel(QFileSystemModel):
     def data(self, index, role):
         if role == Qt.ToolTipRole:
             return super().data(index, Qt.DisplayRole)
         return super().data(index, role)
-class ExplorerWidget(QWidget):
+class Explorer(QWidget):
     def __init__(self,editor_window):
         super().__init__()
         self.treeView = QTreeView(self)

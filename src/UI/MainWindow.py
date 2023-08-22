@@ -9,13 +9,13 @@ from PyQt5.QtGui import QKeySequence
 import subprocess
 from UI.utils import extract_file_name,print_result
 from UI.TextEdit import TextEdit
-from UI.Explorer import ExplorerWidget
+from UI.Explorer import Explorer
 from UI.utils import extract_file_name_without_extension,wait_for_file
 from UI.Terminal import Terminal
 from UI.Fileselection import MultiFileDialog
 from UI.SearchDialog import SearchDialog
 from UI.Line_Number_Widget import LineNumberWidget
-from JsonViwer.MainJsonWindow import MainWindow as jsonWindow
+from JsonViwer.MainJsonWindow import JsonWindow as jsonWindow
 from ControlFlowGraph.ControlFlowGraphGenerator import ControlGraphGenerator
 # 一个新的FileWidget
 class FileWidget(QWidget):
@@ -38,7 +38,6 @@ class MainWindow(QMainWindow):
         self.fileChange=False
         self.cfg=None
         self.mainLayout = QVBoxLayout(self.mainWidget)  # Create main layout
-        self.splitter = QSplitter()
         self.tabWidget = QTabWidget()
         self.tabWidget.currentChanged.connect(self.on_tab_changed)
         # Add tabWidget to the layout instead of setting it as centralWidget
@@ -148,7 +147,7 @@ class MainWindow(QMainWindow):
         self.jsonwindow.show()
         
     def setupExplorer(self):
-        explorerWidget = ExplorerWidget(self)
+        explorerWidget = Explorer(self)
         dockWidget = self.createDockWidget('Explorer', explorerWidget)
         self.addDockWidget(1, dockWidget)
         return explorerWidget

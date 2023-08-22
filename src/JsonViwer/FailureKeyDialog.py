@@ -7,7 +7,6 @@ class AssertionKeyListDialog(QDialog):
         self.assertion_lst = assertion_lst 
 
         self.selected_assertion_statement = None
-        self.selected_keyorder=None
 
         self.initUI()
 
@@ -21,7 +20,7 @@ class AssertionKeyListDialog(QDialog):
         self.listWidget.itemClicked.connect(self.onItemClicked)
         self.layout.addWidget(self.listWidget)
 
-        self.setWindowTitle("Choose a failure case")
+        self.setWindowTitle("Choose an assertion statement")
         self.setGeometry(300, 300, 250, 150)
 
     def onItemClicked(self, item):

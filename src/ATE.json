@@ -523,7 +523,7 @@
     "messageType": "STATUS-MESSAGE"
   },
   {
-    "messageText": "Runtime Symex: 0.0746837s",
+    "messageText": "Runtime Symex: 0.076852s",
     "messageType": "STATUS-MESSAGE"
   },
   {
@@ -539,7 +539,7 @@
     "messageType": "STATUS-MESSAGE"
   },
   {
-    "messageText": "Runtime Postprocess Equation: 0.000329949s",
+    "messageText": "Runtime Postprocess Equation: 0.000249978s",
     "messageType": "STATUS-MESSAGE"
   },
   {
@@ -551,7 +551,7 @@
     "messageType": "STATUS-MESSAGE"
   },
   {
-    "messageText": "Runtime Convert SSA: 0.0127869s",
+    "messageText": "Runtime Convert SSA: 0.0128465s",
     "messageType": "STATUS-MESSAGE"
   },
   {
@@ -563,7 +563,7 @@
     "messageType": "STATUS-MESSAGE"
   },
   {
-    "messageText": "Runtime Post-process: 8.586e-06s",
+    "messageText": "Runtime Post-process: 8.506e-06s",
     "messageType": "STATUS-MESSAGE"
   },
   {
@@ -579,11 +579,11 @@
     "messageType": "STATUS-MESSAGE"
   },
   {
-    "messageText": "Runtime Solver: 0.0213011s",
+    "messageText": "Runtime Solver: 0.051173s",
     "messageType": "STATUS-MESSAGE"
   },
   {
-    "messageText": "Runtime decision procedure: 0.034359s",
+    "messageText": "Runtime decision procedure: 0.0646941s",
     "messageType": "STATUS-MESSAGE"
   },
   {
@@ -5555,8 +5555,8 @@
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "00000000",
-              "data": "0",
+              "binary": "00000001",
+              "data": "1",
               "name": "integer",
               "type": "unsigned char",
               "width": 8
@@ -5577,8 +5577,8 @@
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "00000000",
-              "data": "0",
+              "binary": "00000001",
+              "data": "1",
               "name": "integer",
               "type": "char",
               "width": 8
@@ -5632,8 +5632,8 @@
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "00000000",
-              "data": "0",
+              "binary": "00000001",
+              "data": "1",
               "name": "integer",
               "type": "unsigned char",
               "width": 8
@@ -5654,8 +5654,8 @@
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "00000000",
-              "data": "0",
+              "binary": "00000001",
+              "data": "1",
               "name": "integer",
               "type": "char",
               "width": 8
@@ -5685,50 +5685,6 @@
           },
           {
             "assignmentType": "variable",
-            "hidden": true,
-            "internal": false,
-            "lhs": "return_value_nondet_int",
-            "mode": "C",
-            "sourceLocation": {
-              "file": "ATE.c",
-              "function": "send_message",
-              "line": "41",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "assignment",
-            "thread": 0,
-            "value": {
-              "binary": "00000000000000000000000000000000",
-              "data": "0",
-              "name": "integer",
-              "type": "signed int",
-              "width": 32
-            }
-          },
-          {
-            "assignmentType": "variable",
-            "hidden": true,
-            "internal": false,
-            "lhs": "return_value_nondet_int",
-            "mode": "C",
-            "sourceLocation": {
-              "file": "ATE.c",
-              "function": "send_message",
-              "line": "41",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "assignment",
-            "thread": 0,
-            "value": {
-              "binary": "00000010111111111010110011001000",
-              "data": "50310344",
-              "name": "integer",
-              "type": "signed int",
-              "width": 32
-            }
-          },
-          {
-            "assignmentType": "variable",
             "hidden": false,
             "internal": false,
             "lhs": "process[0l].rcv[0l].x",
@@ -5736,29 +5692,18 @@
             "sourceLocation": {
               "file": "ATE.c",
               "function": "send_message",
-              "line": "41",
+              "line": "39",
               "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
             },
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "00000010111111111010110011001000",
-              "data": "50310344",
+              "binary": "01111111111111111111111111111111",
+              "data": "2147483647",
               "name": "integer",
               "type": "signed int",
               "width": 32
             }
-          },
-          {
-            "hidden": false,
-            "sourceLocation": {
-              "file": "ATE.c",
-              "function": "send_message",
-              "line": "42",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "location-only",
-            "thread": 0
           },
           {
             "function": {
@@ -6244,8 +6189,8 @@
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "00000000",
-              "data": "0",
+              "binary": "00000001",
+              "data": "1",
               "name": "integer",
               "type": "unsigned char",
               "width": 8
@@ -6266,8 +6211,8 @@
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "00000000",
-              "data": "0",
+              "binary": "00000001",
+              "data": "1",
               "name": "integer",
               "type": "char",
               "width": 8
@@ -7959,8 +7904,8 @@
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "00000001",
-              "data": "1",
+              "binary": "00000000",
+              "data": "0",
               "name": "integer",
               "type": "unsigned char",
               "width": 8
@@ -7981,8 +7926,8 @@
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "00000001",
-              "data": "1",
+              "binary": "00000000",
+              "data": "0",
               "name": "integer",
               "type": "char",
               "width": 8
@@ -8012,6 +7957,50 @@
           },
           {
             "assignmentType": "variable",
+            "hidden": true,
+            "internal": false,
+            "lhs": "return_value_nondet_int",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "ATE.c",
+              "function": "send_message",
+              "line": "41",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "00000000000000000000000000000000",
+              "data": "0",
+              "name": "integer",
+              "type": "signed int",
+              "width": 32
+            }
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": true,
+            "internal": false,
+            "lhs": "return_value_nondet_int",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "ATE.c",
+              "function": "send_message",
+              "line": "41",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "00001111111111110011110101100000",
+              "data": "268385632",
+              "name": "integer",
+              "type": "signed int",
+              "width": 32
+            }
+          },
+          {
+            "assignmentType": "variable",
             "hidden": false,
             "internal": false,
             "lhs": "process[0l].rcv[2l].x",
@@ -8019,18 +8008,29 @@
             "sourceLocation": {
               "file": "ATE.c",
               "function": "send_message",
-              "line": "39",
+              "line": "41",
               "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
             },
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "01111111111111111111111111111111",
-              "data": "2147483647",
+              "binary": "00001111111111110011110101100000",
+              "data": "268385632",
               "name": "integer",
               "type": "signed int",
               "width": 32
             }
+          },
+          {
+            "hidden": false,
+            "sourceLocation": {
+              "file": "ATE.c",
+              "function": "send_message",
+              "line": "42",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "location-only",
+            "thread": 0
           },
           {
             "function": {
@@ -8516,8 +8516,8 @@
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "00000001",
-              "data": "1",
+              "binary": "00000000",
+              "data": "0",
               "name": "integer",
               "type": "unsigned char",
               "width": 8
@@ -8538,8 +8538,8 @@
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "00000001",
-              "data": "1",
+              "binary": "00000000",
+              "data": "0",
               "name": "integer",
               "type": "char",
               "width": 8
@@ -9073,6 +9073,28 @@
             "assignmentType": "variable",
             "hidden": false,
             "internal": false,
+            "lhs": "cnt",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "ATE.c",
+              "function": "size_of_rcv",
+              "line": "56",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "00000000000000000000000000000001",
+              "data": "1",
+              "name": "integer",
+              "type": "signed int",
+              "width": 32
+            }
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": false,
+            "internal": false,
             "lhs": "i",
             "mode": "C",
             "sourceLocation": {
@@ -9128,8 +9150,8 @@
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "00000000000000000000000000000001",
-              "data": "1",
+              "binary": "00000000000000000000000000000010",
+              "data": "2",
               "name": "integer",
               "type": "signed int",
               "width": 32
@@ -9227,8 +9249,8 @@
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "00000000000000000000000000000001",
-              "data": "1",
+              "binary": "00000000000000000000000000000010",
+              "data": "2",
               "name": "integer",
               "type": "signed int",
               "width": 32
@@ -9270,8 +9292,8 @@
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "00000000000000000000000000000001",
-              "data": "1",
+              "binary": "00000000000000000000000000000010",
+              "data": "2",
               "name": "integer",
               "type": "signed int",
               "width": 32
@@ -9456,6 +9478,28 @@
             "assignmentType": "variable",
             "hidden": false,
             "internal": false,
+            "lhs": "cnt",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "ATE.c",
+              "function": "size_of_safe",
+              "line": "65",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "00000000000000000000000000000001",
+              "data": "1",
+              "name": "integer",
+              "type": "signed int",
+              "width": 32
+            }
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": false,
+            "internal": false,
             "lhs": "i",
             "mode": "C",
             "sourceLocation": {
@@ -9511,8 +9555,8 @@
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "00000000000000000000000000000001",
-              "data": "1",
+              "binary": "00000000000000000000000000000010",
+              "data": "2",
               "name": "integer",
               "type": "signed int",
               "width": 32
@@ -9610,8 +9654,8 @@
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "00000000000000000000000000000001",
-              "data": "1",
+              "binary": "00000000000000000000000000000010",
+              "data": "2",
               "name": "integer",
               "type": "signed int",
               "width": 32
@@ -9653,8 +9697,8 @@
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "00000000000000000000000000000001",
-              "data": "1",
+              "binary": "00000000000000000000000000000010",
+              "data": "2",
               "name": "integer",
               "type": "signed int",
               "width": 32
@@ -11041,6 +11085,28 @@
             "assignmentType": "variable",
             "hidden": false,
             "internal": false,
+            "lhs": "cnt",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "ATE.c",
+              "function": "size_of_rcv",
+              "line": "56",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "00000000000000000000000000000001",
+              "data": "1",
+              "name": "integer",
+              "type": "signed int",
+              "width": 32
+            }
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": false,
+            "internal": false,
             "lhs": "i",
             "mode": "C",
             "sourceLocation": {
@@ -11096,8 +11162,8 @@
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "00000000000000000000000000000001",
-              "data": "1",
+              "binary": "00000000000000000000000000000010",
+              "data": "2",
               "name": "integer",
               "type": "signed int",
               "width": 32
@@ -11146,28 +11212,6 @@
             },
             "stepType": "location-only",
             "thread": 0
-          },
-          {
-            "assignmentType": "variable",
-            "hidden": false,
-            "internal": false,
-            "lhs": "cnt",
-            "mode": "C",
-            "sourceLocation": {
-              "file": "ATE.c",
-              "function": "size_of_rcv",
-              "line": "56",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "assignment",
-            "thread": 0,
-            "value": {
-              "binary": "00000000000000000000000000000010",
-              "data": "2",
-              "name": "integer",
-              "type": "signed int",
-              "width": 32
-            }
           },
           {
             "assignmentType": "variable",
@@ -11446,6 +11490,28 @@
             "assignmentType": "variable",
             "hidden": false,
             "internal": false,
+            "lhs": "cnt",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "ATE.c",
+              "function": "size_of_safe",
+              "line": "65",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "00000000000000000000000000000001",
+              "data": "1",
+              "name": "integer",
+              "type": "signed int",
+              "width": 32
+            }
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": false,
+            "internal": false,
             "lhs": "i",
             "mode": "C",
             "sourceLocation": {
@@ -11501,8 +11567,8 @@
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "00000000000000000000000000000001",
-              "data": "1",
+              "binary": "00000000000000000000000000000010",
+              "data": "2",
               "name": "integer",
               "type": "signed int",
               "width": 32
@@ -11551,28 +11617,6 @@
             },
             "stepType": "location-only",
             "thread": 0
-          },
-          {
-            "assignmentType": "variable",
-            "hidden": false,
-            "internal": false,
-            "lhs": "cnt",
-            "mode": "C",
-            "sourceLocation": {
-              "file": "ATE.c",
-              "function": "size_of_safe",
-              "line": "65",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "assignment",
-            "thread": 0,
-            "value": {
-              "binary": "00000000000000000000000000000010",
-              "data": "2",
-              "name": "integer",
-              "type": "signed int",
-              "width": 32
-            }
           },
           {
             "assignmentType": "variable",
@@ -12031,14 +12075,14 @@
             "sourceLocation": {
               "file": "ATE.c",
               "function": "transition_1",
-              "line": "96",
+              "line": "94",
               "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
             },
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "11111111111111111111111111111111",
-              "data": "-1",
+              "binary": "01111111111111111111111111111111",
+              "data": "2147483647",
               "name": "integer",
               "type": "signed int",
               "width": 32
@@ -12400,72 +12444,6 @@
             "assignmentType": "variable",
             "hidden": false,
             "internal": false,
-            "lhs": "tmpX",
-            "mode": "C",
-            "sourceLocation": {
-              "file": "ATE.c",
-              "function": "transition_1",
-              "line": "102",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "assignment",
-            "thread": 0,
-            "value": {
-              "binary": "11111111111111111111111111111111",
-              "data": "-1",
-              "name": "integer",
-              "type": "signed int",
-              "width": 32
-            }
-          },
-          {
-            "assignmentType": "variable",
-            "hidden": false,
-            "internal": false,
-            "lhs": "sortedX[0l]",
-            "mode": "C",
-            "sourceLocation": {
-              "file": "ATE.c",
-              "function": "transition_1",
-              "line": "103",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "assignment",
-            "thread": 0,
-            "value": {
-              "binary": "01111111111111111111111111111111",
-              "data": "2147483647",
-              "name": "integer",
-              "type": "signed int",
-              "width": 32
-            }
-          },
-          {
-            "assignmentType": "variable",
-            "hidden": false,
-            "internal": false,
-            "lhs": "sortedX[1l]",
-            "mode": "C",
-            "sourceLocation": {
-              "file": "ATE.c",
-              "function": "transition_1",
-              "line": "104",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "assignment",
-            "thread": 0,
-            "value": {
-              "binary": "11111111111111111111111111111111",
-              "data": "-1",
-              "name": "integer",
-              "type": "signed int",
-              "width": 32
-            }
-          },
-          {
-            "assignmentType": "variable",
-            "hidden": false,
-            "internal": false,
             "lhs": "j",
             "mode": "C",
             "sourceLocation": {
@@ -12505,72 +12483,6 @@
             },
             "stepType": "location-only",
             "thread": 0
-          },
-          {
-            "assignmentType": "variable",
-            "hidden": false,
-            "internal": false,
-            "lhs": "tmpX",
-            "mode": "C",
-            "sourceLocation": {
-              "file": "ATE.c",
-              "function": "transition_1",
-              "line": "102",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "assignment",
-            "thread": 0,
-            "value": {
-              "binary": "11111111111111111111111111111111",
-              "data": "-1",
-              "name": "integer",
-              "type": "signed int",
-              "width": 32
-            }
-          },
-          {
-            "assignmentType": "variable",
-            "hidden": false,
-            "internal": false,
-            "lhs": "sortedX[1l]",
-            "mode": "C",
-            "sourceLocation": {
-              "file": "ATE.c",
-              "function": "transition_1",
-              "line": "103",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "assignment",
-            "thread": 0,
-            "value": {
-              "binary": "11111111111111111111111111111111",
-              "data": "-1",
-              "name": "integer",
-              "type": "signed int",
-              "width": 32
-            }
-          },
-          {
-            "assignmentType": "variable",
-            "hidden": false,
-            "internal": false,
-            "lhs": "sortedX[2l]",
-            "mode": "C",
-            "sourceLocation": {
-              "file": "ATE.c",
-              "function": "transition_1",
-              "line": "104",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "assignment",
-            "thread": 0,
-            "value": {
-              "binary": "11111111111111111111111111111111",
-              "data": "-1",
-              "name": "integer",
-              "type": "signed int",
-              "width": 32
-            }
           },
           {
             "assignmentType": "variable",
@@ -12752,72 +12664,6 @@
             "assignmentType": "variable",
             "hidden": false,
             "internal": false,
-            "lhs": "tmpX",
-            "mode": "C",
-            "sourceLocation": {
-              "file": "ATE.c",
-              "function": "transition_1",
-              "line": "102",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "assignment",
-            "thread": 0,
-            "value": {
-              "binary": "11111111111111111111111111111111",
-              "data": "-1",
-              "name": "integer",
-              "type": "signed int",
-              "width": 32
-            }
-          },
-          {
-            "assignmentType": "variable",
-            "hidden": false,
-            "internal": false,
-            "lhs": "sortedX[1l]",
-            "mode": "C",
-            "sourceLocation": {
-              "file": "ATE.c",
-              "function": "transition_1",
-              "line": "103",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "assignment",
-            "thread": 0,
-            "value": {
-              "binary": "11111111111111111111111111111111",
-              "data": "-1",
-              "name": "integer",
-              "type": "signed int",
-              "width": 32
-            }
-          },
-          {
-            "assignmentType": "variable",
-            "hidden": false,
-            "internal": false,
-            "lhs": "sortedX[2l]",
-            "mode": "C",
-            "sourceLocation": {
-              "file": "ATE.c",
-              "function": "transition_1",
-              "line": "104",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "assignment",
-            "thread": 0,
-            "value": {
-              "binary": "11111111111111111111111111111111",
-              "data": "-1",
-              "name": "integer",
-              "type": "signed int",
-              "width": 32
-            }
-          },
-          {
-            "assignmentType": "variable",
-            "hidden": false,
-            "internal": false,
             "lhs": "j",
             "mode": "C",
             "sourceLocation": {
@@ -12989,72 +12835,6 @@
             },
             "stepType": "location-only",
             "thread": 0
-          },
-          {
-            "assignmentType": "variable",
-            "hidden": false,
-            "internal": false,
-            "lhs": "tmpX",
-            "mode": "C",
-            "sourceLocation": {
-              "file": "ATE.c",
-              "function": "transition_1",
-              "line": "102",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "assignment",
-            "thread": 0,
-            "value": {
-              "binary": "11111111111111111111111111111111",
-              "data": "-1",
-              "name": "integer",
-              "type": "signed int",
-              "width": 32
-            }
-          },
-          {
-            "assignmentType": "variable",
-            "hidden": false,
-            "internal": false,
-            "lhs": "sortedX[1l]",
-            "mode": "C",
-            "sourceLocation": {
-              "file": "ATE.c",
-              "function": "transition_1",
-              "line": "103",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "assignment",
-            "thread": 0,
-            "value": {
-              "binary": "11111111111111111111111111111111",
-              "data": "-1",
-              "name": "integer",
-              "type": "signed int",
-              "width": 32
-            }
-          },
-          {
-            "assignmentType": "variable",
-            "hidden": false,
-            "internal": false,
-            "lhs": "sortedX[2l]",
-            "mode": "C",
-            "sourceLocation": {
-              "file": "ATE.c",
-              "function": "transition_1",
-              "line": "104",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "assignment",
-            "thread": 0,
-            "value": {
-              "binary": "11111111111111111111111111111111",
-              "data": "-1",
-              "name": "integer",
-              "type": "signed int",
-              "width": 32
-            }
           },
           {
             "assignmentType": "variable",
@@ -13231,6 +13011,83 @@
             },
             "stepType": "location-only",
             "thread": 0
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": false,
+            "internal": false,
+            "lhs": "cntX[1l]",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "ATE.c",
+              "function": "transition_1",
+              "line": "112",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "00000000000000000000000000000010",
+              "data": "2",
+              "name": "integer",
+              "type": "signed int",
+              "width": 32
+            }
+          },
+          {
+            "hidden": false,
+            "sourceLocation": {
+              "file": "ATE.c",
+              "function": "transition_1",
+              "line": "113",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "location-only",
+            "thread": 0
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": false,
+            "internal": false,
+            "lhs": "maxcnt",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "ATE.c",
+              "function": "transition_1",
+              "line": "114",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "00000000000000000000000000000010",
+              "data": "2",
+              "name": "integer",
+              "type": "signed int",
+              "width": 32
+            }
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": false,
+            "internal": false,
+            "lhs": "tmpX",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "ATE.c",
+              "function": "transition_1",
+              "line": "115",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "01111111111111111111111111111111",
+              "data": "2147483647",
+              "name": "integer",
+              "type": "signed int",
+              "width": 32
+            }
           },
           {
             "assignmentType": "variable",
@@ -13488,6 +13345,28 @@
             "assignmentType": "variable",
             "hidden": false,
             "internal": false,
+            "lhs": "cnt",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "ATE.c",
+              "function": "size_of_rcv",
+              "line": "56",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "00000000000000000000000000000001",
+              "data": "1",
+              "name": "integer",
+              "type": "signed int",
+              "width": 32
+            }
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": false,
+            "internal": false,
             "lhs": "i",
             "mode": "C",
             "sourceLocation": {
@@ -13543,8 +13422,8 @@
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "00000000000000000000000000000001",
-              "data": "1",
+              "binary": "00000000000000000000000000000010",
+              "data": "2",
               "name": "integer",
               "type": "signed int",
               "width": 32
@@ -13642,8 +13521,8 @@
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "00000000000000000000000000000001",
-              "data": "1",
+              "binary": "00000000000000000000000000000010",
+              "data": "2",
               "name": "integer",
               "type": "signed int",
               "width": 32
@@ -13685,8 +13564,8 @@
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "00000000000000000000000000000001",
-              "data": "1",
+              "binary": "00000000000000000000000000000010",
+              "data": "2",
               "name": "integer",
               "type": "signed int",
               "width": 32
@@ -16441,14 +16320,14 @@
             "sourceLocation": {
               "file": "ATE.c",
               "function": "transition_1",
-              "line": "96",
+              "line": "94",
               "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
             },
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "11111111111111111111111111111111",
-              "data": "-1",
+              "binary": "01111111111111111111111111111111",
+              "data": "2147483647",
               "name": "integer",
               "type": "signed int",
               "width": 32
@@ -16617,14 +16496,14 @@
             "sourceLocation": {
               "file": "ATE.c",
               "function": "transition_1",
-              "line": "94",
+              "line": "96",
               "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
             },
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "01111111111111111111111111111111",
-              "data": "2147483647",
+              "binary": "11111111111111111111111111111111",
+              "data": "-1",
               "name": "integer",
               "type": "signed int",
               "width": 32
@@ -16810,72 +16689,6 @@
             "assignmentType": "variable",
             "hidden": false,
             "internal": false,
-            "lhs": "tmpX",
-            "mode": "C",
-            "sourceLocation": {
-              "file": "ATE.c",
-              "function": "transition_1",
-              "line": "102",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "assignment",
-            "thread": 0,
-            "value": {
-              "binary": "11111111111111111111111111111111",
-              "data": "-1",
-              "name": "integer",
-              "type": "signed int",
-              "width": 32
-            }
-          },
-          {
-            "assignmentType": "variable",
-            "hidden": false,
-            "internal": false,
-            "lhs": "sortedX[0l]",
-            "mode": "C",
-            "sourceLocation": {
-              "file": "ATE.c",
-              "function": "transition_1",
-              "line": "103",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "assignment",
-            "thread": 0,
-            "value": {
-              "binary": "01111111111111111111111111111111",
-              "data": "2147483647",
-              "name": "integer",
-              "type": "signed int",
-              "width": 32
-            }
-          },
-          {
-            "assignmentType": "variable",
-            "hidden": false,
-            "internal": false,
-            "lhs": "sortedX[1l]",
-            "mode": "C",
-            "sourceLocation": {
-              "file": "ATE.c",
-              "function": "transition_1",
-              "line": "104",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "assignment",
-            "thread": 0,
-            "value": {
-              "binary": "11111111111111111111111111111111",
-              "data": "-1",
-              "name": "integer",
-              "type": "signed int",
-              "width": 32
-            }
-          },
-          {
-            "assignmentType": "variable",
-            "hidden": false,
-            "internal": false,
             "lhs": "j",
             "mode": "C",
             "sourceLocation": {
@@ -16915,72 +16728,6 @@
             },
             "stepType": "location-only",
             "thread": 0
-          },
-          {
-            "assignmentType": "variable",
-            "hidden": false,
-            "internal": false,
-            "lhs": "tmpX",
-            "mode": "C",
-            "sourceLocation": {
-              "file": "ATE.c",
-              "function": "transition_1",
-              "line": "102",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "assignment",
-            "thread": 0,
-            "value": {
-              "binary": "11111111111111111111111111111111",
-              "data": "-1",
-              "name": "integer",
-              "type": "signed int",
-              "width": 32
-            }
-          },
-          {
-            "assignmentType": "variable",
-            "hidden": false,
-            "internal": false,
-            "lhs": "sortedX[1l]",
-            "mode": "C",
-            "sourceLocation": {
-              "file": "ATE.c",
-              "function": "transition_1",
-              "line": "103",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "assignment",
-            "thread": 0,
-            "value": {
-              "binary": "01111111111111111111111111111111",
-              "data": "2147483647",
-              "name": "integer",
-              "type": "signed int",
-              "width": 32
-            }
-          },
-          {
-            "assignmentType": "variable",
-            "hidden": false,
-            "internal": false,
-            "lhs": "sortedX[2l]",
-            "mode": "C",
-            "sourceLocation": {
-              "file": "ATE.c",
-              "function": "transition_1",
-              "line": "104",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "assignment",
-            "thread": 0,
-            "value": {
-              "binary": "11111111111111111111111111111111",
-              "data": "-1",
-              "name": "integer",
-              "type": "signed int",
-              "width": 32
-            }
           },
           {
             "assignmentType": "variable",
@@ -17843,6 +17590,28 @@
             "assignmentType": "variable",
             "hidden": false,
             "internal": false,
+            "lhs": "cnt",
+            "mode": "C",
+            "sourceLocation": {
+              "file": "ATE.c",
+              "function": "size_of_rcv",
+              "line": "56",
+              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
+            },
+            "stepType": "assignment",
+            "thread": 0,
+            "value": {
+              "binary": "00000000000000000000000000000001",
+              "data": "1",
+              "name": "integer",
+              "type": "signed int",
+              "width": 32
+            }
+          },
+          {
+            "assignmentType": "variable",
+            "hidden": false,
+            "internal": false,
             "lhs": "i",
             "mode": "C",
             "sourceLocation": {
@@ -17898,8 +17667,8 @@
             "stepType": "assignment",
             "thread": 0,
             "value": {
-              "binary": "00000000000000000000000000000001",
-              "data": "1",
+              "binary": "00000000000000000000000000000010",
+              "data": "2",
               "name": "integer",
               "type": "signed int",
               "width": 32
@@ -17948,28 +17717,6 @@
             },
             "stepType": "location-only",
             "thread": 0
-          },
-          {
-            "assignmentType": "variable",
-            "hidden": false,
-            "internal": false,
-            "lhs": "cnt",
-            "mode": "C",
-            "sourceLocation": {
-              "file": "ATE.c",
-              "function": "size_of_rcv",
-              "line": "56",
-              "workingDirectory": "/home/mirage/Visualization-Tool-For-CBMC/src"
-            },
-            "stepType": "assignment",
-            "thread": 0,
-            "value": {
-              "binary": "00000000000000000000000000000010",
-              "data": "2",
-              "name": "integer",
-              "type": "signed int",
-              "width": 32
-            }
           },
           {
             "assignmentType": "variable",

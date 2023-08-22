@@ -12,12 +12,6 @@ void increment(int *value) {
     assert(*value > 0);
 }
 
-// Use assertions to check for null pointers
-void increment_ptr(int *value) {
-    value = NULL;  // Set the value to NULL to make the next assertion fail
-    assert(value != NULL);
-}
-
 // Verify loop invariants
 void zero_array(int *array, int size) {
     for(int i = 0; i < size; i++) {
@@ -29,9 +23,6 @@ void zero_array(int *array, int size) {
 int main() {
     int value = 1;
     increment(&value);
-
-    int *value_ptr = &value;
-    increment_ptr(value_ptr);
 
     int size = 0;  // Set the size to 0 to make the assertion in test_array fail
     int array[size];

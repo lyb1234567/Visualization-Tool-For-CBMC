@@ -1,0 +1,16 @@
+2023-08-13 22:49:10.751 | INFO     | log_decorator:wrapper:10 - setUp completed successfully.
+2023-08-13 22:49:10.862 | INFO     | log_decorator:wrapper:10 - test_display completed successfully.
+2023-08-14 22:04:57.760 | INFO     | log_decorator:wrapper:10 - setUp completed successfully.
+2023-08-14 22:04:57.912 | INFO     | log_decorator:wrapper:10 - test_display completed successfully.
+2023-08-14 22:05:26.209 | INFO     | log_decorator:wrapper:10 - setUp completed successfully.
+2023-08-14 22:05:26.355 | INFO     | log_decorator:wrapper:10 - test_display completed successfully.
+2023-08-14 22:12:35.270 | INFO     | log_decorator:wrapper:10 - setUp completed successfully.
+2023-08-14 22:12:35.419 | INFO     | log_decorator:wrapper:10 - test_display completed successfully.
+2023-08-14 22:16:03.279 | INFO     | log_decorator:wrapper:10 - setUp completed successfully.
+2023-08-14 22:16:03.426 | INFO     | log_decorator:wrapper:10 - test_display completed successfully.
+2023-08-14 22:18:48.018 | INFO     | log_decorator:wrapper:10 - setUp completed successfully.
+2023-08-14 22:18:48.156 | INFO     | log_decorator:wrapper:10 - test_display completed successfully.
+2023-08-14 22:27:48.708 | INFO     | log_decorator:wrapper:10 - setUp completed successfully.
+2023-08-14 22:27:48.859 | INFO     | log_decorator:wrapper:10 - test_display completed successfully.
+2023-08-14 22:28:53.287 | INFO     | log_decorator:wrapper:10 - setUp completed successfully.
+2023-08-14 22:28:53.385 | INFO     | log_decorator:wrapper:10 - test_display completed successfully.
